@@ -1,0 +1,26 @@
+.search-bg {
+  padding: 2px 4px;
+  display: flex;
+  align-items: center;
+  width: 400px;
+  border-radius: 8px !important;
+}
+.input {
+  margin-left: 10px;
+  flex: 1;
+}
+.icon-button {
+  padding: 10px;
+}
+.divider {
+  height: 28px !important;
+  margin: 4px;
+}
+
+.color-info {
+  color: #64b5f6 !important;
+}
+
+.color-secondary {
+  color: #bdbdbd !important;
+}

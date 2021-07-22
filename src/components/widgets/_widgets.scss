@@ -1,0 +1,36 @@
+.bottom-right-widgets {
+  position: absolute;
+  right: 20px;
+  bottom: 25px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  z-index: 500;
+
+  .vertical-widget {
+  }
+
+  .horizontal-widget {
+  }
+}
+
+.bottom-left-widgets {
+  bottom: 0;
+  left: 20px;
+  position: absolute;
+  z-index: 500;
+}
+
+.top-left-widgets {
+  top: 7px;
+  left: 7px;
+  position: absolute;
+  z-index: 500;
+}
+
+.top-right-widgets {
+  top: 15px;
+  right: 30px;
+  position: absolute;
+  z-index: 500;
+}
