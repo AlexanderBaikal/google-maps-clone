@@ -7,12 +7,20 @@ import Widgets from "./components/widgets/Widgets";
 function App() {
   const [menuSidebar, toggleMenuSidebar] = useState(false);
   const handleMenuSidebar = () => toggleMenuSidebar((value) => !value);
+  const [zoomDelta, setZoomDelta] = useState(0);
 
   return (
     <div className="App">
-      <Map />
-      <Widgets menuSidebar={menuSidebar} handleMenuSidebar={handleMenuSidebar} />
-      <MenuSidebar menuSidebar={menuSidebar} handleMenuSidebar={handleMenuSidebar} />
+      <Map zoomDelta={zoomDelta} setZoomDelta={setZoomDelta} />
+      <Widgets
+        setZoomDelta={setZoomDelta}
+        menuSidebar={menuSidebar}
+        handleMenuSidebar={handleMenuSidebar}
+      />
+      <MenuSidebar
+        menuSidebar={menuSidebar}
+        handleMenuSidebar={handleMenuSidebar}
+      />
     </div>
   );
 }

@@ -1,19 +1,24 @@
-import {
-  MapContainer,
-  Marker,
-  Popup,
-  TileLayer,
-} from "react-leaflet";
+import { MapContainer, Marker, Popup, TileLayer, useMap } from "react-leaflet";
 import "leaflet/dist/leaflet.css";
 import "./_map.scss";
+import { useEffect, useState } from "react";
 
-const Map = () => {
+const Map = ({ zoomDelta, setZoomDelta }) => {
+  const [map, setMap] = useState(null);
+  useEffect(() => {
+    if (map) {
+      console.log(zoomDelta);
+      map.zoomIn(zoomDelta);
+      setZoomDelta(0)
+    }
+  }, [zoomDelta, map]);
   return (
     <MapContainer
       center={[51.505, -0.09]}
       zoom={13}
       scrollWheelZoom={true}
       zoomControl={false}
+      whenCreated={setMap}
     >
       <TileLayer
         url="https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}"

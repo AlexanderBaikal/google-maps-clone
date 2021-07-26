@@ -22,10 +22,21 @@
 }
 
 .top-left-widgets {
-  top: 7px;
-  left: 7px;
+  top: 0px;
+  left: 0px;
   position: absolute;
   z-index: 500;
+
+  .search-bar{
+    position: absolute;
+    z-index: 2;
+  }
+
+  .under-search-bar{
+    position: absolute;
+    z-index: 0;
+    
+  }
 }
 
 .top-right-widgets {
