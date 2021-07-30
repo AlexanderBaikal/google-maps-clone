@@ -1,10 +1,11 @@
 import { MapContainer, Marker, Popup, TileLayer, useMap } from "react-leaflet";
 import "leaflet/dist/leaflet.css";
-import "./_map.scss";
+import "./_map.css";
 import { useEffect, useState } from "react";
 
 const Map = ({ zoomDelta, setZoomDelta }) => {
   const [map, setMap] = useState(null);
+  
   useEffect(() => {
     if (map) {
       console.log(zoomDelta);
@@ -12,6 +13,7 @@ const Map = ({ zoomDelta, setZoomDelta }) => {
       setZoomDelta(0)
     }
   }, [zoomDelta, map]);
+
   return (
     <MapContainer
       center={[51.505, -0.09]}
@@ -29,11 +31,7 @@ const Map = ({ zoomDelta, setZoomDelta }) => {
         tileSize={512}
         zoomOffset={-1}
       />
-      {/* <Marker position={[51.505, -0.09]}>
-        <Popup>
-          A pretty CSS3 popup. <br /> Easily customizable.
-        </Popup>
-      </Marker> */}
+
     </MapContainer>
   );
 };

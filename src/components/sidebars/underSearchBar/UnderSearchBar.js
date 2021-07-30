@@ -1,4 +1,5 @@
 import {
+  Avatar,
   Button,
   ButtonBase,
   Divider,
@@ -11,9 +12,6 @@ import {
   makeStyles,
 } from "@material-ui/core";
 import { Paper } from "@material-ui/core";
-import "./_underSearchBar.scss";
-import KeyboardArrowDownOutlinedIcon from "@material-ui/icons/KeyboardArrowDownOutlined";
-import { useState } from "react";
 import HomeOutlinedIcon from "@material-ui/icons/HomeOutlined";
 import WorkOutlinedIcon from "@material-ui/icons/WorkOutlined";
 import DriveEtaIcon from "@material-ui/icons/DriveEta";
@@ -24,9 +22,71 @@ import HotelIcon from "@material-ui/icons/Hotel";
 import MoreHorizIcon from "@material-ui/icons/MoreHoriz";
 import ArrowForwardIosRoundedIcon from "@material-ui/icons/ArrowForwardIosRounded";
 import ExpandLessIcon from "@material-ui/icons/ExpandLess";
+import { green, grey } from "@material-ui/core/colors";
+import clsx from "clsx";
 
 const useStyles = makeStyles((theme) => ({
-  fabRoot: {
+  underSearch: {
+    position: "relative",
+    backgroundColor: "#f0f0f0",
+    height: "100vh",
+    width: "423px",
+  },
+
+  visible: {
+    display: "block",
+  },
+
+  close: {
+    display: "none",
+  },
+
+  card: {
+    width: "100%",
+    marginBottom: "10px",
+  },
+
+  extendedIcon: {
+    marginRight: theme.spacing(1),
+    fill: "#2196f3",
+  },
+
+  outlined: {
+    borderLeft: "none",
+    borderRight: "none",
+  },
+
+  iconAvatar: {
+    width: "35px",
+    height: "35px",
+    backgroundColor: grey[200],
+    color: "black",
+  },
+
+  iconAvatarSmall: {
+    width: "25px",
+    height: "25px",
+    marginLeft: "5px",
+    backgroundColor: green[500],
+    color: "black",
+  },
+
+  iconAvatarLarge: {
+    padding: "3px",
+    fill: "white",
+  },
+
+  extras: {
+    padding: "8px 16px",
+  },
+
+  extrasHeader: {
+    display: "flex",
+    justifyContent: "space-between",
+    lineHeight: "20px",
+  },
+
+  fab: {
     position: "fixed",
     left: "150px",
     bottom: "15px",
@@ -38,212 +98,225 @@ const useStyles = makeStyles((theme) => ({
     "&:hover": {
       borderColor: " #DADCE0",
       backgroundColor: "#F1F3F4",
-      transitionDuration: "0ms",
+      transition: "none",
     },
   },
 
-  extendedIcon: {
-    marginRight: theme.spacing(1),
-    fill: "#2196f3",
+  weather: {
+    display: "flex",
+  },
+
+  weatherImage: {
+    backgroundSize: "24px 24px",
+    height: "24px",
+    margin: "7.5px 0 8px 10px",
+    width: "24px",
+  },
+
+  weatherLabel: {
+    fontSize: "13px",
+    color: "rgba(0, 0, 0, 0.54)",
+    padding: "10px 0",
+  },
+
+  options: {
+    display: "flex",
+    alignItems: "flex-start",
+    justifyContent: "space-around",
+    position: "relative",
+    left: "-7px",
+    paddingTop: "10px",
+  },
+
+  optionsButton: {
+    borderRadius: "8px",
+    width: "74px",
+    display: "flex",
+    flexDirection: "column",
+    padding: "10px 0px",
+    justifyContent: "center",
+    "&:hover": {
+      backgroundColor: "rgb(239, 239, 239)",
+    },
+  },
+
+  divider: {
+    margin: "0 24px",
+    borderBottom: "1px solid #e8eaed",
+  },
+
+  textSmall: {
+    fontSize: "0.75rem",
+  },
+  marginZero: {
+    margin: 0,
   },
 }));
 
 const UnderSearchBar = ({ underSearchBar, setUnderSearchBar }) => {
+  const classes = useStyles();
   const handleUnderSearchBar = () => {
     setUnderSearchBar((value) => !value);
-    // setSearchPrompt((value) => !value);
   };
-  const layersText = "Show traffic jams, expected time and places close to you";
-  const classes = useStyles();
+
+  const myPlaces = [
+    { name: "Home", iconComponent: HomeOutlinedIcon },
+    { name: "Work", iconComponent: WorkOutlinedIcon },
+  ];
+
+  const extras = [
+    {
+      name: "Grocery stores",
+      iconComponent: ShoppingCartOutlinedIcon,
+      color: "#388e3c",
+    },
+    {
+      name: "Restaurants",
+      iconComponent: RestaurantOutlinedIcon,
+      color: "#42a5f5",
+    },
+    {
+      name: "Takeaway food",
+      iconComponent: LocalCafeOutlinedIcon,
+      color: "#d32f2f",
+    },
+    { name: "Hostels", iconComponent: HotelIcon, color: "#f57c00" },
+    { name: "Show more", iconComponent: MoreHorizIcon, color: "#78909c" },
+  ];
 
   return (
     <Paper
-      className={underSearchBar ? "under-search open" : "under-search close"}
+      className={
+        underSearchBar
+          ? clsx(classes.underSearch, classes.open)
+          : clsx(classes.underSearch, classes.close)
+      }
       elevation={underSearchBar ? 12 : 4}
+      square={underSearchBar ? true : false}
     >
-      {!underSearchBar ? (
-        <div
-          onClick={handleUnderSearchBar}
-          className="under-search-compact"
+      <>
+        <Paper
+          square
+          variant="outlined"
+          className={clsx(classes.card, classes.outlined)}
+          style={{ height: "158px" }}
+        ></Paper>
+        <Paper
+          square
+          variant="outlined"
+          className={clsx(classes.card, classes.outlined)}
         >
-          <IconButton
-            className="under-search__expand-button"
-            aria-label="show extras"
-          >
-            <KeyboardArrowDownOutlinedIcon />
-          </IconButton>
-          <ListItemText
-            classes={{ primary: "under-search-compact__text" }}
-            primary={layersText}
-          />
-        </div>
-      ) : (
-        <>
-          <Paper
-            square
-            variant="outlined"
-            className="under-search__card"
-            style={{ height: "152px" }}
-          ></Paper>
-          <Paper square variant="outlined" className="under-search__card">
-            <List>
-              <ListItem
-                button
-                key={"Home"}
-                className="under-search__card__list-item"
-              >
-                <ListItemIcon style={{ minWidth: "32px" }}>
-                  <HomeOutlinedIcon fontSize="medium" className="round-icon" />
-                </ListItemIcon>
-                <div className="under-search__card__list-item__description">
-                  <ListItemText
-                    primary={"Home"}
-                    className="under-search__card__list-item__description__text"
-                  />
-                  <ListItemText
-                    secondary={"Add address"}
-                    className="under-search__card__list-item__description__text"
-                  />
-                </div>
-              </ListItem>
-              <div className="under-search__card__divider"></div>
-              <ListItem
-                button
-                key={"Work"}
-                className="under-search__card__list-item"
-              >
-                <ListItemIcon style={{ minWidth: "32px" }}>
-                  <WorkOutlinedIcon fontSize="medium" className="round-icon" />
-                </ListItemIcon>
-                <div className="under-search__card__list-item__description">
-                  <ListItemText
-                    primary={"Work"}
-                    className="under-search__card__list-item__description__text"
-                  />
-                  <ListItemText
-                    secondary={"Add address"}
-                    className="under-search__card__list-item__description__text"
-                  />
-                </div>
-              </ListItem>
-            </List>
-          </Paper>
-          <Paper square variant="outlined" className="under-search__card">
-            <List>
-              <ListItem
-                button
-                key={"Traffic"}
-                className="under-search__card__list-item"
-              >
-                <ListItemIcon style={{ minWidth: "32px" }}>
+          <List>
+            {myPlaces.map((item, index) => (
+              <>
+                <ListItem button key={item.name}>
+                  <ListItemIcon>
+                    <Avatar className={classes.iconAvatar}>
+                      <item.iconComponent fontSize="medium" />
+                    </Avatar>
+                  </ListItemIcon>
+                  <div>
+                    <ListItemText primary={item.name} style={{ margin: 0 }} />
+                    <ListItemText
+                      secondary={"Add address"}
+                      style={{ margin: 0 }}
+                    />
+                  </div>
+                </ListItem>
+                {index < myPlaces.length - 1 ? (
+                  <div className={classes.divider}></div>
+                ) : null}
+              </>
+            ))}
+          </List>
+        </Paper>
+        <Paper
+          square
+          variant="outlined"
+          className={clsx(classes.card, classes.outlined)}
+        >
+          <List>
+            <ListItem button key={"Traffic"}>
+              <ListItemIcon>
+                <Avatar
+                  className={classes.iconAvatarSmall}
+                  style={{ backgroundColor: "#4caf50" }}
+                >
                   <DriveEtaIcon
                     fontSize="small"
-                    className="round-icon"
                     style={{ backgroundColor: "#4caf50", fill: "white" }}
                   />
-                </ListItemIcon>
-                <div className="under-search__card__list-item__description">
-                  <ListItemText
-                    primary={"There aren't any traffic jams"}
-                    className="under-search__card__list-item__description__text"
-                  />
-                  <ListItemText
-                    secondary={"Common traffic"}
-                    className="under-search__card__list-item__description__text"
-                  />
-                </div>
-                <IconButton style={{ position: "absolute", right: "10px" }}>
-                  <ArrowForwardIosRoundedIcon fontSize="small" />
-                </IconButton>
-              </ListItem>
-            </List>
-          </Paper>
-          <Paper square variant="outlined" className="under-search__card">
-            <div
-              button
-              key={"Options"}
-              className="under-search__card__list-item"
-              style={{
-                display: "block",
-                padding: "8px 16px",
-              }}
-            >
-              <div className="under-search__card__list-item__header">
-                <div>
-                  <h1 style={{ fontSize: "15px" }}>London</h1>
-                </div>
-                <div className="under-search__card__list-item__header__weather">
-                  <div className="under-search__card__list-item__header__weather__degrees">
-                    15°
-                  </div>
-                  <img
-                    src="https://ssl.gstatic.com/onebox/weather/128/partly_cloudy.png"
-                    alt="Partly cloudy"
-                  />
-                </div>
+                </Avatar>
+              </ListItemIcon>
+              <div>
+                <ListItemText
+                  primary={"There aren't any traffic jams"}
+                  classes={{ root: classes.marginZero }}
+                />
+                <ListItemText
+                  secondary={"Common traffic"}
+                  classes={{
+                    secondary: classes.textSmall,
+                    root: classes.marginZero,
+                  }}
+                />
               </div>
-              <div className="under-search__card__list-item__options">
-                <ButtonBase aria-label="show extras" className="option-button">
-                  <ShoppingCartOutlinedIcon className="round-icon-large" />
-                  <ListItemText
-                    classes={{ secondary: "under-search-text-small" }}
-                    secondary={"Grocery stores"}
-                  />
-                </ButtonBase>
-                <ButtonBase aria-label="show extras" className="option-button">
-                  <RestaurantOutlinedIcon
-                    className="round-icon-large"
-                    style={{ backgroundColor: "#42a5f5" }}
-                  />
-                  <ListItemText
-                    classes={{ secondary: "under-search-text-small" }}
-                    secondary={"Restaurants"}
-                  />
-                </ButtonBase>
-                <ButtonBase aria-label="show extras" className="option-button">
-                  <LocalCafeOutlinedIcon
-                    className="round-icon-large"
-                    style={{ backgroundColor: "#d32f2f" }}
-                  />
-                  <ListItemText
-                    classes={{ secondary: "under-search-text-small" }}
-                    secondary={"Takeaway food"}
-                  />
-                </ButtonBase>
-                <ButtonBase aria-label="show extras" className="option-button">
-                  <HotelIcon
-                    className="round-icon-large"
-                    style={{ backgroundColor: "#f57c00" }}
-                  />
-                  <ListItemText
-                    classes={{ secondary: "under-search-text-small" }}
-                    secondary={"Hostels"}
-                  />
-                </ButtonBase>
-                <ButtonBase aria-label="show extras" className="option-button">
-                  <MoreHorizIcon
-                    className="round-icon-large"
-                    style={{ backgroundColor: "#78909c" }}
-                  />
-                  <ListItemText
-                    classes={{ secondary: "under-search-text-small" }}
-                    secondary={"Show more"}
-                  />
-                </ButtonBase>
+              <IconButton style={{ position: "absolute", right: "10px" }}>
+                <ArrowForwardIosRoundedIcon fontSize="small" />
+              </IconButton>
+            </ListItem>
+          </List>
+        </Paper>
+        <Paper
+          square
+          variant="outlined"
+          className={clsx(classes.card, classes.outlined)}
+        >
+          <div button key={"Options"} className={classes.extras}>
+            <div className={classes.extrasHeader}>
+              <div>
+                <h1 style={{ fontSize: "15px" }}>London</h1>
+              </div>
+              <div className={classes.weather}>
+                <div className={classes.weatherLabel}>15°</div>
+                <img
+                  className={classes.weatherImage}
+                  src="https://ssl.gstatic.com/onebox/weather/128/partly_cloudy.png"
+                  alt="Partly cloudy"
+                />
               </div>
             </div>
-          </Paper>
-          <Fab
-            size="small"
-            variant="extended"
-            className={classes.fabRoot}
-            onClick={handleUnderSearchBar}
-          >
-            <ExpandLessIcon className={classes.extendedIcon} />
-            <div style={{ marginRight: "8px", color: "#3C4043" }}>Hide all</div>
-          </Fab>
-        </>
-      )}
+            <div className={classes.options}>
+              {extras.map((item) => (
+                <ButtonBase
+                  aria-label="show extras"
+                  className={classes.optionsButton}
+                >
+                  <Avatar
+                    className={classes.iconAvatarLarge}
+                    style={{ backgroundColor: item.color, marginBottom: "10px" }}
+                  >
+                    <item.iconComponent />
+                  </Avatar>
+                  <ListItemText
+                    classes={{ secondary: classes.textSmall }}
+                    secondary={item.name}
+                  />
+                </ButtonBase>
+              ))}
+            </div>
+          </div>
+        </Paper>
+        <Fab
+          size="small"
+          variant="extended"
+          className={classes.fab}
+          onClick={handleUnderSearchBar}
+        >
+          <ExpandLessIcon className={classes.extendedIcon} />
+          <div style={{ marginRight: "8px", color: "#3C4043" }}>Hide all</div>
+        </Fab>
+      </>
     </Paper>
   );
 };
