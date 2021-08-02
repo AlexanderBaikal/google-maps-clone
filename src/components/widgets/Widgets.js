@@ -1,6 +1,7 @@
 import { makeStyles } from "@material-ui/core";
 import clsx from "clsx";
 import { useState } from "react";
+import BottomGallery from "../map/bottomGallery/BottomGallery";
 import UnderSearchBar from "../sidebars/underSearchBar/UnderSearchBar";
 import HorizontalWidget from "./horizontalWidget/HorizontalWidget";
 import MinimapWidget from "./minimapWidget/MinimapWidget";
@@ -11,12 +12,12 @@ import VerticalWidget from "./verticalWidget/VerticalWidget";
 const useStyles = makeStyles({
   bottomRightWidgets: {
     position: "absolute",
-    right: "20px",
-    bottom: "25px",
+    bottom: 0,
+    left: 0,
     display: "flex",
     flexDirection: "column",
-    alignItems: "flex-end",
     zIndex: 501,
+    width: "100%",
   },
 
   bottomLeftWidgets: {
@@ -24,10 +25,14 @@ const useStyles = makeStyles({
     left: "20px",
     position: "absolute",
     zIndex: 501,
-    transition: "left 200ms cubic-bezier(0, 0, 0.2, 1)",
+    // transition: "left 200ms cubic-bezier(0, 0, 0.2, 1)",
   },
+
   shift: {
-    left: "440px",
+    left: "423px",
+    position: "absolute",
+    bottom: 0,
+    width: "calc(100vw - 423px)"
   },
 
   topLeftWidgets: {
@@ -43,28 +48,54 @@ const useStyles = makeStyles({
     position: "absolute",
     zIndex: 501,
   },
+
+  tools: {
+    position: "relative",
+    right: "20px",
+
+    display: "flex",
+    flexDirection: "column",
+    alignItems: "flex-end",
+  },
+
+  bottomWidgets: {
+  },
 });
 
 const Widgets = ({ menuSidebar, handleMenuSidebar, setZoomDelta }) => {
   const [searchPrompt, setSearchPrompt] = useState(false);
   const [underSearchBar, setUnderSearchBar] = useState(false);
+  const [bottomGallery, setBottomGallery] = useState(false);
   const classes = useStyles();
 
   return (
     <>
-      <div className={classes.bottomRightWidgets}>
-        <VerticalWidget setZoomDelta={setZoomDelta} />
-        <HorizontalWidget className="horizontal-widget" />
-      </div>
       <div
         className={
           underSearchBar
-            ? clsx(classes.bottomLeftWidgets, classes.shift)
-            : classes.bottomLeftWidgets
+            ? clsx(classes.bottomWidgets, classes.shift)
+            : classes.bottomWidgets
         }
       >
-        <MinimapWidget />
+        <div className={classes.bottomRightWidgets}>
+          <div
+            className={classes.tools}
+            style={{ bottom: bottomGallery ? 0 : "25px" }}
+          >
+            <VerticalWidget setZoomDelta={setZoomDelta} />
+            <HorizontalWidget
+              className="horizontal-widget"
+              bottomGallery={bottomGallery}
+              setBottomGallery={setBottomGallery}
+            />
+          </div>
+          {bottomGallery ? <BottomGallery /> : null}
+        </div>
+        <div className={classes.bottomLeftWidgets}>
+          <MinimapWidget bottomGallery={bottomGallery} />
+        </div>
       </div>
+
       <div className={classes.topLeftWidgets}>
         <SearchBar
           menuSidebar={menuSidebar}

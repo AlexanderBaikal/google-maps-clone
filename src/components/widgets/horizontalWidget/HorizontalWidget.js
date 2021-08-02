@@ -1,24 +1,17 @@
-import { Button, makeStyles } from "@material-ui/core";
+import { Button, ButtonGroup, makeStyles } from "@material-ui/core";
 import DoubleArrowRoundedIcon from "@material-ui/icons/DoubleArrowRounded";
 import clsx from "clsx";
+import { useState } from "react";
+import BottomGallery from "../../map/bottomGallery/BottomGallery";
 
 const useStyles = makeStyles({
   horizontalWidget: {
     marginTop: "5px",
-    width: "145px",
     height: "30px",
-    display: "flex",
   },
 
-  streetView: {
-    display: "flex",
-  },
-
-  streetViewButton: {
-    borderRadius: "8px 0 0 8px",
-    maxWidth: "31px",
-    minWidth: "31px",
-    padding: "3px",
+  buttonRoot: {
+    padding: 0,
   },
 
   streetViewIcon: {
@@ -26,7 +19,7 @@ const useStyles = makeStyles({
     backgroundPosition: "0px -31px",
     backgroundRepeat: "no-repeat",
     height: "30px",
-    width: "31px",
+    width: "27px",
     backgroundImage:
       "url(//maps.gstatic.com/tactile/pegman_v3/default/runway-2x.png);",
   },
@@ -38,12 +31,7 @@ const useStyles = makeStyles({
     },
   },
 
-  gallery: {
-    display: "flex",
-  },
-
   galleryButton: {
-    borderRadius: "0 8px 8px 0",
     padding: 0,
   },
 
@@ -58,7 +46,6 @@ const useStyles = makeStyles({
     textAlign: "left",
     backgroundRepeat: "no-repeat",
     fontSize: "12px",
-    fontWeight: "400",
     backgroundPosition: "8px 8px",
     color: "transparent",
     backgroundImage:
@@ -66,40 +53,69 @@ const useStyles = makeStyles({
     backgroundSize: "60px 15px",
   },
 
+  galleryLabelExtended: {
+    textTransform: "none",
+    marginLeft: "12px",
+    marginRight: "2px",
+    fontSize: "0.8rem",
+    fontWeight: 400,
+    textAlign: "end",
+    color: "#222",
+  },
+
   expandIcon: {
-    marginRight: "7.5px",
-    marginLeft: "7.5px",
+    padding: "6px",
     fill: "rgb(100, 100, 100)",
   },
 });
 
-const HorizontalWidget = () => {
+const HorizontalWidget = ({ bottomGallery, setBottomGallery }) => {
   const classes = useStyles();
+
+  const handleBottomGallery = () => {
+    setBottomGallery((value) => !value);
+  };
+
   return (
-    <div className={classes.horizontalWidget}>
-      <div className={classes.streetView}>
-        <Button
-          variant="contained"
-          className={clsx(classes.streetViewButton, classes.buttonWhite)}
+    <ButtonGroup
+      className={classes.horizontalWidget}
+      variant="contained"
+      aria-label="contained primary button group"
+    >
+      <Button
+        variant="contained"
+        disableElevation
+        classes={{ root: classes.buttonRoot }}
+        className={clsx(classes.streetViewButton, classes.buttonWhite)}
+        style={{
+          borderRadius: bottomGallery ? "8px 0 0 0" : "8px 0 0 8px",
+          borderRight: "1px solid #e6e6e6",
+        }}
+      >
+        <div className={classes.streetViewIcon}></div>
+      </Button>
+      <Button
+        variant="contained"
+        disableElevation
+        onClick={handleBottomGallery}
+        className={clsx(classes.galleryButton, classes.buttonWhite)}
+        style={{ borderRadius: bottomGallery ? "0 8px 0 0" : "0 8px 8px 0" }}
+      >
+        <label
+          className={
+            bottomGallery ? classes.galleryLabelExtended : classes.galleryLabel
+          }
         >
-          <div className={classes.streetViewIcon}></div>
-        </Button>
-      </div>
-      <div className={classes.gallery}>
-        <Button
-          variant="contained"
-          className={clsx(classes.galleryButton, classes.buttonWhite)}
-        >
-          <label className={classes.galleryLabel}></label>
-          <DoubleArrowRoundedIcon
-            fontSize="small"
-            className={classes.expandIcon}
-            transform="rotate(-90)"
-            fill=""
-          />
-        </Button>
-      </div>
-    </div>
+          {bottomGallery ? "Images" : ""}
+        </label>
+        <DoubleArrowRoundedIcon
+          fontSize="small"
+          className={classes.expandIcon}
+          transform={bottomGallery ? "rotate(90)" : "rotate(-90)"}
+          fill=""
+        />
+      </Button>
+    </ButtonGroup>
   );
 };
 

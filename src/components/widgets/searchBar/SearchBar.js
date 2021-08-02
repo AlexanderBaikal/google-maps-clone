@@ -16,6 +16,9 @@ import {
 import ScheduleOutlinedIcon from "@material-ui/icons/ScheduleOutlined";
 import { useRef } from "react";
 import clsx from "clsx";
+import Extras from "../../inlines/Extras";
+import onClickOutside from "react-onclickoutside";
+import History from "../../inlines/History";
 
 const useStyles = makeStyles((theme) => {
   return {
@@ -24,10 +27,9 @@ const useStyles = makeStyles((theme) => {
       zIndex: 2,
       left: "7px",
       top: "7px",
-      width: "408px",
     },
     paper: {
-      width: "400px",
+      width: "395px",
       padding: "0 4px",
       display: "flex",
       alignItems: "center",
@@ -70,6 +72,10 @@ const useStyles = makeStyles((theme) => {
       borderRadius: "0 0 8px 8px",
       zIndex: -1,
     },
+    underHistory: {
+      position: "relative",
+      marginTop: "10px",
+    },
     prompt: {
       color: theme.palette.grey[500],
       position: "relative",
@@ -92,6 +98,25 @@ const useStyles = makeStyles((theme) => {
       marginRight: "20px",
       color: "inherit",
     },
+    underHistoryPrompt: {
+      color: theme.palette.grey[500],
+      position: "relative",
+      cursor: "pointer",
+      display: "flex",
+      alignItems: "center",
+      "&:hover": {
+        color: "black",
+      },
+    },
+    underHistoryPromptText: {
+      textAlign: "center",
+      width: "300px",
+      color: "inherit",
+    },
+    dividerHorizontal: {
+      height: "0px",
+      borderTop: "1px solid #E8EAED",
+    },
   };
 });
 
@@ -103,16 +128,22 @@ const SearchBar = ({
   setUnderSearchBar,
 }) => {
   const handleUnderSearchBar = () => {
+    console.log(underSearchBar);
     setUnderSearchBar((value) => !value);
+    console.log(underSearchBar);
     if (!underSearchBar) {
       inputRef.current.focus();
     }
   };
 
+  SearchBar.handleClickOutside = () => {
+    setSearchPrompt(false);
+  };
+
   const promptText = "Show traffic jams, expected time and places close to you";
   const inputRef = useRef(null);
 
-  const historyItems = ["United Kingdom", "Big Ben"];
+
   const classes = useStyles();
 
   return (
@@ -127,7 +158,6 @@ const SearchBar = ({
         }
         elevation={searchPrompt ? 1 : 2}
         onFocus={() => setSearchPrompt(true)}
-        onBlur={() => setSearchPrompt(false)}
       >
         <IconButton
           className={classes.iconButton}
@@ -149,7 +179,7 @@ const SearchBar = ({
         >
           <SearchIcon />
         </IconButton>
-        <Divider className="divider" orientation="vertical" />
+        <Divider className={classes.divider} orientation="vertical" />
         <IconButton
           color="primary"
           classes={{ colorPrimary: classes.colorInfo }}
@@ -160,21 +190,37 @@ const SearchBar = ({
       </Paper>
 
       {searchPrompt || underSearchBar ? (
-        <Paper elevation={!searchPrompt ? 0 : 2} className={classes.history}>
-          <List>
-            {historyItems.map((item) => (
-              <ListItem button key={item} className={classes.listItem}>
-                <ListItemIcon className={classes.listItemIcon}>
-                  <ScheduleOutlinedIcon fontSize="small" />
-                </ListItemIcon>
+        <>
+          {searchPrompt ? (
+            <Paper elevation={2} className={classes.history}>
+              <History />
+            </Paper>
+          ) : null}
+          {!underSearchBar ? (
+            <Paper className={classes.underHistory} elevation={2}>
+              <Extras countItems={4} />
+              <div className={classes.dividerHorizontal} />
+              <div
+                className={classes.underHistoryPrompt}
+                onClick={handleUnderSearchBar}
+              >
+                <IconButton
+                  className={classes.promptButton}
+                  style={{ marginLeft: "4px" }}
+                  aria-label="show extras"
+                >
+                  <KeyboardArrowDownOutlinedIcon />
+                </IconButton>
                 <ListItemText
-                  primary={item}
-                  classes={{ primary: classes.listItemText }}
+                  secondaryTypographyProps={{
+                    className: classes.underHistoryPromptText,
+                  }}
+                  secondary={"Show similar"}
                 />
-              </ListItem>
-            ))}
-          </List>
-        </Paper>
+              </div>
+            </Paper>
+          ) : null}
+        </>
       ) : (
         <Paper onClick={handleUnderSearchBar} className={classes.prompt}>
           <IconButton className={classes.promptButton} aria-label="show extras">
@@ -190,4 +236,8 @@ const SearchBar = ({
   );
 };
 
-export default SearchBar;
+const clickOutsideConfig = {
+  handleClickOutside: () => SearchBar.handleClickOutside,
+};
+
+export default onClickOutside(SearchBar, clickOutsideConfig);
