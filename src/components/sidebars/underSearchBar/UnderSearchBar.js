@@ -3,11 +3,13 @@ import { Paper } from "@material-ui/core";
 import clsx from "clsx";
 import { useState } from "react";
 import MainUnderSearchBar from "./MainUnderSearchBar";
+import PlaceDescriptionBar from "./PlaceDescriptionBar";
+import PlacesUnderSearchBar from "./PlacesUnderSearchBar";
 
 const useStyles = makeStyles((theme) => ({
   underSearch: {
     position: "relative",
-    backgroundColor: "#f0f0f0",
+
     height: "100vh",
     width: "423px",
     overflow: "auto",
@@ -22,7 +24,12 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const UnderSearchBar = ({ underSearchBar, setUnderSearchBar }) => {
+const UnderSearchBar = ({
+  underSearchBar,
+  setUnderSearchBar,
+  placesBar,
+  setPlacesBar,
+}) => {
   const classes = useStyles();
 
   return (
@@ -34,11 +41,17 @@ const UnderSearchBar = ({ underSearchBar, setUnderSearchBar }) => {
       }
       elevation={underSearchBar ? 12 : 4}
       square={underSearchBar ? true : false}
+      style={{ backgroundColor: !placesBar ? "white" : "#f0f0f0" }}
     >
-      <MainUnderSearchBar
-        underSearchBar={underSearchBar}
-        setUnderSearchBar={setUnderSearchBar}
-      />
+      {/* {placesBar ? (
+        <PlacesUnderSearchBar />
+      ) : (
+        <MainUnderSearchBar
+          setUnderSearchBar={setUnderSearchBar}
+          setPlacesBar={setPlacesBar}
+        />
+      )} */}
+      <PlaceDescriptionBar />
     </Paper>
   );
 };

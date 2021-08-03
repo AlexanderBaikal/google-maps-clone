@@ -7,18 +7,15 @@ import {
   Divider,
   InputBase,
   Paper,
-  List,
-  ListItem,
-  ListItemIcon,
   ListItemText,
   makeStyles,
+  ClickAwayListener,
 } from "@material-ui/core";
-import ScheduleOutlinedIcon from "@material-ui/icons/ScheduleOutlined";
 import { useRef } from "react";
 import clsx from "clsx";
 import Extras from "../../inlines/Extras";
-import onClickOutside from "react-onclickoutside";
 import History from "../../inlines/History";
+import CloseIcon from "@material-ui/icons/Close";
 
 const useStyles = makeStyles((theme) => {
   return {
@@ -126,118 +123,123 @@ const SearchBar = ({
   setSearchPrompt,
   underSearchBar,
   setUnderSearchBar,
+  placesBar,
+  setPlacesBar,
 }) => {
   const handleUnderSearchBar = () => {
-    console.log(underSearchBar);
     setUnderSearchBar((value) => !value);
-    console.log(underSearchBar);
     if (!underSearchBar) {
       inputRef.current.focus();
     }
   };
 
-  SearchBar.handleClickOutside = () => {
+  const handleClickOutside = () => {
     setSearchPrompt(false);
+  };
+
+  const handlePlacesBar = () => {
+    setPlacesBar((value) => !value);
   };
 
   const promptText = "Show traffic jams, expected time and places close to you";
   const inputRef = useRef(null);
 
-
   const classes = useStyles();
 
   return (
-    <div className={classes.searchbar}>
-      <Paper
-        component="form"
-        variant={underSearchBar ? "outlined" : "elevation"}
-        className={
-          searchPrompt
-            ? clsx(classes.paper, classes.bottomRound)
-            : classes.paper
-        }
-        elevation={searchPrompt ? 1 : 2}
-        onFocus={() => setSearchPrompt(true)}
-      >
-        <IconButton
-          className={classes.iconButton}
-          aria-label="menu"
-          onClick={handleMenuSidebar}
+    <ClickAwayListener onClickAway={handleClickOutside}>
+      <div className={classes.searchbar}>
+        <Paper
+          component="form"
+          variant={underSearchBar ? "outlined" : "elevation"}
+          className={
+            searchPrompt
+              ? clsx(classes.paper, classes.bottomRound)
+              : classes.paper
+          }
+          elevation={searchPrompt ? 1 : 2}
+          onFocus={() => setSearchPrompt(true)}
         >
-          <MenuIcon />
-        </IconButton>
-        <InputBase
-          className={classes.input}
-          placeholder="Search Google Maps"
-          inputRef={inputRef}
-        />
-        <IconButton
-          type="submit"
-          color="secondary"
-          classes={{ colorSecondary: classes.colorSecondary }}
-          aria-label="search"
-        >
-          <SearchIcon />
-        </IconButton>
-        <Divider className={classes.divider} orientation="vertical" />
-        <IconButton
-          color="primary"
-          classes={{ colorPrimary: classes.colorInfo }}
-          aria-label="directions"
-        >
-          <DirectionsIcon />
-        </IconButton>
-      </Paper>
-
-      {searchPrompt || underSearchBar ? (
-        <>
-          {searchPrompt ? (
-            <Paper elevation={2} className={classes.history}>
-              <History />
-            </Paper>
-          ) : null}
-          {!underSearchBar ? (
-            <Paper className={classes.underHistory} elevation={2}>
-              <Extras countItems={4} />
-              <div className={classes.dividerHorizontal} />
-              <div
-                className={classes.underHistoryPrompt}
-                onClick={handleUnderSearchBar}
-              >
-                <IconButton
-                  className={classes.promptButton}
-                  style={{ marginLeft: "4px" }}
-                  aria-label="show extras"
-                >
-                  <KeyboardArrowDownOutlinedIcon />
-                </IconButton>
-                <ListItemText
-                  secondaryTypographyProps={{
-                    className: classes.underHistoryPromptText,
-                  }}
-                  secondary={"Show similar"}
-                />
-              </div>
-            </Paper>
-          ) : null}
-        </>
-      ) : (
-        <Paper onClick={handleUnderSearchBar} className={classes.prompt}>
-          <IconButton className={classes.promptButton} aria-label="show extras">
-            <KeyboardArrowDownOutlinedIcon />
+          <IconButton
+            className={classes.iconButton}
+            aria-label="menu"
+            onClick={handleMenuSidebar}
+          >
+            <MenuIcon />
           </IconButton>
-          <ListItemText
-            secondaryTypographyProps={{ className: classes.promptText }}
-            secondary={promptText}
+          <InputBase
+            className={classes.input}
+            placeholder="Search Google Maps"
+            inputRef={inputRef}
           />
+          <IconButton
+            type="submit"
+            color="secondary"
+            classes={{ colorSecondary: classes.colorSecondary }}
+            aria-label="search"
+          >
+            <SearchIcon />
+          </IconButton>
+          <Divider className={classes.divider} orientation="vertical" />
+          <IconButton
+            color="primary"
+            classes={{ colorPrimary: classes.colorInfo }}
+            aria-label="directions"
+            onClick={placesBar ? handlePlacesBar : () => {}}
+          >
+            {placesBar ? <CloseIcon /> : <DirectionsIcon />}
+          </IconButton>
         </Paper>
-      )}
-    </div>
+
+        {searchPrompt || underSearchBar ? (
+          <>
+            {searchPrompt ? (
+              <Paper elevation={2} className={classes.history}>
+                <History />
+              </Paper>
+            ) : null}
+            {!underSearchBar ? (
+              <Paper className={classes.underHistory} elevation={2}>
+                <Extras countItems={4} />
+                <div className={classes.dividerHorizontal} />
+                <div
+                  className={classes.underHistoryPrompt}
+                  onClick={handleUnderSearchBar}
+                >
+                  <IconButton
+                    className={classes.promptButton}
+                    style={{ marginLeft: "4px" }}
+                    aria-label="show extras"
+                  >
+                    <KeyboardArrowDownOutlinedIcon />
+                  </IconButton>
+                  <ListItemText
+                    secondaryTypographyProps={{
+                      className: classes.underHistoryPromptText,
+                    }}
+                    secondary={"Show similar"}
+                  />
+                </div>
+              </Paper>
+            ) : null}
+          </>
+        ) : (
+          <Paper onClick={handleUnderSearchBar} className={classes.prompt}>
+            <IconButton
+              className={classes.promptButton}
+              aria-label="show extras"
+            >
+              <KeyboardArrowDownOutlinedIcon />
+            </IconButton>
+            <ListItemText
+              secondaryTypographyProps={{ className: classes.promptText }}
+              secondary={promptText}
+            />
+          </Paper>
+        )}
+      </div>
+    </ClickAwayListener>
   );
 };
 
-const clickOutsideConfig = {
-  handleClickOutside: () => SearchBar.handleClickOutside,
-};
-
-export default onClickOutside(SearchBar, clickOutsideConfig);
+export default SearchBar;

@@ -1,6 +1,32 @@
 import { createTheme } from "@material-ui/core";
 
-const theme = createTheme({});
+const theme = createTheme({
+  palette: {
+    primary: {
+      main: "#2196f3",
+    },
+  },
+  typography: {
+    h1: {
+      fontFamily: "Google Sans,Roboto,Arial,sans-serif",
+      lineHeight: "1.75rem",
+      fontSize: "1.375rem",
+      fontWeight: 400,
+    },
+    h2: {
+      fontSize: "13px",
+      fontWeight: 400,
+    },
+    subtitle1: {
+      fontFamily: "Google Sans,Roboto,Arial,sans-serif",
+      fontWeight: 500,
+      lineHeight: "1.5rem",
+      fontSize: "1rem",
+      letterSpacing: ".00625em",
+    },
+  },
+});
+
 theme.overrides = {
   MuiPaper: {
     rounded: {
@@ -9,6 +35,9 @@ theme.overrides = {
     elevation2: {
       boxShadow: "0 2px 4px rgb(0 0 0 / 20%), 0 -1px 0px rgb(0 0 0 / 2%)",
     },
+  },
+  MuiButton: {
+    root: { textTransform: "none" },
   },
 };
 

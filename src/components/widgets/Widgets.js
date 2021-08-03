@@ -32,7 +32,7 @@ const useStyles = makeStyles({
     left: "423px",
     position: "absolute",
     bottom: 0,
-    width: "calc(100vw - 423px)"
+    width: "calc(100vw - 423px)",
   },
 
   topLeftWidgets: {
@@ -58,8 +58,7 @@ const useStyles = makeStyles({
     alignItems: "flex-end",
   },
 
-  bottomWidgets: {
-  },
+  bottomWidgets: {},
 });
 
 const Widgets = ({ menuSidebar, handleMenuSidebar, setZoomDelta }) => {
@@ -67,6 +66,7 @@ const Widgets = ({ menuSidebar, handleMenuSidebar, setZoomDelta }) => {
   const [underSearchBar, setUnderSearchBar] = useState(false);
   const [bottomGallery, setBottomGallery] = useState(false);
   const classes = useStyles();
+  const [placesBar, setPlacesBar] = useState(false);
 
   return (
     <>
@@ -98,18 +98,19 @@ const Widgets = ({ menuSidebar, handleMenuSidebar, setZoomDelta }) => {
 
       <div className={classes.topLeftWidgets}>
         <SearchBar
-          menuSidebar={menuSidebar}
           handleMenuSidebar={handleMenuSidebar}
           searchPrompt={searchPrompt}
           setSearchPrompt={setSearchPrompt}
           underSearchBar={underSearchBar}
           setUnderSearchBar={setUnderSearchBar}
+          placesBar={placesBar}
+          setPlacesBar={setPlacesBar}
         />
         <UnderSearchBar
-          searchPrompt={searchPrompt}
-          setSearchPrompt={setSearchPrompt}
           underSearchBar={underSearchBar}
           setUnderSearchBar={setUnderSearchBar}
+          placesBar={placesBar}
+          setPlacesBar={setPlacesBar}
         />
       </div>
       <div className={classes.topRightWidgets}>

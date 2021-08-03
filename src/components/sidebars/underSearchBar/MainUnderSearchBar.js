@@ -108,7 +108,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const MainUnderSearchBar = ({ underSearchBar, setUnderSearchBar }) => {
+const MainUnderSearchBar = ({ setUnderSearchBar, setPlacesBar }) => {
   const classes = useStyles();
   const handleUnderSearchBar = () => {
     setUnderSearchBar((value) => !value);
@@ -215,7 +215,11 @@ const MainUnderSearchBar = ({ underSearchBar, setUnderSearchBar }) => {
         className={clsx(classes.card, classes.outlined)}
         style={{ margin: shownMore ? 0 : "inherit" }}
       >
-        <Extras shownMore={shownMore} setShownMore={setShownMore} />
+        <Extras
+          shownMore={shownMore}
+          setShownMore={setShownMore}
+          setPlacesBar={setPlacesBar}
+        />
       </Paper>
       {shownMore ? (
         <Paper

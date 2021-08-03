@@ -77,35 +77,39 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const Extras = ({ countItems = 5, shownMore, setShownMore }) => {
+const Extras = ({ countItems = 5, shownMore, setShownMore, setPlacesBar }) => {
   const classes = useStyles();
 
   const handleShownMore = () => setShownMore((value) => !value);
+
+  const handlePlacesBar = () => {
+    setPlacesBar((value) => !value);
+  };
 
   const extras = [
     {
       name: "Grocery stores",
       iconComponent: ShoppingCartOutlinedIcon,
       color: "#388e3c",
-      onClick: () => {},
+      onClick: handlePlacesBar,
     },
     {
       name: "Restaurants",
       iconComponent: RestaurantOutlinedIcon,
       color: "#42a5f5",
-      onClick: () => {},
+      onClick: handlePlacesBar,
     },
     {
       name: "Takeaway food",
       iconComponent: LocalCafeOutlinedIcon,
       color: "#d32f2f",
-      onClick: () => {},
+      onClick: handlePlacesBar,
     },
     {
       name: "Hostels",
       iconComponent: HotelIcon,
       color: "#f57c00",
-      onClick: () => {},
+      onClick: handlePlacesBar,
     },
     {
       name: "Show more",

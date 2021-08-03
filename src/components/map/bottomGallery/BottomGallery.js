@@ -45,6 +45,7 @@ const useStyles = makeStyles((theme) => {
     },
     imageListItem: {
       borderRadius: "8px",
+      cursor: "pointer"
     },
 
     iconButton: {

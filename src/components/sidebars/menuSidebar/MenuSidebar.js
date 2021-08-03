@@ -32,7 +32,7 @@ const useStyles = makeStyles((theme) => {
     },
     close: {
       transition: "transform 0.2s ease-in",
-      transform: "translateX(-100%)",
+      transform: "translateX(-115%)",
     },
     header: {
       display: "flex",
