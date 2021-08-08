@@ -1,238 +1,183 @@
 //
 
 import {
-  Avatar,
-  Box,
-  ButtonBase,
   Divider,
-  Fab,
-  IconButton,
-  ImageList,
-  ImageListItem,
-  ImageListItemBar,
-  Link,
-  ListItemIcon,
-  ListItemText,
+  Input,
   makeStyles,
   Typography,
+  Button,
 } from "@material-ui/core";
-import Rating from "@material-ui/lab/Rating";
-import DirectionsIcon from "@material-ui/icons/Directions";
-import BookmarkBorderOutlinedIcon from "@material-ui/icons/BookmarkBorderOutlined";
-import LocationOnOutlinedIcon from "@material-ui/icons/LocationOnOutlined";
-import MobileScreenShareOutlinedIcon from "@material-ui/icons/MobileScreenShareOutlined";
-import ShareOutlinedIcon from "@material-ui/icons/ShareOutlined";
 
+import SearchOutlinedIcon from "@material-ui/icons/SearchOutlined";
 import CreateOutlinedIcon from "@material-ui/icons/CreateOutlined";
+import SortOutlinedIcon from "@material-ui/icons/SortOutlined";
+import RateReviewOutlinedIcon from "@material-ui/icons/RateReviewOutlined";
 
-import TimelineOutlinedIcon from "@material-ui/icons/TimelineOutlined";
-import QueryBuilderOutlinedIcon from "@material-ui/icons/QueryBuilderOutlined";
-import PublicIcon from "@material-ui/icons/Public";
-import CallIcon from "@material-ui/icons/Call";
-import VerifiedUserOutlinedIcon from "@material-ui/icons/VerifiedUserOutlined";
-import LabelOutlinedIcon from "@material-ui/icons/LabelOutlined";
-import { List } from "@material-ui/core";
-import { ListItem } from "@material-ui/core";
 import clsx from "clsx";
-import { Button } from "@material-ui/core";
-import { Container } from "@material-ui/core";
-import ArrowBackIosOutlinedIcon from "@material-ui/icons/ArrowBackIosOutlined";
-import ArrowForwardIosOutlinedIcon from "@material-ui/icons/ArrowForwardIosOutlined";
 import { useState } from "react";
-import CameraAltOutlinedIcon from '@material-ui/icons/CameraAltOutlined';
+import CameraAltOutlinedIcon from "@material-ui/icons/CameraAltOutlined";
+import PlacesList from "../../inlines/PlacesList";
+import Comments from "../../inlines/Comments";
+import Chips from "../../inlines/Chips";
+import RatingReview from "../../inlines/RatingReview";
+import PhotoCards from "../../inlines/PhotoCards";
+import ListInfo from "../../inlines/ListInfo";
+import ActionButtons from "../../inlines/ActionButtons";
+import BasicInfo from "../../inlines/BasicInfo";
+import HeaderBar from "../../inlines/HeaderBar";
+import BottomButton from "../../inlines/BottomButton";
+import EditModal from "../../modals/EditModal";
+import UploadPhotoModal from "../../modals/UploadPhotoModal";
+import CompletePhotoModal from "../../modals/CompletePhotoModal";
 
 const useStyles = makeStyles((theme) => ({
   root: {},
   topImage: { overflow: "hidden", width: "100%" },
-  rating: {
-    display: "flex",
-    alignItems: "center",
-  },
-  basicInfo: {
-    padding: "15px 25px",
-  },
-  actionButtons: {
-    display: "flex",
-    justifyContent: "space-evenly",
-    padding: "10px 30px 0 26px",
-    alignItems: "flex-start",
-  },
-  optionsButton: {
-    borderRadius: "8px",
-    width: "74px",
-    display: "flex",
-    flexDirection: "column",
-    padding: "10px 0px",
-    justifyContent: "center",
-  },
-  textSmall: {
-    fontSize: "0.75rem",
-  },
-  avatar: {
-    backgroundColor: theme.palette.primary.main,
-    border: "1px solid",
-    borderColor: theme.palette.primary.main,
-    padding: "7px",
-  },
-  avatarFilled: {
-    backgroundColor: theme.palette.primary.main,
-    fill: "white",
-    "&:hover": {
-      backgroundColor: theme.palette.primary.light,
-    },
-  },
-  avatarOutlined: {
-    backgroundColor: "transparent",
-    fill: theme.palette.primary.main,
-  },
 
-  marginZero: {
-    margin: 0,
-  },
-  listItemIcon: {
-    minWidth: "48px",
-  },
-  listItemGutters: {
-    paddingRight: "24px",
-    paddingLeft: "24px",
-  },
-  actionDiv: {
-    display: "flex",
-    justifyContent: "center",
-  },
   listInfo: {
     padding: "6px 0",
   },
-  buttonRounded: {
-    borderRadius: "100px",
-  },
-  bottomButton: {
-    display: "flex",
-    justifyContent: "center",
-    marginBottom: "12px",
-  },
+
   photos: {
     // padding: "12px",
   },
-  subheader: {
-    padding: "16px 24px",
-  },
-  photoCards: {
-    marginBottom: "15px",
-    position: "relative",
-  },
-  imageList: {
-    flexWrap: "nowrap",
-    padding: "0 20px",
-    overflowX: "hidden",
-    transition: "0.4s margin-left ease 0s",
-  },
-  icon: {
-    fill: "white",
-  },
-  titleBar: {
-    background:
-      "linear-gradient(to top, rgba(0,0,0,0.9) 0%, rgba(0,0,0,0.3) 70%, rgba(0,0,0,0) 100%)",
-    height: "50px",
-  },
-  title: {
-    fontSize: "0.7rem",
-  },
-  imageListItem: {
+
+  directoryInput: {
+    border: "1px solid",
+    boxSizing: "border-box",
     borderRadius: "8px",
-    cursor: "pointer",
-    boxShadow: "0 1px 6px rgb(60 64 67 / 30%)",
-  },
-  fabForward: {
-    right: "10px",
-  },
-  fabBackward: {
-    left: "10px",
-  },
-  fab: {
-    backgroundColor: "white",
-    position: "absolute",
-    top: "calc(50% - 20px)",
-  },
-  fabContainer: {
-    height: "100%",
-    width: "100%",
-    position: "absolute",
-    top: 0,
-    opacity: 0,
-    "&:hover": {
-      opacity: 1,
+    borderColor: "rgba(0, 0, 0, 0.23)",
+    padding: "0 16px",
+    marginBottom: "8px",
+    height: "36px",
+
+    "&:focus": {
+      border: "2px solid",
+      padding: "0 15px",
+      borderColor: theme.palette.primary.main,
     },
   },
-  shiftEnd: {
-    marginLeft: "-220px!important", // coz there is a bug with styles
+
+  directoryFilters: {
+    padding: "0 5%",
+  },
+
+  directoryInputWrapper: {
+    width: "97%",
+    margin: "0 1.5%",
+  },
+
+  iconButton: {
+    border: "1px solid blue",
+    fontSize: "1rem",
+  },
+  subheaderButton: {
+    borderRadius: "100px",
+    padding: "5px 15px",
+    minWidth: "35px",
   },
 }));
 
-const itemData = [
+const places = [
   {
-    img: "https://material-ui.com/static/images/image-list/breakfast.jpg",
-    title: "Summer breakfast",
-    author: "author",
+    name: "24/7 store",
+    type: "Grocery store",
+    address: "Central st., 99",
+    openInfo: "Open until 22:00",
+    extraInfo: "In-store shopping",
+    photoUrl:
+      "https://maps.gstatic.com/tactile/pane/result-no-thumbnail-2x.png",
+    rating: {
+      value: 3.5,
+      count: 163,
+    },
   },
   {
-    img: "https://material-ui.com/static/images/image-list/burgers.jpg",
-    title: "Hamburger",
-    author: "author",
+    name: "24/7 store",
+    type: "Grocery store",
+    address: "Central st., 99",
+    openInfo: "Open until 22:00",
+    extraInfo: "In-store shopping",
+    photoUrl:
+      "https://maps.gstatic.com/tactile/pane/result-no-thumbnail-2x.png",
+    rating: {
+      value: 3.5,
+      count: 163,
+    },
   },
   {
-    img: "https://material-ui.com/static/images/image-list/camera.jpg",
-    title: "Something",
-    author: "author",
+    name: "24/7 store",
+    type: "Grocery store",
+    address: "Central st., 99",
+    openInfo: "Open until 22:00",
+    extraInfo: "In-store shopping",
+    photoUrl:
+      "https://maps.gstatic.com/tactile/pane/result-no-thumbnail-2x.png",
+    rating: {
+      value: 3.5,
+      count: 163,
+    },
   },
   {
-    img: "https://material-ui.com/static/images/image-list/morning.jpg",
-    title: "Morning coffee",
-    author: "author",
+    name: "24/7 store",
+    type: "Grocery store",
+    address: "Central st., 99",
+    openInfo: "Open until 22:00",
+    extraInfo: "In-store shopping",
+    photoUrl:
+      "https://maps.gstatic.com/tactile/pane/result-no-thumbnail-2x.png",
+    rating: {
+      value: 3.5,
+      count: 163,
+    },
   },
   {
-    img: "http://material-ui.com/static/images/image-list/breakfast.jpg",
-    title: "Image",
-    author: "author",
+    name: "24/7 store",
+    type: "Grocery store",
+    address: "Central st., 99",
+    openInfo: "Open until 22:00",
+    extraInfo: "In-store shopping",
+    photoUrl:
+      "https://maps.gstatic.com/tactile/pane/result-no-thumbnail-2x.png",
+    rating: {
+      value: 3.5,
+      count: 163,
+    },
   },
 ];
 
 const PlaceDescriptionBar = () => {
   const classes = useStyles();
 
-  const actionButtons = [
-    { name: "Directions", iconComponent: DirectionsIcon, filled: true },
-    { name: "Save", iconComponent: BookmarkBorderOutlinedIcon, filled: false },
-    { name: "Nearby", iconComponent: LocationOnOutlinedIcon, filled: false },
-    {
-      name: "Send to your phone",
-      iconComponent: MobileScreenShareOutlinedIcon,
-      filled: false,
-    },
-    { name: "Share", iconComponent: ShareOutlinedIcon, filled: false },
-  ];
+  const [openEdit, setOpenEdit] = useState(false);
 
-  const listInfo = [
-    { text: "You visited on Thursday", iconComponent: TimelineOutlinedIcon },
-    {
-      text: "Ulitsa 3 Iyulya, 25, г.Иркутск, Irkutsk Oblast, 664022",
-      iconComponent: LocationOnOutlinedIcon,
-    },
-    { text: "Opens at 10:00", iconComponent: QueryBuilderOutlinedIcon },
-    { text: "mk.com", iconComponent: PublicIcon },
-    { text: "+73952485325", iconComponent: CallIcon },
-    { text: "Claim this business", iconComponent: VerifiedUserOutlinedIcon },
-    { text: "Add a label", iconComponent: LabelOutlinedIcon },
-  ];
-
-  const [shiftedEnd, setShiftedEnd] = useState(false);
-
-  const shiftEnd = () => {
-    setShiftedEnd(true);
+  const handleOpenEdit = () => {
+    setOpenEdit(true);
   };
 
-  const shiftStart = () => {
-    setShiftedEnd(false);
+  const handleCloseEdit = () => {
+    setOpenEdit(false);
+  };
+
+  const [openUploadPhoto, setOpenUploadPhoto] = useState(false);
+
+  const handleOpenUploadPhoto = () => {
+    setOpenUploadPhoto(true);
+  };
+
+  const handleCloseUploadPhoto = () => {
+    setOpenUploadPhoto(false);
+  };
+
+  const [openCompletePhoto, setOpenCompletePhoto] = useState(false);
+
+  const handleOpenCompletePhoto = () => {
+    setOpenUploadPhoto(false);
+    setOpenCompletePhoto(true);
+  };
+
+  const handleCloseCompletePhoto = () => {
+    setOpenCompletePhoto(false);
   };
 
   return (
@@ -242,158 +187,97 @@ const PlaceDescriptionBar = () => {
         alt=""
         className={classes.topImage}
       />
-      <div className={classes.basicInfo}>
-        <Typography variant="h1">Trendy Quarter</Typography>
-        <Typography variant="h2" style={{ marginTop: "4px" }}>
-          Trendy Quarter
-        </Typography>
-        <Typography
-          variant="body2"
-          component="div"
-          style={{ marginTop: "8px" }}
-        >
-          <div className={classes.rating}>
-            <Box mr="3px">{4.2}</Box>
-            <Rating name="read-only" value={4.2} readOnly size="small" />
-            <Box ml="3px">{"1,432 reviews"}</Box>
-          </div>
-          <Link
-            href="#"
-            onClick={(e) => e.preventDefault()}
-            variant="body2"
-            color="textSecondary"
-          >
-            {"Shopping mall"}
-          </Link>
-        </Typography>
-      </div>
+      <BasicInfo />
       <Divider />
-      <div className={classes.actionButtons}>
-        {actionButtons.map((item) => (
-          <div className={classes.optionsButton} key={item.name}>
-            <div className={classes.actionDiv}>
-              <IconButton
-                classes={{
-                  root: item.filled
-                    ? clsx(classes.avatar, classes.avatarFilled)
-                    : clsx(classes.avatar, classes.avatarOutlined),
-                }}
-              >
-                <item.iconComponent
-                  fontSize="small"
-                  style={{ fill: "inherit" }}
-                />
-              </IconButton>
-            </div>
-
-            <ListItemText
-              secondaryTypographyProps={{
-                color: "primary",
-                style: { textAlign: "center" },
-              }}
-              classes={{ secondary: classes.textSmall }}
-              secondary={item.name}
-            />
-          </div>
-        ))}
-      </div>
+      <ActionButtons />
       <Divider />
       <div className={classes.listInfo}>
-        <List>
-          {listInfo.map((item) => (
-            <ListItem button classes={{ gutters: classes.listItemGutters }}>
-              <ListItemIcon classes={{ root: classes.listItemIcon }}>
-                <item.iconComponent color="primary" />
-              </ListItemIcon>
-              <ListItemText
-                primary={item.text}
-                primaryTypographyProps={{ variant: "body2" }}
-                classes={{ root: classes.marginZero }}
-              />
-            </ListItem>
-          ))}
-        </List>
-        <div className={classes.bottomButton}>
-          <Button
-            variant="outlined"
-            className={classes.buttonRounded}
-            startIcon={<CreateOutlinedIcon color="primary" />}
-          >
-            Suggest an edit
-          </Button>
-        </div>
+        <ListInfo />
+        <BottomButton
+          title="Suggest an edit"
+          startIcon={CreateOutlinedIcon}
+          onClick={handleOpenEdit}
+        />
+        {openEdit ? (
+          <EditModal onClose={handleCloseEdit} isOpen={openEdit} />
+        ) : null}
       </div>
       <Divider />
       <div className={classes.photos}>
-        <div className={classes.subheader}>
-          <Typography variant="subtitle1">Photos</Typography>
+        <HeaderBar title="Photos" />
+        <PhotoCards />
+
+        <BottomButton
+          title="Add a photo"
+          startIcon={CameraAltOutlinedIcon}
+          onClick={handleOpenUploadPhoto}
+        />
+        {openUploadPhoto ? (
+          <UploadPhotoModal
+            onClose={handleCloseUploadPhoto}
+            isOpen={openUploadPhoto}
+            onComplete={handleOpenCompletePhoto}
+          />
+        ) : null}
+        {openCompletePhoto ? (
+          <CompletePhotoModal
+            onClose={handleCloseCompletePhoto}
+            isOpen={openCompletePhoto}
+          />
+        ) : null}
+      </div>
+
+      <Divider />
+      <div className={classes.directory}>
+        <HeaderBar title="Directory" />
+        <div className={classes.directoryFilters}>
+          <Input
+            placeholder="Search for places"
+            className={classes.directoryInputWrapper}
+            inputProps={{
+              "aria-label": "description",
+              className: classes.directoryInput,
+            }}
+            disableUnderline
+          />
+          <Chips />
         </div>
-        <div className={classes.photoCards}>
-          <ImageList
-            className={
-              shiftedEnd
-                ? clsx(classes.imageList, classes.shiftEnd)
-                : classes.imageList
-            }
-            style={{ margin: 0 }}
-            rowHeight={150}
-            gap={8}
-          >
-            {itemData.map((item) => (
-              <ImageListItem
-                key={item.img}
-                classes={{ item: classes.imageListItem }}
-                style={{ width: "120px" }}
-              >
-                <img src={item.img} alt={item.title} />
-                <ImageListItemBar
-                  title={item.title}
-                  actionPosition="left"
-                  classes={{
-                    root: classes.titleBar,
-                    title: classes.title,
-                  }}
-                />
-              </ImageListItem>
-            ))}
-          </ImageList>
-          <div className={classes.fabContainer}>
-            {!shiftedEnd ? (
-              <Fab
-                size="small"
-                aria-label="add"
-                className={clsx(classes.fab, classes.fabForward)}
-                onClick={shiftEnd}
-              >
-                <ArrowForwardIosOutlinedIcon
-                  fontSize="small"
-                  style={{ fill: "black" }}
-                />
-              </Fab>
-            ) : (
-              <Fab
-                size="small"
-                aria-label="add"
-                className={clsx(classes.fab, classes.fabBackward)}
-                onClick={shiftStart}
-              >
-                <ArrowBackIosOutlinedIcon
-                  fontSize="small"
-                  style={{ fill: "black" }}
-                />
-              </Fab>
-            )}
-          </div>
+        <div className={classes.directoryPlaces}>
+          <PlacesList items={places} maxCount={4} short />
         </div>
-        <div className={classes.bottomButton}>
-          <Button
-            variant="outlined"
-            className={classes.buttonRounded}
-            startIcon={<CameraAltOutlinedIcon color="primary" />}
-          >
-            Add a photo
-          </Button>
-        </div>
+        <BottomButton title="View all" textButton />
+      </div>
+      <Divider />
+      <div className={classes.review}>
+        <HeaderBar title="Review Summary" />
+        <RatingReview />
+        <BottomButton
+          title="Write a review"
+          startIcon={RateReviewOutlinedIcon}
+        />
+      </div>
+      <Divider />
+      <div className={classes.comments}>
+        <HeaderBar
+          title="Reviews"
+          buttons={
+            <>
+              <Button
+                className={classes.subheaderButton}
+                variant="outlined"
+                style={{ padding: "7px 8px", marginRight: "5px" }}
+              >
+                <SearchOutlinedIcon fontSize="small" color="primary" />
+              </Button>
+              <Button variant="outlined" className={classes.subheaderButton}>
+                <SortOutlinedIcon fontSize="small" color="primary" />
+                Sort
+              </Button>
+            </>
+          }
+        />
+
+        <Comments />
       </div>
     </div>
   );

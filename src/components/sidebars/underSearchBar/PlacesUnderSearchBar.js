@@ -1,16 +1,9 @@
 import {
-  List,
-  ListItem,
-  ListItemText,
   Divider,
   makeStyles,
-  Menu,
-  MenuItem,
-  Fade,
   Button,
   Paper,
   Typography,
-  Box,
   IconButton,
   FormControl,
   RadioGroup,
@@ -20,17 +13,16 @@ import {
 import { useState } from "react";
 import ArrowDropDownIcon from "@material-ui/icons/ArrowDropDown";
 import TuneIcon from "@material-ui/icons/Tune";
-import Rating from "@material-ui/lab/Rating";
 import ArrowBackIosIcon from "@material-ui/icons/ArrowBackIos";
 import ArrowForwardIosIcon from "@material-ui/icons/ArrowForwardIos";
 import { Popper } from "@material-ui/core";
 import Popover from "@material-ui/core/Popover";
+import PlacesList from "../../inlines/PlacesList";
 
 const useStyles = makeStyles((theme) => ({
   root: {},
   button: {
     borderRadius: "100px",
-    textTransform: "none",
     margin: "0 3px",
     padding: "2px 11px",
     fontWeight: 400,
@@ -41,28 +33,7 @@ const useStyles = makeStyles((theme) => ({
   topButtons: {
     marginLeft: "10px",
   },
-  image: {
-    minWidth: "84px",
-    height: "84px",
-    borderRadius: "8px",
-    marginLeft: "10px",
-    marginTop: "5px",
-  },
-  listItemGutters: {
-    paddingLeft: "26px",
-    paddingRight: "26px",
-    minHeight: "110px",
-    display: "flex",
-    alignItems: "start",
-  },
-  rating: {
-    display: "flex",
-    alignItems: "center",
-  },
-  list: {
-    height: "520px",
-    overflowY: "auto",
-  },
+
   footerTop: {
     padding: "10px 25px",
     display: "flex",
@@ -268,60 +239,7 @@ const PlacesUnderSearchBar = () => {
           </Popper>
         </div>
       </Paper>
-      <List aria-label="places" className={classes.list}>
-        {places.map((item, id) => (
-          <div key={id}>
-            <ListItem button classes={{ gutters: classes.listItemGutters }}>
-              <ListItemText
-                primary={item.name}
-                primaryTypographyProps={{ style: { fontWeight: 500 } }}
-                style={{ marginTop: 0 }}
-                secondaryTypographyProps={{ component: "div" }}
-                secondary={
-                  <>
-                    <div className={classes.rating}>
-                      <Box mr="3px">{item.rating.value}</Box>
-                      <Rating
-                        name="read-only"
-                        value={item.rating.value}
-                        readOnly
-                        size="small"
-                      />
-                      <Box ml="3px">({item.rating.count})</Box>
-                    </div>
-                    <Typography variant="body2" className={classes.inline}>
-                      {item.type} · {item.address}
-                      {item.openInfo ? (
-                        <>
-                          <br />
-                          {item.openInfo}
-                        </>
-                      ) : (
-                        ""
-                      )}
-                      {item.extraInfo ? (
-                        <>
-                          <br />
-                          <br />
-                          {item.extraInfo}
-                        </>
-                      ) : (
-                        ""
-                      )}
-                    </Typography>
-                  </>
-                }
-              />
-              <img
-                src="https://maps.gstatic.com/tactile/pane/result-no-thumbnail-2x.png"
-                alt=""
-                className={classes.image}
-              />
-            </ListItem>
-            {id < places.length - 1 ? <Divider /> : null}
-          </div>
-        ))}
-      </List>
+      <PlacesList items={places}/>
       <div className={classes.footer}>
         <Divider />
         <div className={classes.footerTop}>

@@ -24,6 +24,9 @@ const theme = createTheme({
       fontSize: "1rem",
       letterSpacing: ".00625em",
     },
+    h3:{
+      fontSize: "1.2rem",
+    }
   },
 });
 
@@ -39,6 +42,9 @@ theme.overrides = {
   MuiButton: {
     root: { textTransform: "none" },
   },
+  MuiTab:{
+    root: { textTransform: "none" },
+  }
 };
 
 export default theme;

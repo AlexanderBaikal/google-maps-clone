@@ -1,10 +1,45 @@
-import { Button } from "@material-ui/core";
-import "./_verticalWidget.scss";
+import { Button, makeStyles } from "@material-ui/core";
 import MyLocationIcon from "@material-ui/icons/MyLocation";
 import RemoveIcon from "@material-ui/icons/Remove";
 import AddIcon from "@material-ui/icons/Add";
+import clsx from "clsx";
+
+const useStyles = makeStyles((theme) => ({
+  textSecondary: {
+    fill: "rgb(50, 50, 50)",
+  },
+  controlButton: {
+    backgroundColor: "white",
+    maxHeight: "30px",
+    maxWidth: "30px",
+    minHeight: "30px",
+    minWidth: "30px",
+    borderRadius: "8px",
+  },
+  zoom: {
+    marginTop: "4px",
+    position: "relative",
+  },
+  buttons: {
+    height: "60px",
+  },
+  zoomInButton: {
+    position: "absolute",
+    top: 0,
+    borderBottomLeftRadius: 0,
+    borderBottomRightRadius: 0,
+  },
+  zoomOutButton: {
+    position: "absolute",
+    bottom: 0,
+    borderTopLeftRadius: 0,
+    borderTopRightRadius: 0,
+  },
+}));
 
 const VerticalWidget = ({ setZoomDelta }) => {
+  const classes = useStyles();
+
   const zoomIn = () => {
     setZoomDelta(1);
   };
@@ -13,27 +48,27 @@ const VerticalWidget = ({ setZoomDelta }) => {
   };
 
   return (
-    <div className="vertical-widget">
-      <div className="vertical-widget__my-location">
-        <Button variant="contained" className="control-button">
-          <MyLocationIcon fontSize="small" className="text-secondary" />
+    <div>
+      <div>
+        <Button variant="contained" className={classes.controlButton}>
+          <MyLocationIcon fontSize="small" className={classes.textSecondary} />
         </Button>
       </div>
-      <div className="vertical-widget__zoom">
-        <div className="vertical-widget__zoom__buttons">
+      <div className={classes.zoom}>
+        <div className={classes.buttons}>
           <Button
             variant="contained"
-            className="control-button zoom-in-button"
+            className={clsx(classes.controlButton, classes.zoomInButton)}
             onClick={zoomIn}
           >
-            <AddIcon fontSize="small" className="text-secondary" />
+            <AddIcon fontSize="small" className={classes.textSecondary} />
           </Button>
           <Button
             variant="contained"
-            className="control-button zoom-out-button"
+            className={clsx(classes.controlButton, classes.zoomOutButton)}
             onClick={zoomOut}
           >
-            <RemoveIcon fontSize="small" className="text-secondary" />
+            <RemoveIcon fontSize="small" className={classes.textSecondary} />
           </Button>
         </div>
       </div>
