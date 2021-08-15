@@ -72,10 +72,6 @@ const useStyles = makeStyles({
 const HorizontalWidget = ({ bottomGallery, setBottomGallery }) => {
   const classes = useStyles();
 
-  const handleBottomGallery = () => {
-    setBottomGallery((value) => !value);
-  };
-
   return (
     <ButtonGroup
       className={classes.horizontalWidget}
@@ -97,7 +93,7 @@ const HorizontalWidget = ({ bottomGallery, setBottomGallery }) => {
       <Button
         variant="contained"
         disableElevation
-        onClick={handleBottomGallery}
+        onClick={() => setBottomGallery(!bottomGallery)}
         className={clsx(classes.galleryButton, classes.buttonWhite)}
         style={{ borderRadius: bottomGallery ? "0 8px 0 0" : "0 8px 8px 0" }}
       >

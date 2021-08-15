@@ -5,18 +5,18 @@ import { useEffect, useState } from "react";
 
 const Map = ({ zoomDelta, setZoomDelta }) => {
   const [map, setMap] = useState(null);
-  
+
   useEffect(() => {
     if (map) {
       console.log(zoomDelta);
       map.zoomIn(zoomDelta);
-      setZoomDelta(0)
+      setZoomDelta(0);
     }
   }, [zoomDelta, map]);
 
   return (
     <MapContainer
-      center={[51.505, -0.09]}
+      center={[52.27, 104.29]}
       zoom={13}
       scrollWheelZoom={true}
       zoomControl={false}
@@ -31,7 +31,6 @@ const Map = ({ zoomDelta, setZoomDelta }) => {
         tileSize={512}
         zoomOffset={-1}
       />
-
     </MapContainer>
   );
 };

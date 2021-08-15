@@ -2,10 +2,12 @@ import { makeStyles } from "@material-ui/core";
 import clsx from "clsx";
 import { useState } from "react";
 import BottomGallery from "../map/bottomGallery/BottomGallery";
-import UnderSearchBar from "../sidebars/underSearchBar/UnderSearchBar";
-import HorizontalWidget from "./horizontalWidget/HorizontalWidget";
+import UnderSearchBar from "../sidebars/UnderSearchBar";
+import UnderSearchContainer from "../sidebars/UnderSearchContainer";
+import HorizontalContainer from "./horizontalWidget/HorizontalContainer";
 import MinimapWidget from "./minimapWidget/MinimapWidget";
 import SearchBar from "./searchBar/SearchBar";
+import SearchbarContainer from "./searchBar/SearchbarContainer";
 import UserWidget from "./userWidget/UserWidget";
 import VerticalWidget from "./verticalWidget/VerticalWidget";
 
@@ -61,12 +63,8 @@ const useStyles = makeStyles({
   bottomWidgets: {},
 });
 
-const Widgets = ({ menuSidebar, handleMenuSidebar, setZoomDelta }) => {
-  const [searchPrompt, setSearchPrompt] = useState(false);
-  const [underSearchBar, setUnderSearchBar] = useState(false);
-  const [bottomGallery, setBottomGallery] = useState(false);
+const Widgets = ({ setZoomDelta, underSearchBar, bottomGallery }) => {
   const classes = useStyles();
-  const [placesBar, setPlacesBar] = useState(false);
 
   return (
     <>
@@ -83,11 +81,7 @@ const Widgets = ({ menuSidebar, handleMenuSidebar, setZoomDelta }) => {
             style={{ bottom: bottomGallery ? 0 : "25px" }}
           >
             <VerticalWidget setZoomDelta={setZoomDelta} />
-            <HorizontalWidget
-              className="horizontal-widget"
-              bottomGallery={bottomGallery}
-              setBottomGallery={setBottomGallery}
-            />
+            <HorizontalContainer />
           </div>
           {bottomGallery ? <BottomGallery /> : null}
         </div>
@@ -97,21 +91,8 @@ const Widgets = ({ menuSidebar, handleMenuSidebar, setZoomDelta }) => {
       </div>
 
       <div className={classes.topLeftWidgets}>
-        <SearchBar
-          handleMenuSidebar={handleMenuSidebar}
-          searchPrompt={searchPrompt}
-          setSearchPrompt={setSearchPrompt}
-          underSearchBar={underSearchBar}
-          setUnderSearchBar={setUnderSearchBar}
-          placesBar={placesBar}
-          setPlacesBar={setPlacesBar}
-        />
-        <UnderSearchBar
-          underSearchBar={underSearchBar}
-          setUnderSearchBar={setUnderSearchBar}
-          placesBar={placesBar}
-          setPlacesBar={setPlacesBar}
-        />
+        <SearchbarContainer />
+        <UnderSearchContainer />
       </div>
       <div className={classes.topRightWidgets}>
         <UserWidget />

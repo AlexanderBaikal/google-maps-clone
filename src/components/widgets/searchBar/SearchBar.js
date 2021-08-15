@@ -11,9 +11,9 @@ import {
   makeStyles,
   ClickAwayListener,
 } from "@material-ui/core";
-import { useRef } from "react";
+import { useRef, useState } from "react";
 import clsx from "clsx";
-import Extras from "../../inlines/Extras";
+import Extras from "./../../inlines/Extras";
 import History from "../../inlines/History";
 import CloseIcon from "@material-ui/icons/Close";
 
@@ -118,16 +118,17 @@ const useStyles = makeStyles((theme) => {
 });
 
 const SearchBar = ({
-  handleMenuSidebar,
-  searchPrompt,
-  setSearchPrompt,
+  setMenuSidebar,
   underSearchBar,
-  setUnderSearchBar,
+  setUndersearchBar,
   placesBar,
   setPlacesBar,
+  searchPrompt,
+  setSearchPrompt,
 }) => {
   const handleUnderSearchBar = () => {
-    setUnderSearchBar((value) => !value);
+    console.log(underSearchBar);
+    setUndersearchBar(!underSearchBar);
     if (!underSearchBar) {
       inputRef.current.focus();
     }
@@ -137,13 +138,8 @@ const SearchBar = ({
     setSearchPrompt(false);
   };
 
-  const handlePlacesBar = () => {
-    setPlacesBar((value) => !value);
-  };
-
   const promptText = "Show traffic jams, expected time and places close to you";
   const inputRef = useRef(null);
-
   const classes = useStyles();
 
   return (
@@ -158,12 +154,14 @@ const SearchBar = ({
               : classes.paper
           }
           elevation={searchPrompt ? 1 : 2}
-          onFocus={() => setSearchPrompt(true)}
+          onFocus={() => {
+            setSearchPrompt(true);
+          }}
         >
           <IconButton
             className={classes.iconButton}
             aria-label="menu"
-            onClick={handleMenuSidebar}
+            onClick={setMenuSidebar}
           >
             <MenuIcon />
           </IconButton>
@@ -185,7 +183,7 @@ const SearchBar = ({
             color="primary"
             classes={{ colorPrimary: classes.colorInfo }}
             aria-label="directions"
-            onClick={placesBar ? handlePlacesBar : () => {}}
+            onClick={placesBar ? setPlacesBar : () => {}}
           >
             {placesBar ? <CloseIcon /> : <DirectionsIcon />}
           </IconButton>

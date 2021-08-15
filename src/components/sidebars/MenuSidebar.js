@@ -51,7 +51,7 @@ const useStyles = makeStyles((theme) => {
   };
 });
 
-const MenuSidebar = ({ menuSidebar, handleMenuSidebar }) => {
+const MenuSidebar = ({ menuSidebar, setMenuSidebar }) => {
   const layersText = "Another layers";
   const classes = useStyles();
   const componentsToText = [
@@ -77,7 +77,7 @@ const MenuSidebar = ({ menuSidebar, handleMenuSidebar }) => {
           src="https://www.google.com/images/branding/googlelogo/2x/googlelogo_color_74x24dp.png"
           alt="logo"
         />
-        <IconButton onClick={handleMenuSidebar}>
+        <IconButton onClick={setMenuSidebar}>
           <CloseIcon />
         </IconButton>
       </div>

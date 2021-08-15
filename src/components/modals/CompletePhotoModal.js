@@ -6,7 +6,7 @@ import CloseIcon from "@material-ui/icons/Close";
 
 const useStyles = makeStyles((theme) => ({
   paper: {
-    width: "400px"
+    width: "400px",
   },
 
   closeButton: {

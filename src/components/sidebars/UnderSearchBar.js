@@ -2,9 +2,9 @@ import { makeStyles } from "@material-ui/core";
 import { Paper } from "@material-ui/core";
 import clsx from "clsx";
 import { useState } from "react";
-import MainUnderSearchBar from "./MainUnderSearchBar";
-import PlaceDescriptionBar from "./PlaceDescriptionBar";
-import PlacesUnderSearchBar from "./PlacesUnderSearchBar";
+import MainUnderSearchBar from "./nested/MainUnderSearchBar";
+import PlaceDescriptionBar from "./nested/PlaceDescriptionBar";
+import PlacesUnderSearchBar from "./nested/PlacesUnderSearchBar";
 
 const useStyles = makeStyles((theme) => ({
   underSearch: {
