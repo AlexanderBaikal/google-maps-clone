@@ -1,8 +1,9 @@
 import widgetReducer from "./widgets/reducers";
 
 import { combineReducers } from "redux";
-import { SET_MENU_SIDEBAR } from "./widgets/actions";
+import { SET_MENU_SIDEBAR } from "./actions";
 import { SET_ZOOM_DELTA } from "./actions";
+import sidebarBarReducer from './sidebars/reducers';
 
 const defaultState = {
   menuSidebar: false,
@@ -14,7 +15,7 @@ export const appReducer = (state = defaultState, action) => {
     case SET_MENU_SIDEBAR:
       return {
         ...state,
-        menuSidebar: action.payload,
+        menuSidebar: !action.payload,
       };
     case SET_ZOOM_DELTA:
       return {
@@ -28,4 +29,5 @@ export const appReducer = (state = defaultState, action) => {
 export default combineReducers({
   widgets: widgetReducer,
   app: appReducer,
+  sidebars: sidebarBarReducer
 });

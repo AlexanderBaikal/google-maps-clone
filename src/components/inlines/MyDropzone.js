@@ -4,10 +4,10 @@ import {
   makeStyles,
   Typography,
 } from "@material-ui/core";
-import React, { createRef } from "react";
+import React, { createRef, useCallback } from "react";
 import { useState } from "react";
 import Dropzone from "react-dropzone";
-import CompletePhotoModal from "../modals/CompletePhotoModal";
+import { storageRef } from "../../firebase";
 
 const useStyles = makeStyles((theme) => {
   return {
@@ -42,15 +42,21 @@ const useStyles = makeStyles((theme) => {
       border: "1px solid",
       backgroundColor: "#fff",
     },
+    loadingBlock: {
+      flex: 1,
+      display: "flex",
+      flexDirection: "column",
+      alignItems: "center",
+      justifyContent: "center",
+    },
   };
 });
 
 // Disable click and keydown behavior on the <Dropzone>
-const MyDropzone = ({onComplete}) => {
+const MyDropzone = ({ onComplete }) => {
   const classes = useStyles();
 
   const [loading, setLoading] = useState(false);
-  
 
   const dropzoneRef = createRef();
   const openDialog = () => {
@@ -61,56 +67,65 @@ const MyDropzone = ({onComplete}) => {
     }
   };
 
+  const onDrop = (files) => {
+    console.log("processFiles", files);
+    for (var file of files) {
+      console.log("@", file.path);
+      loadPhoto(file);
+    }
+  };
+
+  const loadPhoto = (file) => {
+    var fileRef = storageRef.child(file.name);
+    setLoading(true);
+
+    fileRef
+      .put(file)
+      .then(() => {
+        setLoading(false);
+      })
+      .catch((e) => {
+        alert(e);
+      });
+  };
+
   return (
-    <Dropzone ref={dropzoneRef} noClick noKeyboard>
+    <Dropzone
+      ref={dropzoneRef}
+      noClick
+      noKeyboard
+      onDrop={(acceptedFiles) => onDrop(acceptedFiles)}
+    >
       {({ getRootProps, getInputProps, acceptedFiles }) => {
-        console.log(getInputProps);
         return (
           <div className={classes.container}>
-            <div
-              {...getRootProps({ className: classes.dropzone })}
-              onDrop={(f) => {
-                setLoading(true);
-                setTimeout(() => {
-                  setLoading(false);
-                  onComplete()
-                }, 600);
-              }}
-            >
-              {!loading ? (
-                <>
-                  <input {...getInputProps()} />
-                  <Typography variant="h5" style={{ marginBottom: "10px" }}>
-                    Drag photos here
-                  </Typography>
-                  <Typography
-                    variant="subtitle2"
-                    style={{ marginBottom: "4px" }}
-                  >
-                    or if you prefer...
-                  </Typography>
-                  <Button
-                    variant="contained"
-                    classes={{ containedSizeSmall: classes.small }}
-                    color="primary"
-                    size="small"
-                    onClick={openDialog}
-                  >
-                    Choose photos to upload
-                  </Button>
-                </>
-              ) : (
-                <>
-                  <Typography
-                    variant="subtitle2"
-                    style={{ marginBottom: "4px" }}
-                  >
-                    Uploading...
-                  </Typography>
-                  <LinearProgress className={classes.progress} />
-                </>
-              )}
-            </div>
+            {loading ? (
+              <div className={classes.loadingBlock}>
+                <Typography variant="subtitle2" style={{ marginBottom: "4px" }}>
+                  Uploading...
+                </Typography>
+                <LinearProgress className={classes.progress} />
+              </div>
+            ) : (
+              <div {...getRootProps({ className: classes.dropzone })}>
+                <input {...getInputProps()} />
+                <Typography variant="h5" style={{ marginBottom: "10px" }}>
+                  Drag photos here
+                </Typography>
+                <Typography variant="subtitle2" style={{ marginBottom: "4px" }}>
+                  or if you prefer...
+                </Typography>
+                <Button
+                  variant="contained"
+                  classes={{ containedSizeSmall: classes.small }}
+                  color="primary"
+                  size="small"
+                  onClick={openDialog}
+                >
+                  Choose photos to upload
+                </Button>
+              </div>
+            )}
           </div>
         );
       }}

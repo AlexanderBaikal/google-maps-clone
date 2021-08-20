@@ -11,11 +11,14 @@ import {
   makeStyles,
   ClickAwayListener,
 } from "@material-ui/core";
-import { useRef, useState } from "react";
+import { useRef } from "react";
 import clsx from "clsx";
 import Extras from "./../../inlines/Extras";
 import History from "../../inlines/History";
 import CloseIcon from "@material-ui/icons/Close";
+import {
+  MAIN_UNDERSEARCH_BAR,
+} from "../../../redux/sidebars/actions";
 
 const useStyles = makeStyles((theme) => {
   return {
@@ -118,24 +121,32 @@ const useStyles = makeStyles((theme) => {
 });
 
 const SearchBar = ({
+  menuSidebar,
   setMenuSidebar,
   underSearchBar,
-  setUndersearchBar,
-  placesBar,
-  setPlacesBar,
+  setUnderSearchBar,
+  activeBar,
+  setActiveBar,
   searchPrompt,
   setSearchPrompt,
 }) => {
   const handleUnderSearchBar = () => {
-    console.log(underSearchBar);
-    setUndersearchBar(!underSearchBar);
+    setUnderSearchBar(underSearchBar);
     if (!underSearchBar) {
       inputRef.current.focus();
     }
   };
 
+  const handleSearchPrompt = () => {
+    setSearchPrompt(searchPrompt);
+  };
+
   const handleClickOutside = () => {
-    setSearchPrompt(false);
+    if (searchPrompt) setSearchPrompt(searchPrompt);
+  };
+
+  const handleMenuSidebar = () => {
+    setMenuSidebar(menuSidebar);
   };
 
   const promptText = "Show traffic jams, expected time and places close to you";
@@ -154,14 +165,12 @@ const SearchBar = ({
               : classes.paper
           }
           elevation={searchPrompt ? 1 : 2}
-          onFocus={() => {
-            setSearchPrompt(true);
-          }}
+          onFocus={handleSearchPrompt}
         >
           <IconButton
             className={classes.iconButton}
             aria-label="menu"
-            onClick={setMenuSidebar}
+            onClick={handleMenuSidebar}
           >
             <MenuIcon />
           </IconButton>
@@ -183,9 +192,17 @@ const SearchBar = ({
             color="primary"
             classes={{ colorPrimary: classes.colorInfo }}
             aria-label="directions"
-            onClick={placesBar ? setPlacesBar : () => {}}
+            onClick={
+              activeBar !== MAIN_UNDERSEARCH_BAR
+                ? () => setActiveBar(MAIN_UNDERSEARCH_BAR)
+                : () => {}
+            }
           >
-            {placesBar ? <CloseIcon /> : <DirectionsIcon />}
+            {activeBar !== MAIN_UNDERSEARCH_BAR ? (
+              <CloseIcon />
+            ) : (
+              <DirectionsIcon />
+            )}
           </IconButton>
         </Paper>
 

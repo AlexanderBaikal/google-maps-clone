@@ -52,17 +52,16 @@ const useStyles = makeStyles((theme) => ({
   radioPopover: {
     padding: "12px",
   },
-  radioLabel:{
+  radioLabel: {
     fontSize: "0.8rem",
-    marginLeft: "10px"
-    
+    marginLeft: "10px",
   },
-  radioSpacing:{
-    height: "30px"
-  }
+  radioSpacing: {
+    height: "30px",
+  },
 }));
 
-const PlacesUnderSearchBar = () => {
+const PlacesUnderSearchBar = ({ setActiveBar }) => {
   const classes = useStyles();
 
   const [anchorEl, setAnchorEl] = useState(null);
@@ -189,19 +188,28 @@ const PlacesUnderSearchBar = () => {
                   value="Any time"
                   control={<Radio color="primary" size="small" />}
                   label="Any time"
-                  classes={{label:classes.radioLabel, root: classes.radioSpacing}}
+                  classes={{
+                    label: classes.radioLabel,
+                    root: classes.radioSpacing,
+                  }}
                 />
                 <FormControlLabel
                   value="Open now"
                   control={<Radio color="primary" size="small" />}
                   label="Open now"
-                  classes={{label:classes.radioLabel, root: classes.radioSpacing}}
+                  classes={{
+                    label: classes.radioLabel,
+                    root: classes.radioSpacing,
+                  }}
                 />
                 <FormControlLabel
                   value="Open 24 hours"
                   control={<Radio color="primary" size="small" />}
                   label="Open 24 hours"
-                  classes={{label:classes.radioLabel, root: classes.radioSpacing}}
+                  classes={{
+                    label: classes.radioLabel,
+                    root: classes.radioSpacing,
+                  }}
                 />
               </RadioGroup>
             </FormControl>
@@ -239,7 +247,10 @@ const PlacesUnderSearchBar = () => {
           </Popper>
         </div>
       </Paper>
-      <PlacesList items={places}/>
+      <PlacesList
+        setActiveBar={setActiveBar}
+        items={places}
+      />
       <div className={classes.footer}>
         <Divider />
         <div className={classes.footerTop}>

@@ -8,8 +8,7 @@ const Map = ({ zoomDelta, setZoomDelta }) => {
 
   useEffect(() => {
     if (map) {
-      console.log(zoomDelta);
-      map.zoomIn(zoomDelta);
+      map.setZoom(map.getZoom() + zoomDelta);
       setZoomDelta(0);
     }
   }, [zoomDelta, map]);

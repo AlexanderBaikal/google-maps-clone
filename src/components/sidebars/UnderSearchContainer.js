@@ -1,14 +1,11 @@
 import UnderSearchBar from "./UnderSearchBar";
-import { setUndersearchBar, setPlacesBar } from "./../../redux/widgets/actions";
 import { connect } from "react-redux";
 
 const UnderSearchContainer = (props) => {
   return (
     <UnderSearchBar
       underSearchBar={props.underSearchBar}
-      setUnderSearchBar={props.setUnderSearchBar}
-      placesBar={props.placesBar}
-      setPlacesBar={props.setPlacesBar}
+      activeBar={props.activeBar}
     />
   );
 };
@@ -16,13 +13,11 @@ const UnderSearchContainer = (props) => {
 const mapStateToProps = (state) => {
   return {
     underSearchBar: state.widgets.all.underSearchBar,
-    placesBar: state.widgets.all.placesBar,
+    activeBar: state.sidebars.activeBar.activeBar,
   };
 };
 
 const mapDispatchToProps = {
-  setPlacesBar,
-  setUndersearchBar,
 };
 
 export default connect(

@@ -108,10 +108,14 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const MainUnderSearchBar = ({ setUnderSearchBar, setPlacesBar }) => {
+const MainUnderSearchBar = ({
+  underSearchBar,
+  setUnderSearchBar,
+  setActiveBar,
+}) => {
   const classes = useStyles();
   const handleUnderSearchBar = () => {
-    setUnderSearchBar((value) => !value);
+    setUnderSearchBar(underSearchBar);
   };
 
   const myPlaces = [
@@ -218,7 +222,7 @@ const MainUnderSearchBar = ({ setUnderSearchBar, setPlacesBar }) => {
         <Extras
           shownMore={shownMore}
           setShownMore={setShownMore}
-          setPlacesBar={setPlacesBar}
+          setActiveBar={setActiveBar}
         />
       </Paper>
       {shownMore ? (

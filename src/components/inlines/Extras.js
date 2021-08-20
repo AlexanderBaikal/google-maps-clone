@@ -10,6 +10,7 @@ import LocalCafeOutlinedIcon from "@material-ui/icons/LocalCafeOutlined";
 import HotelIcon from "@material-ui/icons/Hotel";
 import MoreHorizIcon from "@material-ui/icons/MoreHoriz";
 import ExpandLessOutlinedIcon from "@material-ui/icons/ExpandLessOutlined";
+import { PLACES_BAR } from "../../redux/sidebars/actions";
 
 const useStyles = makeStyles((theme) => ({
   iconAvatarLarge: {
@@ -77,13 +78,14 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const Extras = ({ countItems = 5, shownMore, setShownMore, setPlacesBar }) => {
+const Extras = ({ countItems = 5, shownMore, setShownMore, setActiveBar }) => {
   const classes = useStyles();
 
   const handleShownMore = () => setShownMore((value) => !value);
 
-  const handlePlacesBar = () => {
-    setPlacesBar((value) => !value);
+  const handleActiveBar = () => {
+    
+    setActiveBar(PLACES_BAR);
   };
 
   const extras = [
@@ -91,25 +93,25 @@ const Extras = ({ countItems = 5, shownMore, setShownMore, setPlacesBar }) => {
       name: "Grocery stores",
       iconComponent: ShoppingCartOutlinedIcon,
       color: "#388e3c",
-      onClick: handlePlacesBar,
+      onClick: handleActiveBar,
     },
     {
       name: "Restaurants",
       iconComponent: RestaurantOutlinedIcon,
       color: "#42a5f5",
-      onClick: handlePlacesBar,
+      onClick: handleActiveBar,
     },
     {
       name: "Takeaway food",
       iconComponent: LocalCafeOutlinedIcon,
       color: "#d32f2f",
-      onClick: handlePlacesBar,
+      onClick: handleActiveBar,
     },
     {
       name: "Hostels",
       iconComponent: HotelIcon,
       color: "#f57c00",
-      onClick: handlePlacesBar,
+      onClick: handleActiveBar,
     },
     {
       name: "Show more",

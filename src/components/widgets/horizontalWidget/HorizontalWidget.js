@@ -1,8 +1,6 @@
 import { Button, ButtonGroup, makeStyles } from "@material-ui/core";
 import DoubleArrowRoundedIcon from "@material-ui/icons/DoubleArrowRounded";
 import clsx from "clsx";
-import { useState } from "react";
-import BottomGallery from "../../map/bottomGallery/BottomGallery";
 
 const useStyles = makeStyles({
   horizontalWidget: {
@@ -93,7 +91,7 @@ const HorizontalWidget = ({ bottomGallery, setBottomGallery }) => {
       <Button
         variant="contained"
         disableElevation
-        onClick={() => setBottomGallery(!bottomGallery)}
+        onClick={() => setBottomGallery(bottomGallery)}
         className={clsx(classes.galleryButton, classes.buttonWhite)}
         style={{ borderRadius: bottomGallery ? "0 8px 0 0" : "0 8px 8px 0" }}
       >

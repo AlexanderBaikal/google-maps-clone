@@ -1,10 +1,14 @@
 import { makeStyles } from "@material-ui/core";
 import { Paper } from "@material-ui/core";
 import clsx from "clsx";
-import { useState } from "react";
-import MainUnderSearchBar from "./nested/MainUnderSearchBar";
-import PlaceDescriptionBar from "./nested/PlaceDescriptionBar";
-import PlacesUnderSearchBar from "./nested/PlacesUnderSearchBar";
+import {
+  DESCRIPTION_BAR,
+  MAIN_UNDERSEARCH_BAR,
+  PLACES_BAR,
+} from "../../redux/sidebars/actions";
+import MainUnderSearchContainer from "./nested/MainUnderSearchContainer";
+import PlaceDescriptionContainer from "./nested/PlaceDescriptionContainer";
+import PlacesContainer from "./nested/PlacesContainer";
 
 const useStyles = makeStyles((theme) => ({
   underSearch: {
@@ -24,13 +28,19 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const UnderSearchBar = ({
-  underSearchBar,
-  setUnderSearchBar,
-  placesBar,
-  setPlacesBar,
-}) => {
+const UnderSearchBar = ({ underSearchBar, activeBar }) => {
   const classes = useStyles();
+
+  const renderSwitch = (param) => {
+    switch (param) {
+      case PLACES_BAR:
+        return <PlacesContainer />;
+      case DESCRIPTION_BAR:
+        return <PlaceDescriptionContainer />;
+      default:
+        return <MainUnderSearchContainer />;
+    }
+  };
 
   return (
     <Paper
@@ -41,17 +51,12 @@ const UnderSearchBar = ({
       }
       elevation={underSearchBar ? 12 : 4}
       square={underSearchBar ? true : false}
-      style={{ backgroundColor: !placesBar ? "white" : "#f0f0f0" }}
+      style={{
+        backgroundColor:
+          activeBar !== MAIN_UNDERSEARCH_BAR ? "white" : "#f0f0f0",
+      }}
     >
-      {/* {placesBar ? (
-        <PlacesUnderSearchBar />
-      ) : (
-        <MainUnderSearchBar
-          setUnderSearchBar={setUnderSearchBar}
-          setPlacesBar={setPlacesBar}
-        />
-      )} */}
-      <PlaceDescriptionBar />
+      {renderSwitch(activeBar)}
     </Paper>
   );
 };

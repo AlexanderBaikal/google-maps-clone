@@ -9,7 +9,7 @@ export const searchPromptReducer = (state = defaultState, action) => {
     case SET_SEARCH_PROMPT:
       return {
         ...state,
-        searchPrompt: action.payload,
+        searchPrompt: !action.payload,
       };
   }
   return state;

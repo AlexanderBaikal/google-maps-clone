@@ -8,6 +8,7 @@ import {
   Typography,
   Box,
 } from "@material-ui/core";
+import { DESCRIPTION_BAR } from "../../redux/sidebars/actions";
 
 const useStyles = makeStyles((theme) => ({
   image: {
@@ -34,15 +35,19 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const PlacesList = ({ items = [], maxCount = 0, short = false }) => {
+const PlacesList = ({ items = [], maxCount = 0, short = false, setActiveBar }) => {
   const classes = useStyles();
   items = maxCount ? items.slice(0, maxCount) : items;
+
+  const handleActiveBar = () => {
+    setActiveBar(DESCRIPTION_BAR)
+  }
 
   return (
     <List aria-label="places" className={short ? "" : classes.list}>
       {items.map((item, id) => (
         <div key={id}>
-          <ListItem button classes={{ gutters: classes.listItemGutters }}>
+          <ListItem button classes={{ gutters: classes.listItemGutters }} onClick={handleActiveBar}>
             <ListItemText
               primary={item.name}
               primaryTypographyProps={{ style: { fontWeight: 500 } }}

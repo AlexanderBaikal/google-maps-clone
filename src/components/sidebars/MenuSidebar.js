@@ -77,7 +77,7 @@ const MenuSidebar = ({ menuSidebar, setMenuSidebar }) => {
           src="https://www.google.com/images/branding/googlelogo/2x/googlelogo_color_74x24dp.png"
           alt="logo"
         />
-        <IconButton onClick={setMenuSidebar}>
+        <IconButton onClick={() => setMenuSidebar(menuSidebar)}>
           <CloseIcon />
         </IconButton>
       </div>

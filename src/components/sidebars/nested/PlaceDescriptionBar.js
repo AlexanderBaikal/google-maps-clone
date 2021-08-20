@@ -146,7 +146,7 @@ const places = [
   },
 ];
 
-const PlaceDescriptionBar = () => {
+const PlaceDescriptionBar = ({ setActiveBar, content }) => {
   const classes = useStyles();
 
   const [openEdit, setOpenEdit] = useState(false);
@@ -187,12 +187,12 @@ const PlaceDescriptionBar = () => {
         alt=""
         className={classes.topImage}
       />
-      <BasicInfo />
+      <BasicInfo content={content} />
       <Divider />
       <ActionButtons />
       <Divider />
       <div className={classes.listInfo}>
-        <ListInfo />
+        <ListInfo content={content} />
         <BottomButton
           title="Suggest an edit"
           startIcon={CreateOutlinedIcon}
@@ -243,7 +243,12 @@ const PlaceDescriptionBar = () => {
           <Chips />
         </div>
         <div className={classes.directoryPlaces}>
-          <PlacesList items={places} maxCount={4} short />
+          <PlacesList
+            items={places}
+            maxCount={4}
+            short
+            setActiveBar={setActiveBar}
+          />
         </div>
         <BottomButton title="View all" textButton />
       </div>
