@@ -29,7 +29,7 @@ import BottomButton from "./../../inlines/BottomButton";
 import EditModal from "./../../modals/EditModal";
 import UploadPhotoModal from "./../../modals/UploadPhotoModal";
 import CompletePhotoModal from "./../../modals/CompletePhotoModal";
-import { storageRef } from "./../../../firebase";
+import ReviewModal from "../../modals/ReviewModal";
 
 const useStyles = makeStyles((theme) => ({
   root: {},
@@ -77,80 +77,13 @@ const useStyles = makeStyles((theme) => ({
     border: "1px solid blue",
     fontSize: "1rem",
   },
+  
   subheaderButton: {
     borderRadius: "100px",
     padding: "5px 15px",
     minWidth: "35px",
   },
 }));
-
-const places = [
-  {
-    name: "24/7 store",
-    type: "Grocery store",
-    address: "Central st., 99",
-    openInfo: "Open until 22:00",
-    extraInfo: "In-store shopping",
-    photoUrl:
-      "https://maps.gstatic.com/tactile/pane/result-no-thumbnail-2x.png",
-    rating: {
-      value: 3.5,
-      count: 163,
-    },
-  },
-  {
-    name: "24/7 store",
-    type: "Grocery store",
-    address: "Central st., 99",
-    openInfo: "Open until 22:00",
-    extraInfo: "In-store shopping",
-    photoUrl:
-      "https://maps.gstatic.com/tactile/pane/result-no-thumbnail-2x.png",
-    rating: {
-      value: 3.5,
-      count: 163,
-    },
-  },
-  {
-    name: "24/7 store",
-    type: "Grocery store",
-    address: "Central st., 99",
-    openInfo: "Open until 22:00",
-    extraInfo: "In-store shopping",
-    photoUrl:
-      "https://maps.gstatic.com/tactile/pane/result-no-thumbnail-2x.png",
-    rating: {
-      value: 3.5,
-      count: 163,
-    },
-  },
-  {
-    name: "24/7 store",
-    type: "Grocery store",
-    address: "Central st., 99",
-    openInfo: "Open until 22:00",
-    extraInfo: "In-store shopping",
-    photoUrl:
-      "https://maps.gstatic.com/tactile/pane/result-no-thumbnail-2x.png",
-    rating: {
-      value: 3.5,
-      count: 163,
-    },
-  },
-  {
-    name: "24/7 store",
-    type: "Grocery store",
-    address: "Central st., 99",
-    openInfo: "Open until 22:00",
-    extraInfo: "In-store shopping",
-    photoUrl:
-      "https://maps.gstatic.com/tactile/pane/result-no-thumbnail-2x.png",
-    rating: {
-      value: 3.5,
-      count: 163,
-    },
-  },
-];
 
 const PlaceDescriptionBar = ({ setActiveBar, content, images, places }) => {
   const classes = useStyles();
@@ -263,7 +196,7 @@ const PlaceDescriptionBar = ({ setActiveBar, content, images, places }) => {
       <Divider />
       <div className={classes.review}>
         <HeaderBar title="Review Summary" />
-        <RatingReview />
+        <RatingReview content={content} />
         <BottomButton
           title="Write a review"
           startIcon={RateReviewOutlinedIcon}
@@ -271,6 +204,7 @@ const PlaceDescriptionBar = ({ setActiveBar, content, images, places }) => {
       </div>
       <Divider />
       <div className={classes.comments}>
+        {/* <ReviewModal /> */}
         <HeaderBar
           title="Reviews"
           buttons={

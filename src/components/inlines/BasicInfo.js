@@ -1,6 +1,7 @@
 import { Box, Link, makeStyles, Typography } from "@material-ui/core";
 import Rating from "@material-ui/lab/Rating";
 import { useEffect } from "react";
+import numeral from "numeral";
 
 const useStyles = makeStyles((theme) => ({
   root: {},
@@ -13,20 +14,27 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const BasicInfo = ({content}) => {
+const BasicInfo = ({ content }) => {
   const classes = useStyles();
 
   return (
     <div className={classes.basicInfo}>
       <Typography variant="h1">{content.name}</Typography>
       <Typography variant="h2" style={{ marginTop: "4px" }}>
-      {content.name}
+        {content.name}
       </Typography>
       <Typography variant="body2" component="div" style={{ marginTop: "8px" }}>
         <div className={classes.rating}>
-          <Box mr="3px">{content.ratingValue}</Box>
-          <Rating name="read-only" value={content.ratingValue || 5} readOnly size="small" />
-          <Box ml="3px">{content.ratingCount}</Box>
+          <Box mr="3px">{numeral(content.ratingValue).format("0.0")}</Box>
+          <Rating
+            name="read-only"
+            value={content.ratingValue || 5}
+            readOnly
+            size="small"
+          />
+          <Box ml="3px">
+            {numeral(content.ratingCount).format("0,0") + " rewiews"}
+          </Box>
         </div>
         <Link
           href="#"

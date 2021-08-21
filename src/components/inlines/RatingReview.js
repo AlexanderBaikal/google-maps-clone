@@ -1,10 +1,11 @@
 import { Button, LinearProgress, makeStyles } from "@material-ui/core";
 import { Rating } from "@material-ui/lab";
+import numeral from "numeral";
 
 const useStyles = makeStyles((theme) => ({
   root: {},
   reviewGraphics: {
-    width: "50%",
+    width: "60%",
   },
   reviewGraphicsItem: {
     display: "flex",
@@ -53,7 +54,7 @@ const reviewGraphicsItems = [
   { mark: 1, value: 5 },
 ];
 
-const RatingReview = () => {
+const RatingReview = ({ content }) => {
   const classes = useStyles();
   return (
     <div className={classes.reviewContent}>
@@ -73,10 +74,12 @@ const RatingReview = () => {
         </div>
       </div>
       <div className={classes.reviewStars}>
-        <span className={classes.reviewValue}>4.6</span>
+        <span className={classes.reviewValue}>
+          {numeral(content.ratingValue).format("0.0")}
+        </span>
         <Rating
           name="read-only"
-          value={4.6}
+          value={content.ratingValue}
           size="small"
           readOnly
           precision={0.5}
@@ -85,9 +88,7 @@ const RatingReview = () => {
           className={classes.textButton}
           color="primary"
           style={{ padding: "4px", fontSize: "12px" }}
-        >
-          1,655 reviews
-        </Button>
+        >{`${numeral(content.ratingCount).format("0,0")} reviews`}</Button>
       </div>
     </div>
   );
