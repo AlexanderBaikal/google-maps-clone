@@ -5,10 +5,10 @@ import {
   DESCRIPTION_BAR,
   MAIN_UNDERSEARCH_BAR,
   PLACES_BAR,
-} from "../../redux/sidebars/actions";
-import MainUnderSearchContainer from "./nested/MainUnderSearchContainer";
-import PlaceDescriptionContainer from "./nested/PlaceDescriptionContainer";
-import PlacesContainer from "./nested/PlacesContainer";
+} from "../../../redux/sidebars/actions";
+import MainUnderSearchContainer from "../mainUnderSearch/MainUnderSearchContainer";
+import PlaceDescriptionContainer from "../placeDescription/PlaceDescriptionContainer";
+import PlacesContainer from "../places/PlacesContainer";
 
 const useStyles = makeStyles((theme) => ({
   underSearch: {

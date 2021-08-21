@@ -28,6 +28,13 @@ const theme = createTheme({
       fontSize: "1.2rem",
     }
   },
+  props: {
+    // Name of the component ⚛️
+    MuiButtonBase: {
+      // The properties to apply
+      disableRipple: true, // No more ripple, on the whole application 💣!
+    },
+  },
 });
 
 theme.overrides = {
@@ -44,7 +51,8 @@ theme.overrides = {
   },
   MuiTab:{
     root: { textTransform: "none" },
-  }
+  },
+
 };
 
 export default theme;

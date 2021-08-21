@@ -31,7 +31,8 @@ const useStyles = makeStyles((theme) => ({
     height: "50px",
   },
   title: {
-    fontSize: "0.7rem",
+    fontSize: "0.9rem",
+    fontWeight: 600,
   },
   imageListItem: {
     borderRadius: "8px",
@@ -64,35 +65,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const itemData = [
-  {
-    img: "https://material-ui.com/static/images/image-list/breakfast.jpg",
-    title: "Summer breakfast",
-    author: "author",
-  },
-  {
-    img: "https://material-ui.com/static/images/image-list/burgers.jpg",
-    title: "Hamburger",
-    author: "author",
-  },
-  {
-    img: "https://material-ui.com/static/images/image-list/camera.jpg",
-    title: "Something",
-    author: "author",
-  },
-  {
-    img: "https://material-ui.com/static/images/image-list/morning.jpg",
-    title: "Morning coffee",
-    author: "author",
-  },
-  {
-    img: "http://material-ui.com/static/images/image-list/breakfast.jpg",
-    title: "Image",
-    author: "author",
-  },
-];
-
-const PhotoCards = () => {
+const PhotoCards = ({ images }) => {
   const classes = useStyles();
 
   const [shiftedEnd, setShiftedEnd] = useState(false);
@@ -103,6 +76,19 @@ const PhotoCards = () => {
 
   const shiftStart = () => {
     setShiftedEnd(false);
+  };
+
+  const itemData = () => {
+    var titles = ["All", "Latest", "Inside", "Street View", "Videos"];
+    return titles.slice(0, 5).map((title, i) => {
+      return {
+        img:
+          images[i] ||
+          images[0] ||
+          "https://maps.gstatic.com/tactile/pane/result-no-thumbnail-2x.png",
+        title,
+      };
+    });
   };
 
   return (
@@ -117,7 +103,7 @@ const PhotoCards = () => {
         rowHeight={150}
         gap={8}
       >
-        {itemData.map((item) => (
+        {itemData().map((item) => (
           <ImageListItem
             key={item.img}
             classes={{ item: classes.imageListItem }}

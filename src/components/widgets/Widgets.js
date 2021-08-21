@@ -1,15 +1,11 @@
 import { makeStyles } from "@material-ui/core";
 import clsx from "clsx";
-import { useState } from "react";
 import BottomGallery from "./bottomGallery/BottomGallery";
-import UnderSearchBar from "../sidebars/UnderSearchBar";
-import UnderSearchContainer from "../sidebars/UnderSearchContainer";
+import UnderSearchContainer from "../sidebars/wrapper/UnderSearchContainer";
 import HorizontalContainer from "./horizontalWidget/HorizontalContainer";
 import MinimapWidget from "./minimapWidget/MinimapWidget";
-import SearchBar from "./searchBar/SearchBar";
 import SearchbarContainer from "./searchBar/SearchbarContainer";
 import UserWidget from "./userWidget/UserWidget";
-import VerticalWidget from "./verticalWidget/VerticalWidget";
 import VerticalContainer from "./verticalWidget/VerticalContainer";
 
 const useStyles = makeStyles({

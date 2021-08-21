@@ -70,12 +70,11 @@ const MyDropzone = ({ onComplete }) => {
   const onDrop = (files) => {
     console.log("processFiles", files);
     for (var file of files) {
-      console.log("@", file.path);
-      loadPhoto(file);
+      uploadPhoto(file);
     }
   };
 
-  const loadPhoto = (file) => {
+  const uploadPhoto = (file) => {
     var fileRef = storageRef.child(file.name);
     setLoading(true);
 
@@ -83,11 +82,15 @@ const MyDropzone = ({ onComplete }) => {
       .put(file)
       .then(() => {
         setLoading(false);
+        onComplete();
+        storageRef.root.listAll().then((res) => console.log(res));
       })
       .catch((e) => {
         alert(e);
       });
   };
+
+
 
   return (
     <Dropzone

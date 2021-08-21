@@ -9,4 +9,3 @@ export const setActiveBar = (activeBar) => {
     payload: activeBar,
   };
 };
-

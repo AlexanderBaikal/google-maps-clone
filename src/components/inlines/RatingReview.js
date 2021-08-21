@@ -59,8 +59,8 @@ const RatingReview = () => {
     <div className={classes.reviewContent}>
       <div className={classes.reviewGraphics}>
         <div>
-          {reviewGraphicsItems.map((item) => (
-            <div className={classes.reviewGraphicsItem}>
+          {reviewGraphicsItems.map((item, i) => (
+            <div className={classes.reviewGraphicsItem} key={i}>
               <span className={classes.reviewSpan}>{item.mark}</span>
               <LinearProgress
                 className={classes.progress}

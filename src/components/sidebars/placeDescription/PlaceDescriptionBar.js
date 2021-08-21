@@ -16,23 +16,29 @@ import RateReviewOutlinedIcon from "@material-ui/icons/RateReviewOutlined";
 import clsx from "clsx";
 import { useState } from "react";
 import CameraAltOutlinedIcon from "@material-ui/icons/CameraAltOutlined";
-import PlacesList from "../../inlines/PlacesList";
-import Comments from "../../inlines/Comments";
-import Chips from "../../inlines/Chips";
-import RatingReview from "../../inlines/RatingReview";
-import PhotoCards from "../../inlines/PhotoCards";
-import ListInfo from "../../inlines/ListInfo";
-import ActionButtons from "../../inlines/ActionButtons";
-import BasicInfo from "../../inlines/BasicInfo";
-import HeaderBar from "../../inlines/HeaderBar";
-import BottomButton from "../../inlines/BottomButton";
-import EditModal from "../../modals/EditModal";
-import UploadPhotoModal from "../../modals/UploadPhotoModal";
-import CompletePhotoModal from "../../modals/CompletePhotoModal";
+import PlacesList from "./../../inlines/PlacesList";
+import Comments from "./../../inlines/Comments";
+import Chips from "./../../inlines/Chips";
+import RatingReview from "./../../inlines/RatingReview";
+import PhotoCards from "./../../inlines/PhotoCards";
+import ListInfo from "./../../inlines/ListInfo";
+import ActionButtons from "./../../inlines/ActionButtons";
+import BasicInfo from "./../../inlines/BasicInfo";
+import HeaderBar from "./../../inlines/HeaderBar";
+import BottomButton from "./../../inlines/BottomButton";
+import EditModal from "./../../modals/EditModal";
+import UploadPhotoModal from "./../../modals/UploadPhotoModal";
+import CompletePhotoModal from "./../../modals/CompletePhotoModal";
+import { storageRef } from "./../../../firebase";
 
 const useStyles = makeStyles((theme) => ({
   root: {},
-  topImage: { overflow: "hidden", width: "100%" },
+  topImage: {
+    overflow: "hidden",
+    width: "100%",
+    objectFit: "cover",
+    height: "235px",
+  },
 
   listInfo: {
     padding: "6px 0",
@@ -146,7 +152,7 @@ const places = [
   },
 ];
 
-const PlaceDescriptionBar = ({ setActiveBar, content }) => {
+const PlaceDescriptionBar = ({ setActiveBar, content, images, places }) => {
   const classes = useStyles();
 
   const [openEdit, setOpenEdit] = useState(false);
@@ -183,8 +189,8 @@ const PlaceDescriptionBar = ({ setActiveBar, content }) => {
   return (
     <div>
       <img
-        src="https://lh5.googleusercontent.com/p/AF1QipOGhfXAIoIdT-qFA6SD4HTRLPEvQ-xiCnR3Dh_6=w426-h240-k-no"
-        alt=""
+        src={content.imageUrl || images[0]}
+        alt="top image"
         className={classes.topImage}
       />
       <BasicInfo content={content} />
@@ -205,7 +211,7 @@ const PlaceDescriptionBar = ({ setActiveBar, content }) => {
       <Divider />
       <div className={classes.photos}>
         <HeaderBar title="Photos" />
-        <PhotoCards />
+        <PhotoCards images={images} />
 
         <BottomButton
           title="Add a photo"
@@ -242,14 +248,16 @@ const PlaceDescriptionBar = ({ setActiveBar, content }) => {
           />
           <Chips />
         </div>
-        <div className={classes.directoryPlaces}>
-          <PlacesList
-            items={places}
-            maxCount={4}
-            short
-            setActiveBar={setActiveBar}
-          />
-        </div>
+        {places ? (
+          <div className={classes.directoryPlaces}>
+            <PlacesList
+              items={places}
+              maxCount={4}
+              short
+              setActiveBar={setActiveBar}
+            />
+          </div>
+        ) : null}
         <BottomButton title="View all" textButton />
       </div>
       <Divider />

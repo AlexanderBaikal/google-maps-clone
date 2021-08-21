@@ -17,6 +17,7 @@ const useStyles = makeStyles((theme) => ({
     borderRadius: "8px",
     marginLeft: "10px",
     marginTop: "5px",
+    objectFit: "cover",
   },
   listItemGutters: {
     paddingLeft: "26px",
@@ -35,19 +36,27 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const PlacesList = ({ items = [], maxCount = 0, short = false, setActiveBar }) => {
+const PlacesList = ({ items, maxCount = 0, short = false, setActiveBar, setDescriptionData }) => {
   const classes = useStyles();
   items = maxCount ? items.slice(0, maxCount) : items;
 
-  const handleActiveBar = () => {
-    setActiveBar(DESCRIPTION_BAR)
-  }
+  const showDescription = (value) => {
+    setDescriptionData(value)
+    setActiveBar(DESCRIPTION_BAR);
+    
+  };
+
+  items = items || [];
 
   return (
     <List aria-label="places" className={short ? "" : classes.list}>
       {items.map((item, id) => (
         <div key={id}>
-          <ListItem button classes={{ gutters: classes.listItemGutters }} onClick={handleActiveBar}>
+          <ListItem
+            button
+            classes={{ gutters: classes.listItemGutters }}
+            onClick={() => showDescription(item.name)}
+          >
             <ListItemText
               primary={item.name}
               primaryTypographyProps={{ style: { fontWeight: 500 } }}
@@ -56,14 +65,14 @@ const PlacesList = ({ items = [], maxCount = 0, short = false, setActiveBar }) =
               secondary={
                 <>
                   <div className={classes.rating}>
-                    <Box mr="3px">{item.rating.value}</Box>
+                    <Box mr="3px">{item.ratingValue}</Box>
                     <Rating
                       name="read-only"
-                      value={item.rating.value}
+                      value={item.ratingValue}
                       readOnly
                       size="small"
                     />
-                    <Box ml="3px">({item.rating.count})</Box>
+                    <Box ml="3px">({item.ratingCount})</Box>
                   </div>
                   <Typography variant="body2" className={classes.inline}>
                     {item.type} · {item.address}
@@ -89,7 +98,10 @@ const PlacesList = ({ items = [], maxCount = 0, short = false, setActiveBar }) =
               }
             />
             <img
-              src="https://maps.gstatic.com/tactile/pane/result-no-thumbnail-2x.png"
+              src={
+                item.imageUrl ||
+                "https://maps.gstatic.com/tactile/pane/result-no-thumbnail-2x.png"
+              }
               alt=""
               className={classes.image}
             />

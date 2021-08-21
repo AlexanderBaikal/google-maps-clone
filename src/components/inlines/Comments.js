@@ -67,7 +67,7 @@ const Comments = () => {
         <Chips />
       </div>
       {[...Array(3)].map((item, i) => (
-        <>
+        <div key={i}>
           <div className={classes.comment}>
             <div className={classes.commentHeader}>
               <Avatar
@@ -122,7 +122,7 @@ const Comments = () => {
             </Button>
           </div>
           {i < 2 ? <Divider /> : null}
-        </>
+        </div>
       ))}
       <div className={classes.textButtonContainer}>
         <Button className={classes.textButton}>

@@ -17,7 +17,7 @@ import ArrowBackIosIcon from "@material-ui/icons/ArrowBackIos";
 import ArrowForwardIosIcon from "@material-ui/icons/ArrowForwardIos";
 import { Popper } from "@material-ui/core";
 import Popover from "@material-ui/core/Popover";
-import PlacesList from "../../inlines/PlacesList";
+import PlacesList from "./../../inlines/PlacesList";
 
 const useStyles = makeStyles((theme) => ({
   root: {},
@@ -61,7 +61,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const PlacesUnderSearchBar = ({ setActiveBar }) => {
+const PlacesUnderSearchBar = ({ setActiveBar, allPlaces, setDescriptionData }) => {
   const classes = useStyles();
 
   const [anchorEl, setAnchorEl] = useState(null);
@@ -83,73 +83,20 @@ const PlacesUnderSearchBar = ({ setActiveBar }) => {
     setValue(event.target.value);
   };
 
-  const places = [
-    {
-      name: "24/7 store",
-      type: "Grocery store",
-      address: "Central st., 99",
-      openInfo: "Open until 22:00",
-      extraInfo: "In-store shopping",
-      photoUrl:
-        "https://maps.gstatic.com/tactile/pane/result-no-thumbnail-2x.png",
-      rating: {
-        value: 3.5,
-        count: 163,
-      },
-    },
-    {
-      name: "24/7 store",
-      type: "Grocery store",
-      address: "Central st., 99",
-      openInfo: "Open until 22:00",
-      extraInfo: "In-store shopping",
-      photoUrl:
-        "https://maps.gstatic.com/tactile/pane/result-no-thumbnail-2x.png",
-      rating: {
-        value: 3.5,
-        count: 163,
-      },
-    },
-    {
-      name: "24/7 store",
-      type: "Grocery store",
-      address: "Central st., 99",
-      openInfo: "Open until 22:00",
-      extraInfo: "In-store shopping",
-      photoUrl:
-        "https://maps.gstatic.com/tactile/pane/result-no-thumbnail-2x.png",
-      rating: {
-        value: 3.5,
-        count: 163,
-      },
-    },
-    {
-      name: "24/7 store",
-      type: "Grocery store",
-      address: "Central st., 99",
-      openInfo: "Open until 22:00",
-      extraInfo: "In-store shopping",
-      photoUrl:
-        "https://maps.gstatic.com/tactile/pane/result-no-thumbnail-2x.png",
-      rating: {
-        value: 3.5,
-        count: 163,
-      },
-    },
-    {
-      name: "24/7 store",
-      type: "Grocery store",
-      address: "Central st., 99",
-      openInfo: "Open until 22:00",
-      extraInfo: "In-store shopping",
-      photoUrl:
-        "https://maps.gstatic.com/tactile/pane/result-no-thumbnail-2x.png",
-      rating: {
-        value: 3.5,
-        count: 163,
-      },
-    },
-  ];
+  // const places = [
+  //   {
+  //     name: "24/7 store",
+  //     type: "Grocery store",
+  //     address: "Central st., 99",
+  //     openInfo: "Open until 22:00",
+  //     extraInfo: "In-store shopping",
+  //     photoUrl:
+  //       "https://maps.gstatic.com/tactile/pane/result-no-thumbnail-2x.png",
+  //     rating: {
+  //       value: 3.5,
+  //       count: 163,
+  //     },
+  //   },
 
   return (
     <div className={classes.root}>
@@ -249,7 +196,8 @@ const PlacesUnderSearchBar = ({ setActiveBar }) => {
       </Paper>
       <PlacesList
         setActiveBar={setActiveBar}
-        items={places}
+        items={allPlaces}
+        setDescriptionData={setDescriptionData}
       />
       <div className={classes.footer}>
         <Divider />

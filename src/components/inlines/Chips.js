@@ -29,8 +29,9 @@ const Chips = () => {
 
   return (
     <div className={classes.directoryChips}>
-      {directoryChipItems.map((item) => (
+      {directoryChipItems.map((item, i) => (
         <Chip
+          key={i}
           variant="outlined"
           label={<Typography variant="body2">{item}</Typography>}
           onClick={() => {}}

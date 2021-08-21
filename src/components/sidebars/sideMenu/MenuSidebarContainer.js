@@ -1,6 +1,6 @@
 import { connect } from "react-redux";
 import MenuSidebar from "./MenuSidebar";
-import { setMenuSidebar } from "./../../redux/actions";
+import { setMenuSidebar } from "../../../redux/actions";
 
 const MenuSidebarContainer = (props) => {
   return (

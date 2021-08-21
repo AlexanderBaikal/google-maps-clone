@@ -50,8 +50,8 @@ const ListInfo = ({ content }) => {
 
   return (
     <List>
-      {listInfo.map((item) => (
-        <ListItem button classes={{ gutters: classes.listItemGutters }}>
+      {listInfo.map((item, i) => (
+        <ListItem button classes={{ gutters: classes.listItemGutters }} key={i}>
           <ListItemIcon classes={{ root: classes.listItemIcon }}>
             <item.iconComponent color="primary" />
           </ListItemIcon>

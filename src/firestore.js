@@ -13,8 +13,6 @@ firebase.initializeApp({
 
 var db = firebase.firestore();
 
-
-
 {
   // Add a new document in collection "descriptions"
   // db.collection("descriptions")
@@ -163,3 +161,111 @@ var db = firebase.firestore();
 // }).catch((error) => {
 //     console.log("Error getting document:", error);
 // });
+
+// db.collection("descriptions")
+// .doc("O'key")
+// .set({
+//   address:
+//     "Trts Komsomoll, Ulitsa Verkhnyaya Naberezhnaya, 10, Irkutsk, Irkutsk Oblast, 664022",
+//   lastVisit: firebase.firestore.Timestamp.fromDate(
+//     new Date("March 1, 2021 at 13:00:00 AM UTC+8")
+//   ),
+//   website: "okmarket.ru",
+//   name: "O'key",
+//   phoneNumber: "+73952784400",
+//   ratingCount: "3343",
+//   ratingValue: "4.42",
+//   inside: db.doc('places/Yarkomoll'),
+//   schedule: {
+//     monday: {
+//       open: "8:00",
+//       close: "23:00",
+//     },
+//     tuesday: {
+//       open: "8:00",
+//       close: "23:00",
+//     },
+//     wednesday: {
+//       open: "8:00",
+//       close: "23:00",
+//     },
+//     thursday: {
+//       open: "8:00",
+//       close: "23:00",
+//     },
+//     friday: {
+//       open: "8:00",
+//       close: "23:00",
+//     },
+//     saturday: {
+//       open: "8:00",
+//       close: "23:00",
+//     },
+//     sunday: {
+//       open: "8:00",
+//       close: "23:00",
+//     },
+//   },
+// })
+// .then(() => {
+//   console.log("Document successfully written!");
+// })
+// .catch((error) => {
+//   console.error("Error writing document: ", error);
+// });
+
+db.collection("descriptions")
+  .doc("Sportmaster")
+  .set({
+    address:
+      "Ulitsa Verkhnyaya Naberezhnaya, 10, Irkutsk, Irkutsk Oblast, 664022",
+    lastVisit: firebase.firestore.Timestamp.fromDate(
+      new Date("February 10, 2021 at 16:00:00 AM UTC+8")
+    ),
+    type: "Sporting goods store",
+    website: "www.sportmaster.ru",
+    name: "Sportmaster",
+    about: {
+      pros: ["In-store shopping", "Delivery", "In-store pick-up"],
+    },
+    phoneNumber: "+78007777771",
+    ratingCount: 1902,
+    ratingValue: 4.44,
+    inside: db.doc("places/Yarkomoll"),
+    schedule: {
+      monday: {
+        open: "10:00",
+        close: "22:00",
+      },
+      tuesday: {
+        open: "10:00",
+        close: "22:00",
+      },
+      wednesday: {
+        open: "10:00",
+        close: "22:00",
+      },
+      thursday: {
+        open: "10:00",
+        close: "22:00",
+      },
+      friday: {
+        open: "10:00",
+        close: "22:00",
+      },
+      saturday: {
+        open: "10:00",
+        close: "22:00",
+      },
+      sunday: {
+        open: "10:00",
+        close: "22:00",
+      },
+    },
+  })
+  .then(() => {
+    console.log("Document successfully written!");
+  })
+  .catch((error) => {
+    console.error("Error writing document: ", error);
+  });

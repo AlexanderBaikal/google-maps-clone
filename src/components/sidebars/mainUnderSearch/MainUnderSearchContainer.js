@@ -1,6 +1,6 @@
 import MainUnderSearchBar from "./MainUnderSearchBar";
 import { setUnderSearchBar } from "../../../redux/widgets/actions";
-import {setActiveBar} from './../../../redux/sidebars/actions'
+import {setActiveBar} from '../../../redux/sidebars/actions'
 import { connect } from "react-redux";
 
 const MainUnderSearchContainer = (props) => {
