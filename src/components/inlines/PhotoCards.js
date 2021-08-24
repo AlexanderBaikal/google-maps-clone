@@ -80,12 +80,11 @@ const PhotoCards = ({ images }) => {
 
   const itemData = () => {
     var titles = ["All", "Latest", "Inside", "Street View", "Videos"];
-    return titles.slice(0, 5).map((title, i) => {
+    return titles.map((title, i) => {
       return {
-        img:
-          images[i] ||
-          images[0] ||
-          "https://maps.gstatic.com/tactile/pane/result-no-thumbnail-2x.png",
+        img: images
+          ? images[i] || images[0] || "https://maps.gstatic.com/tactile/pane/result-no-thumbnail-2x.png"
+          : "https://maps.gstatic.com/tactile/pane/result-no-thumbnail-2x.png",
         title,
       };
     });
@@ -103,9 +102,9 @@ const PhotoCards = ({ images }) => {
         rowHeight={150}
         gap={8}
       >
-        {itemData().map((item) => (
+        {itemData().map((item, i) => (
           <ImageListItem
-            key={item.img}
+            key={i}
             classes={{ item: classes.imageListItem }}
             style={{ width: "120px" }}
           >

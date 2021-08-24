@@ -1,6 +1,9 @@
 import { combineReducers } from "redux";
-import { MAIN_UNDERSEARCH_BAR, SET_ACTIVE_BAR, SET_DESCRIPTION_DATA } from "./actions";
-import { descriptionBarReducer } from "./placeDescription/reducers";
+import {
+  MAIN_UNDERSEARCH_BAR,
+  SET_ACTIVE_BAR,
+} from "./actions";
+import descriptionBarReducer from "./placeDescription/reducers";
 import { placesBarReducer } from "./placesBar/reducers";
 
 const defaultState = {

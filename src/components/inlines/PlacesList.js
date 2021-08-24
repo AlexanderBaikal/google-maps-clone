@@ -9,6 +9,8 @@ import {
   Box,
 } from "@material-ui/core";
 import { DESCRIPTION_BAR } from "../../redux/sidebars/actions";
+import { useDispatch } from "react-redux";
+import { createRef, useEffect, useRef, useState } from "react";
 
 const useStyles = makeStyles((theme) => ({
   image: {
@@ -36,17 +38,39 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const PlacesList = ({ items, maxCount = 0, short = false, setActiveBar, setDescriptionData }) => {
+const PlacesList = ({
+  items,
+  maxCount = 0,
+  short = false,
+  setActiveBar,
+  setDescriptionData,
+}) => {
   const classes = useStyles();
   items = maxCount ? items.slice(0, maxCount) : items;
 
   const showDescription = (value) => {
-    setDescriptionData(value)
     setActiveBar(DESCRIPTION_BAR);
-    
+    setDescriptionData(value);
   };
 
   items = items || [];
+
+  const [imgRefs, setImgRefs] = useState([]);
+
+  useEffect(() => {
+    // add or remove refs
+    setImgRefs((imgRefs) =>
+      Array(items.length)
+        .fill()
+        .map((_, i) => imgRefs[i] || createRef())
+    );
+  }, [items.length]);
+
+  const onImageError = (index) => {
+    console.log("@", imgRefs, index, imgRefs[index]);
+    imgRefs[index].current.src =
+      "https://maps.gstatic.com/tactile/pane/result-no-thumbnail-2x.png";
+  };
 
   return (
     <List aria-label="places" className={short ? "" : classes.list}>
@@ -98,11 +122,10 @@ const PlacesList = ({ items, maxCount = 0, short = false, setActiveBar, setDescr
               }
             />
             <img
-              src={
-                item.imageUrl ||
-                "https://maps.gstatic.com/tactile/pane/result-no-thumbnail-2x.png"
-              }
+              src={item.imageUrl}
               alt=""
+              ref={imgRefs[id]}
+              onError={() => onImageError(id)}
               className={classes.image}
             />
           </ListItem>

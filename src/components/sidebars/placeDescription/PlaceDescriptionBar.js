@@ -27,9 +27,9 @@ import BasicInfo from "./../../inlines/BasicInfo";
 import HeaderBar from "./../../inlines/HeaderBar";
 import BottomButton from "./../../inlines/BottomButton";
 import EditModal from "./../../modals/EditModal";
-import UploadPhotoModal from "./../../modals/UploadPhotoModal";
-import CompletePhotoModal from "./../../modals/CompletePhotoModal";
-import ReviewModal from "../../modals/ReviewModal";
+import UploadPhotoModal from "./../../modals/uploadPhoto/UploadPhotoModal";
+import CompletePhotoModal from "./../../modals/uploadPhoto/CompletePhotoModal";
+import ReviewModal from "../../modals/review/ReviewModal";
 
 const useStyles = makeStyles((theme) => ({
   root: {},
@@ -77,7 +77,7 @@ const useStyles = makeStyles((theme) => ({
     border: "1px solid blue",
     fontSize: "1rem",
   },
-  
+
   subheaderButton: {
     borderRadius: "100px",
     padding: "5px 15px",
@@ -85,7 +85,14 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const PlaceDescriptionBar = ({ setActiveBar, content, images, places }) => {
+const PlaceDescriptionBar = ({
+  setActiveBar,
+  content,
+  images,
+  places,
+  comments,
+  setDescriptionData,
+}) => {
   const classes = useStyles();
 
   const [openEdit, setOpenEdit] = useState(false);
@@ -119,10 +126,21 @@ const PlaceDescriptionBar = ({ setActiveBar, content, images, places }) => {
     setOpenCompletePhoto(false);
   };
 
+  const [topImgSrc, setTopImgSrc] = useState(content.imageUrl);
+
+  const onTopImageError = () => {
+    setTopImgSrc(
+      "https://maps.gstatic.com/tactile/pane/default_geocode-2x.png"
+    );
+  };
+
+  const [addComment, setAddComment] = useState(false);
+
   return (
     <div>
       <img
-        src={content.imageUrl || images[0]}
+        src={topImgSrc}
+        onError={onTopImageError}
         alt="top image"
         className={classes.topImage}
       />
@@ -156,6 +174,7 @@ const PlaceDescriptionBar = ({ setActiveBar, content, images, places }) => {
             onClose={handleCloseUploadPhoto}
             isOpen={openUploadPhoto}
             onComplete={handleOpenCompletePhoto}
+            keyword={content.name}
           />
         ) : null}
         {openCompletePhoto ? (
@@ -188,6 +207,7 @@ const PlaceDescriptionBar = ({ setActiveBar, content, images, places }) => {
               maxCount={4}
               short
               setActiveBar={setActiveBar}
+              setDescriptionData={setDescriptionData}
             />
           </div>
         ) : null}
@@ -198,13 +218,14 @@ const PlaceDescriptionBar = ({ setActiveBar, content, images, places }) => {
         <HeaderBar title="Review Summary" />
         <RatingReview content={content} />
         <BottomButton
+          onClick={() => setAddComment(true)}
           title="Write a review"
           startIcon={RateReviewOutlinedIcon}
         />
       </div>
       <Divider />
       <div className={classes.comments}>
-        {/* <ReviewModal /> */}
+        {addComment ? <ReviewModal setAddComment={setAddComment} /> : null}
         <HeaderBar
           title="Reviews"
           buttons={
@@ -224,7 +245,7 @@ const PlaceDescriptionBar = ({ setActiveBar, content, images, places }) => {
           }
         />
 
-        <Comments />
+        <Comments comments={comments} />
       </div>
     </div>
   );

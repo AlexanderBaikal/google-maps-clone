@@ -6,6 +6,7 @@ import MoreVertOutlinedIcon from "@material-ui/icons/MoreVertOutlined";
 import ThumbUpOutlinedIcon from "@material-ui/icons/ThumbUpOutlined";
 import ShareOutlinedIcon from "@material-ui/icons/ShareOutlined";
 import Chips from "./Chips";
+import CommentsImages from "./CommentsImages";
 
 const useStyles = makeStyles((theme) => ({
   root: {},
@@ -45,10 +46,11 @@ const useStyles = makeStyles((theme) => ({
   textButtonContainer: {
     display: "flex",
     justifyContent: "center",
+    marginBottom: "8px",
   },
   textButton: {
     padding: "6px 10px",
-    marginBottom: "8px",
+
     fontWeight: 400,
     "&:hover": {
       backgroundColor: "#e3f2fd",
@@ -59,14 +61,19 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const Comments = () => {
+const Comments = ({ comments }) => {
   const classes = useStyles();
+
+  console.log(comments);
+  comments = comments ? comments.comments : [];
+
   return (
     <div className={classes.comments}>
       <div className={classes.directoryFilters}>
         <Chips />
       </div>
-      {[...Array(3)].map((item, i) => (
+
+      {comments.map((item, i) => (
         <div key={i}>
           <div className={classes.comment}>
             <div className={classes.commentHeader}>
@@ -76,14 +83,14 @@ const Comments = () => {
               />
               <div className={classes.commentHeaderName}>
                 <Typography classes={{ body1: classes.lineHeightOne }}>
-                  Firstname Lastname
+                  {item.author.name}
                 </Typography>
                 <Typography
                   classes={{ body2: classes.lineHeightOne }}
                   variant="body2"
                   color="textSecondary"
                 >
-                  20 reviews
+                  {item.author.reviewCount + " review(s)"}
                 </Typography>
               </div>
               <IconButton
@@ -95,19 +102,11 @@ const Comments = () => {
             </div>
           </div>
           <div className={classes.commentBody}>
-            <Rating
-              name="read-only"
-              value={4.6}
-              size="small"
-              readOnly
-              precision={0.5}
-            />
+            <Rating name="read-only" value={item.value} size="small" readOnly />
             <Typography variant="body2" className={classes.commentText}>
-              Lorem ipsum dolor sit amet consectetur adipisicing elit. Et,
-              illum! Mollitia explicabo enim repudiandae a tenetur eius repellat
-              debitis quis neque veniam, nemo ipsa eligendi id molestias,
-              deleniti doloremque veritatis?
+              {item.text}
             </Typography>
+            <CommentsImages images={item.photos} />
             <Button className={classes.commentButton}>
               <ThumbUpOutlinedIcon
                 classes={{ root: classes.commentButtonIcon }}
@@ -121,13 +120,17 @@ const Comments = () => {
               Share
             </Button>
           </div>
-          {i < 2 ? <Divider /> : null}
+          {i < comments.length - 1 ? <Divider /> : null}
         </div>
       ))}
       <div className={classes.textButtonContainer}>
-        <Button className={classes.textButton}>
-          <Typography variant="subtitle2">More reviews (1,466)</Typography>
-        </Button>
+        {!comments.length ? (
+          <div>No reviews yet</div>
+        ) : (
+          <Button className={classes.textButton}>
+            <Typography variant="subtitle2">More reviews (1,466)</Typography>
+          </Button>
+        )}
       </div>
     </div>
   );

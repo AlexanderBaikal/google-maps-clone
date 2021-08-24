@@ -13,6 +13,7 @@ firebase.initializeApp({
 
 var db = firebase.firestore();
 
+
 {
   // Add a new document in collection "descriptions"
   // db.collection("descriptions")
@@ -214,58 +215,41 @@ var db = firebase.firestore();
 //   console.error("Error writing document: ", error);
 // });
 
-db.collection("descriptions")
-  .doc("Sportmaster")
-  .set({
-    address:
-      "Ulitsa Verkhnyaya Naberezhnaya, 10, Irkutsk, Irkutsk Oblast, 664022",
-    lastVisit: firebase.firestore.Timestamp.fromDate(
-      new Date("February 10, 2021 at 16:00:00 AM UTC+8")
-    ),
-    type: "Sporting goods store",
-    website: "www.sportmaster.ru",
-    name: "Sportmaster",
-    about: {
-      pros: ["In-store shopping", "Delivery", "In-store pick-up"],
-    },
-    phoneNumber: "+78007777771",
-    ratingCount: 1902,
-    ratingValue: 4.44,
-    inside: db.doc("places/Yarkomoll"),
-    schedule: {
-      monday: {
-        open: "10:00",
-        close: "22:00",
-      },
-      tuesday: {
-        open: "10:00",
-        close: "22:00",
-      },
-      wednesday: {
-        open: "10:00",
-        close: "22:00",
-      },
-      thursday: {
-        open: "10:00",
-        close: "22:00",
-      },
-      friday: {
-        open: "10:00",
-        close: "22:00",
-      },
-      saturday: {
-        open: "10:00",
-        close: "22:00",
-      },
-      sunday: {
-        open: "10:00",
-        close: "22:00",
-      },
-    },
-  })
-  .then(() => {
-    console.log("Document successfully written!");
-  })
-  .catch((error) => {
-    console.error("Error writing document: ", error);
-  });
+// db.collection("comments")
+//   .doc("Yarkomoll")
+//   .set({
+//     comments: [
+//       {
+//         author: { name: "Alex White", link: "/", reviewCount: 23 },
+//         date: firebase.firestore.Timestamp.fromDate(
+//           new Date("March 1, 2021 at 13:00:00 AM UTC+8")
+//         ),
+//         value: 4,
+//         text: "Lorem, ipsum dolor sit amet consectetur adipisicing elit. Placeat porro doloremque facilis ex officiis aperiam maiores. Enim neque a similique explicabo voluptates accusamus temporibus tempora nulla autem. Modi quae voluptates commodi! Recusandae veniam obcaecati quos qui veritatis a natus minus.",
+//       },
+//       {
+//         author: { name: "John Jones", link: "/", reviewCount: 13 },
+//         date: firebase.firestore.Timestamp.fromDate(
+//           new Date("April 5, 2021 at 13:00:00 AM UTC+8")
+//         ),
+//         value: 5,
+//         text: "Lorem, ipsum dolor sit amet consectetur adipisicing elit. Placeat porro doloremque facilis ex officiis aperiam maiores. Enim neque a similique explicabo voluptates accusamus temporibus tempora nulla autem. Modi quae voluptates commodi! Recusandae veniam obcaecati quos qui veritatis a natus minus.",
+//       },
+//       {
+//         author: { name: "Bad bad", link: "/", reviewCount: 23 },
+//         date: firebase.firestore.Timestamp.fromDate(
+//           new Date("August 1, 2021 at 22:00:00 AM UTC+8")
+//         ),
+//         value: 2,
+//         text: "Lorem, ipsum dolor sit amet consectetur adipisicing elit. Placeat porro doloremque facilis ex officiis aperiam maiores. Enim neque a similique explicabo voluptates accusamus temporibus tempora nulla autem. Modi quae voluptates commodi! Recusandae veniam obcaecati quos qui veritatis a natus minus.",
+//       },
+//     ],
+//   })
+//   .then(() => {
+//     console.log("Document successfully written!");
+//   })
+//   .catch((error) => {
+//     console.error("Error writing document: ", error);
+//   });
+
+// var child = storageRef.child('Yarkomoll/2334e4edcc2678a8c413231e1cc68740.jpg')
