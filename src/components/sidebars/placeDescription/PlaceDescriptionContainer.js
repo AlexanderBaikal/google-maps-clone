@@ -1,5 +1,11 @@
 import PlaceDescriptionBar from "./PlaceDescriptionBar";
-import { setDescriptionData } from "./../../../redux/sidebars/placeDescription/actions";
+import {
+  setDescriptionData,
+  setAddComment,
+  setOpenEdit,
+  setOpenUploadPhoto,
+  setOpenCompletePhoto,
+} from "./../../../redux/sidebars/placeDescription/actions";
 import { setActiveBar } from "./../../../redux/sidebars/actions";
 import { connect, useDispatch } from "react-redux";
 import { useEffect } from "react";
@@ -26,6 +32,11 @@ const PlaceDescriptionContainer = (props) => {
           images={props.images}
           places={props.places}
           comments={props.comments}
+          setAddComment={props.setAddComment}
+          setOpenEdit={props.setOpenEdit}
+          setOpenUploadPhoto={props.setOpenUploadPhoto}
+          openCompletePhoto={props.openCompletePhoto}
+          setOpenCompletePhoto={props.setOpenCompletePhoto}
         />
       )}
     </>
@@ -39,12 +50,17 @@ const mapStateToProps = (state) => {
     places: state.sidebars.descriptionBar.places.places,
     descriptionData: state.sidebars.descriptionBar.main.descriptionData,
     comments: state.sidebars.descriptionBar.comments.comments,
+    openCompletePhoto: state.sidebars.descriptionBar.main.openCompletePhoto,
   };
 };
 
 const mapDispatchToProps = {
   setActiveBar,
   setDescriptionData,
+  setAddComment,
+  setOpenEdit,
+  setOpenUploadPhoto,
+  setOpenCompletePhoto,
 };
 
 export default connect(

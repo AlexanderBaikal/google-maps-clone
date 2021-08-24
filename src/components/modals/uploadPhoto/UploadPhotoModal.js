@@ -1,6 +1,6 @@
 import { Dialog } from "@material-ui/core";
 import { makeStyles, Modal } from "@material-ui/core";
-import UploadPhotoContent from './UploadPhotoContent';
+import UploadPhotoContent from "./UploadPhotoContent";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -15,17 +15,35 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const UploadPhotoModal = ({ onClose, isOpen, onComplete, keyword }) => {
+const UploadPhotoModal = ({
+  setOpenUploadPhoto,
+  openUploadPhoto,
+  setOpenCompletePhoto,
+  keyword,
+}) => {
   const classes = useStyles();
 
+  const onClose = () => {
+    setOpenUploadPhoto(false);
+  };
+
+  const onComplete = () => {
+    setOpenUploadPhoto(false);
+    setOpenCompletePhoto(true);
+  };
+
   return (
-    <Modal open={isOpen} onClose={onClose} className={classes.root}>
+    <Modal open={openUploadPhoto} onClose={onClose} className={classes.root}>
       <Dialog
         onClose={onClose}
-        open={isOpen}
+        open={openUploadPhoto}
         PaperProps={{ className: classes.dialog, square: true }}
       >
-        <UploadPhotoContent onClose={onClose} onComplete={onComplete} keyword={keyword}/>
+        <UploadPhotoContent
+          onClose={onClose}
+          onComplete={onComplete}
+          keyword={keyword}
+        />
       </Dialog>
     </Modal>
   );

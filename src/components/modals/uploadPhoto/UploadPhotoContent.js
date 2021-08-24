@@ -10,7 +10,8 @@ import { DialogTitle, IconButton, Typography } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core";
 import CloseIcon from "@material-ui/icons/Close";
 import { useState } from "react";
-import MyDropzone from "../../inlines/MyDropzone";
+import DropzoneContainer from "../../inlines/myDropzone/DropzoneContainer";
+import MyDropzone from "../../inlines/myDropzone/MyDropzone";
 
 const useStyles = makeStyles((theme) => ({
   closeButton: {
@@ -57,15 +58,11 @@ const UploadPhotoContent = ({
   onComplete,
   onSelect,
   lite = false,
-  preview = false,
   files,
-  setFiles,
-  keyword
 }) => {
   const classes = useStyles();
 
   const [value, setValue] = useState(0);
-  
 
   const handleChange = (event, newValue) => {
     setValue(newValue);
@@ -97,14 +94,7 @@ const UploadPhotoContent = ({
           <Tab disableRipple label="Photos from phone" />
           <Tab disableRipple label="Your photos" />
         </Tabs>
-        <MyDropzone
-          onComplete={onComplete}
-          lite={lite}
-          preview={preview}
-          files={files}
-          setFiles={setFiles}
-          keyword={keyword}
-        />
+        <DropzoneContainer onComplete={onComplete} />
       </DialogContent>
       <Divider />
       <DialogActions className={classes.actions}>

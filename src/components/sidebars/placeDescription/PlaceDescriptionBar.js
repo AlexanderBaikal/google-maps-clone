@@ -26,10 +26,11 @@ import ActionButtons from "./../../inlines/ActionButtons";
 import BasicInfo from "./../../inlines/BasicInfo";
 import HeaderBar from "./../../inlines/HeaderBar";
 import BottomButton from "./../../inlines/BottomButton";
-import EditModal from "./../../modals/EditModal";
 import UploadPhotoModal from "./../../modals/uploadPhoto/UploadPhotoModal";
 import CompletePhotoModal from "./../../modals/uploadPhoto/CompletePhotoModal";
-import ReviewModal from "../../modals/review/ReviewModal";
+import ReviewModalContainer from "../../modals/review/ReviewModalContainer";
+import EditModalContainer from "../../modals/edit/EditModalContainer";
+import UploadPhotoContainer from "../../modals/uploadPhoto/UploadPhotoContainer";
 
 const useStyles = makeStyles((theme) => ({
   root: {},
@@ -92,38 +93,20 @@ const PlaceDescriptionBar = ({
   places,
   comments,
   setDescriptionData,
+  setAddComment,
+  setOpenEdit,
+  setOpenUploadPhoto,
+  openCompletePhoto,
+  setOpenCompletePhoto,
 }) => {
   const classes = useStyles();
-
-  const [openEdit, setOpenEdit] = useState(false);
 
   const handleOpenEdit = () => {
     setOpenEdit(true);
   };
 
-  const handleCloseEdit = () => {
-    setOpenEdit(false);
-  };
-
-  const [openUploadPhoto, setOpenUploadPhoto] = useState(false);
-
   const handleOpenUploadPhoto = () => {
     setOpenUploadPhoto(true);
-  };
-
-  const handleCloseUploadPhoto = () => {
-    setOpenUploadPhoto(false);
-  };
-
-  const [openCompletePhoto, setOpenCompletePhoto] = useState(false);
-
-  const handleOpenCompletePhoto = () => {
-    setOpenUploadPhoto(false);
-    setOpenCompletePhoto(true);
-  };
-
-  const handleCloseCompletePhoto = () => {
-    setOpenCompletePhoto(false);
   };
 
   const [topImgSrc, setTopImgSrc] = useState(content.imageUrl);
@@ -133,8 +116,6 @@ const PlaceDescriptionBar = ({
       "https://maps.gstatic.com/tactile/pane/default_geocode-2x.png"
     );
   };
-
-  const [addComment, setAddComment] = useState(false);
 
   return (
     <div>
@@ -155,9 +136,7 @@ const PlaceDescriptionBar = ({
           startIcon={CreateOutlinedIcon}
           onClick={handleOpenEdit}
         />
-        {openEdit ? (
-          <EditModal onClose={handleCloseEdit} isOpen={openEdit} />
-        ) : null}
+        <EditModalContainer />
       </div>
       <Divider />
       <div className={classes.photos}>
@@ -169,20 +148,11 @@ const PlaceDescriptionBar = ({
           startIcon={CameraAltOutlinedIcon}
           onClick={handleOpenUploadPhoto}
         />
-        {openUploadPhoto ? (
-          <UploadPhotoModal
-            onClose={handleCloseUploadPhoto}
-            isOpen={openUploadPhoto}
-            onComplete={handleOpenCompletePhoto}
-            keyword={content.name}
-          />
-        ) : null}
-        {openCompletePhoto ? (
-          <CompletePhotoModal
-            onClose={handleCloseCompletePhoto}
-            isOpen={openCompletePhoto}
-          />
-        ) : null}
+        <UploadPhotoContainer />
+        <CompletePhotoModal
+          setOpenCompletePhoto={setOpenCompletePhoto}
+          openCompletePhoto={openCompletePhoto}
+        />
       </div>
 
       <Divider />
@@ -225,7 +195,7 @@ const PlaceDescriptionBar = ({
       </div>
       <Divider />
       <div className={classes.comments}>
-        {addComment ? <ReviewModal setAddComment={setAddComment} /> : null}
+        <ReviewModalContainer />
         <HeaderBar
           title="Reviews"
           buttons={

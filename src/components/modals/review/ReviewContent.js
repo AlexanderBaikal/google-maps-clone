@@ -132,22 +132,21 @@ const ReviewContent = ({
   setAddComment,
   setCompleteReview,
   setAddPhoto,
+  addPhoto,
   files,
   setFiles,
+  content,
 }) => {
   const classes = useStyles();
 
   const [prompt, setPrompt] = useState(false);
+
   const onClose = () => {
     setAddComment(false);
   };
 
-  useEffect(() => {
-    console.log(files);
-  }, [files]);
-
   const handleAddPhoto = () => {
-    setAddPhoto((v) => !v);
+    setAddPhoto(!addPhoto);
   };
 
   const onCancel = () => {
@@ -155,18 +154,19 @@ const ReviewContent = ({
   };
 
   const handleDeleteClick = (file) => {
-    setFiles((prev) => prev.filter((f) => f !== file));
+    setFiles(files.filter((f) => f !== file));
   };
 
   async function onPostClick() {
     const data = {
-      place: "Yarkomoll",
-      author: { name: "Firstname Lastname" },
+      place: content.name,
+      author: { name: "Donald Trump" },
       value: ratingValue,
       photos: files,
       text: commentText,
     };
     await createComment(data);
+    setFiles([])
     setCompleteReview(true);
   }
 

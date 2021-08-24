@@ -12,16 +12,26 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const ReviewModal = ({ isOpen = true, setAddComment }) => {
+const ReviewModal = ({
+  addComment,
+  setAddComment,
+  addPhoto,
+  setAddPhoto,
+  files,
+  setFiles,
+  keyword,
+  content
+}) => {
   const classes = useStyles();
-  const [addPhoto, setAddPhoto] = useState(false);
-  const [files, setFiles] = useState([]);
+
   const onClose = () => {
     setAddComment(false);
+    setCompleteReview(false);
+    
   };
 
   const handleAddPhoto = () => {
-    setAddPhoto((v) => !v);
+    setAddPhoto(!addPhoto);
   };
 
   const onCompleteUploadPhoto = () => {};
@@ -35,19 +45,17 @@ const ReviewModal = ({ isOpen = true, setAddComment }) => {
   return (
     <div className={classes.root}>
       <Dialog
-        open={isOpen}
+        open={addComment}
         PaperProps={{ className: classes.dialog }}
         BackdropProps={{ style: { backgroundColor: "rgba(215,215,215,0.5)" } }}
       >
         {addPhoto ? (
           <UploadPhotoContent
             lite
-            preview
             onClose={handleAddPhoto}
             onComplete={onCompleteUploadPhoto}
             onSelect={onSelect}
             files={files}
-            setFiles={setFiles}
           />
         ) : completeReview ? (
           <SuccessContent onClose={onClose} />
@@ -56,8 +64,11 @@ const ReviewModal = ({ isOpen = true, setAddComment }) => {
             setAddComment={setAddComment}
             setCompleteReview={setCompleteReview}
             setAddPhoto={setAddPhoto}
+            addPhoto={addPhoto}
             files={files}
             setFiles={setFiles}
+            keyword={keyword}
+            content={content}
           />
         )}
       </Dialog>

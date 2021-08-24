@@ -64,7 +64,6 @@ const useStyles = makeStyles((theme) => ({
 const Comments = ({ comments }) => {
   const classes = useStyles();
 
-  console.log(comments);
   comments = comments ? comments.comments : [];
 
   return (

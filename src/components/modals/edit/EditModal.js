@@ -27,7 +27,7 @@ const useStyles = makeStyles((theme) => ({
   closeButton: {
     position: "absolute",
     right: "8px",
-    top:"4px",
+    top: "4px",
     color: theme.palette.grey[500],
   },
   list: {
@@ -49,14 +49,19 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const EditModal = ({ onClose, isOpen = false }) => {
+const EditModal = ({ setOpenEdit, openEdit }) => {
   const classes = useStyles();
+
+  const onClose = () => {
+    setOpenEdit(false);
+  };
+
   return (
-    <Modal open={isOpen} onClose={onClose} className={classes.root}>
+    <Modal open={openEdit} onClose={onClose} className={classes.root}>
       <Dialog
         onClose={onClose}
         aria-labelledby="customized-dialog-title"
-        open={isOpen}
+        open={openEdit}
         PaperProps={{ className: classes.dialog }}
       >
         <DialogTitle className={classes.dialogTitle} onClose={onClose}>

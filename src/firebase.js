@@ -51,6 +51,10 @@ export async function createComment(data) {
     }
 
     const ref = db.collection("comments").doc(place);
+    const doc = await ref.get();
+    if (!doc.exists) {
+      ref.set({ comments: [] });
+    }
     await ref.update({
       comments: firebase.firestore.FieldValue.arrayUnion({
         author: {

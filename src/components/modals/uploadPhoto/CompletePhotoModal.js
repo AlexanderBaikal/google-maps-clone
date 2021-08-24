@@ -28,13 +28,18 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const CompletePhotoModal = ({ onClose, isOpen }) => {
+const CompletePhotoModal = ({ setOpenCompletePhoto, openCompletePhoto }) => {
   const classes = useStyles();
+
+  const onClose = () => {
+    setOpenCompletePhoto(false);
+  };
+
   return (
     <Dialog
       onClose={onClose}
       PaperProps={{ className: classes.paper }}
-      open={isOpen}
+      open={openCompletePhoto}
     >
       <DialogContent className={classes.dialogContent}>
         <IconButton

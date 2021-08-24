@@ -7,11 +7,11 @@ import {
 import React, { createRef } from "react";
 import { useState } from "react";
 import Dropzone from "react-dropzone";
-import { uploadPhotoFirebase } from "../../firebase";
+import { uploadPhotoFirebase } from "../../../firebase";
 import clsx from "clsx";
 import { useEffect } from "react";
 import Jimp from "jimp";
-import PhotoPreviews from "./PhotoPreviews";
+import PhotoPreviews from "./../PhotoPreviews";
 
 const useStyles = makeStyles((theme) => {
   return {
@@ -74,7 +74,13 @@ const useStyles = makeStyles((theme) => {
   };
 });
 
-const MyDropzone = ({ onComplete, lite, preview, files, setFiles, keyword }) => {
+const MyDropzone = ({
+  onComplete,
+  openUploadPhoto,
+  files,
+  setFiles,
+  keyword,
+}) => {
   const classes = useStyles();
 
   const dropStates = {
@@ -101,7 +107,7 @@ const MyDropzone = ({ onComplete, lite, preview, files, setFiles, keyword }) => 
   }, [previewFiles]);
 
   function onDrop(files) {
-    if (preview) {
+    if (!openUploadPhoto) {
       setPreviewFiles(files);
       getPreviews(files);
       setDropzoneState(dropStates.PREVIEW);
@@ -150,7 +156,7 @@ const MyDropzone = ({ onComplete, lite, preview, files, setFiles, keyword }) => 
           <div
             className={clsx(
               classes.container,
-              lite ? classes.containerLite : classes.containerStandard
+              !openUploadPhoto ? classes.containerLite : classes.containerStandard
             )}
           >
             {dropzoneState === dropStates.LOADING ? (
@@ -165,7 +171,7 @@ const MyDropzone = ({ onComplete, lite, preview, files, setFiles, keyword }) => 
                 {...getRootProps({
                   className: clsx(
                     classes.dropzone,
-                    lite ? classes.dropzonelite : classes.dropzoneStandard
+                    !openUploadPhoto ? classes.dropzonelite : classes.dropzoneStandard
                   ),
                 })}
               >
@@ -179,7 +185,7 @@ const MyDropzone = ({ onComplete, lite, preview, files, setFiles, keyword }) => 
                   />
                 ) : (
                   <>
-                    {lite ? <div className={classes.dragImage} /> : null}
+                    {!openUploadPhoto ? <div className={classes.dragImage} /> : null}
                     <Typography variant="h5" style={{ marginBottom: "10px" }}>
                       Drag photos here
                     </Typography>
