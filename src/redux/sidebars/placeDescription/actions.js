@@ -1,6 +1,8 @@
 export const SET_DESCRIPTION_DATA = "SET_DESCRIPTION_DATA";
 export const SET_ADD_COMMENT = "SET_ADD_COMMENT";
 export const SET_OPEN_EDIT = "SET_OPEN_EDIT";
+export const SET_OPEN_EDIT_INFO = "SET_OPEN_EDIT_INFO";
+export const SET_OPEN_COMPLETE_EDIT_INFO = "SET_OPEN_COMPLETE_EDIT_INFO";
 export const SET_OPEN_UPLOAD_PHOTO = "SET_OPEN_UPLOAD_PHOTO";
 export const SET_OPEN_COMPLETE_PHOTO = "SET_OPEN_COMPLETE_PHOTO";
 
@@ -21,6 +23,20 @@ export const setAddComment = (data) => {
 export const setOpenEdit = (data) => {
   return {
     type: SET_OPEN_EDIT,
+    payload: data,
+  };
+};
+
+export const setOpenEditInfo = (data) => {
+  return {
+    type: SET_OPEN_EDIT_INFO,
+    payload: data,
+  };
+};
+
+export const setOpenCompleteEditInfo = (data) => {
+  return {
+    type: SET_OPEN_COMPLETE_EDIT_INFO,
     payload: data,
   };
 };

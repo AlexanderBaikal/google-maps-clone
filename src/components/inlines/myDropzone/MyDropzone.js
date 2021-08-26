@@ -10,8 +10,9 @@ import Dropzone from "react-dropzone";
 import { uploadPhotoFirebase } from "../../../firebase";
 import clsx from "clsx";
 import { useEffect } from "react";
-import Jimp from "jimp";
 import PhotoPreviews from "./../PhotoPreviews";
+import { compress } from "../../../utils/compress";
+import { getPreviews } from "../../../utils/previews";
 
 const useStyles = makeStyles((theme) => {
   return {
@@ -106,34 +107,15 @@ const MyDropzone = ({
     }
   }, [previewFiles]);
 
-  function onDrop(files) {
+  async function onDrop(files) {
     if (!openUploadPhoto) {
       setPreviewFiles(files);
-      getPreviews(files);
+      var newFiles = await getPreviews(files);
+      setFiles(files.concat(newFiles));
       setDropzoneState(dropStates.PREVIEW);
     } else {
       standardUpload(files);
     }
-  }
-
-  async function compress(file) {
-    var image = await Jimp.read(URL.createObjectURL(file));
-    var [w, h] = [image.bitmap.width, image.bitmap.height];
-    const coef = 130;
-    await image.resize((w * coef) / h, coef);
-    var buf = await image.getBufferAsync(Jimp.MIME_PNG);
-    return new File([buf], "filename.png", { type: Jimp.MIME_PNG });
-  }
-
-  async function getPreviews(receivedFiles) {
-    const promises = receivedFiles.map((file) => compress(file));
-    var res = await Promise.all(promises);
-    var newFiles = res.map((file, i) => {
-      return Object.assign(receivedFiles[i], {
-        preview: URL.createObjectURL(file),
-      });
-    });
-    setFiles(files.concat(newFiles));
   }
 
   async function standardUpload(files) {
@@ -156,7 +138,9 @@ const MyDropzone = ({
           <div
             className={clsx(
               classes.container,
-              !openUploadPhoto ? classes.containerLite : classes.containerStandard
+              !openUploadPhoto
+                ? classes.containerLite
+                : classes.containerStandard
             )}
           >
             {dropzoneState === dropStates.LOADING ? (
@@ -171,7 +155,9 @@ const MyDropzone = ({
                 {...getRootProps({
                   className: clsx(
                     classes.dropzone,
-                    !openUploadPhoto ? classes.dropzonelite : classes.dropzoneStandard
+                    !openUploadPhoto
+                      ? classes.dropzonelite
+                      : classes.dropzoneStandard
                   ),
                 })}
               >
@@ -185,7 +171,9 @@ const MyDropzone = ({
                   />
                 ) : (
                   <>
-                    {!openUploadPhoto ? <div className={classes.dragImage} /> : null}
+                    {!openUploadPhoto ? (
+                      <div className={classes.dragImage} />
+                    ) : null}
                     <Typography variant="h5" style={{ marginBottom: "10px" }}>
                       Drag photos here
                     </Typography>

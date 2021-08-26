@@ -2,8 +2,10 @@ import { combineReducers } from "redux";
 import {
   SET_ADD_COMMENT,
   SET_DESCRIPTION_DATA,
+  SET_OPEN_COMPLETE_EDIT_INFO,
   SET_OPEN_COMPLETE_PHOTO,
   SET_OPEN_EDIT,
+  SET_OPEN_EDIT_INFO,
   SET_OPEN_UPLOAD_PHOTO,
 } from "./actions";
 import { commentsReducer } from "./comments/reducers";
@@ -15,6 +17,8 @@ const defaultState = {
   descriptionData: null,
   addComment: false,
   openEdit: false,
+  openEditInfo: false,
+  openCompleteEditInfo: false,
   openUploadPhoto: false,
   openCompletePhoto: false,
 };
@@ -35,6 +39,16 @@ export const mainReducer = (state = defaultState, action) => {
       return {
         ...state,
         openEdit: action.payload,
+      };
+    case SET_OPEN_EDIT_INFO:
+      return {
+        ...state,
+        openEditInfo: action.payload,
+      };
+    case SET_OPEN_COMPLETE_EDIT_INFO:
+      return {
+        ...state,
+        openCompleteEditInfo: action.payload,
       };
     case SET_OPEN_UPLOAD_PHOTO:
       return {

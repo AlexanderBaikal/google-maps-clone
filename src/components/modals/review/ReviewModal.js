@@ -20,14 +20,13 @@ const ReviewModal = ({
   files,
   setFiles,
   keyword,
-  content
+  content,
 }) => {
   const classes = useStyles();
 
   const onClose = () => {
     setAddComment(false);
     setCompleteReview(false);
-    
   };
 
   const handleAddPhoto = () => {

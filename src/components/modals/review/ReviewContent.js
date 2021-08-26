@@ -14,6 +14,7 @@ import StarOutlineRoundedIcon from "@material-ui/icons/StarOutlineRounded";
 import { useEffect, useState } from "react";
 import { createComment } from "../../../firebase";
 import Prompt from "./Prompt";
+import PhotoSection from "./PhotoSection";
 
 const useStyles = makeStyles((theme) => ({
   root: {},
@@ -75,56 +76,10 @@ const useStyles = makeStyles((theme) => ({
     margin: "4px 12px",
     padding: "6px 24px",
   },
-  backdrop: {
-    backgroundColor: "blue",
-    opacity: 0,
-  },
 
-  addPhoto: {
-    display: "flex",
-    justifyContent: "center",
-    alignItems: "center",
-    height: "95px",
-    width: "115px",
-    border: "2px solid #efefef",
-    marginRight: "2px",
-    borderRadius: "4px",
-    cursor: "pointer",
-    "&:hover": {
-      background: "rgba(66,133,244,0.078)",
-      border: "2px solid #d2e3fc",
-    },
-  },
-  preview: {
-    height: "95px",
-    overflow: "hidden",
-    display: "flex",
-    alignItems: "center",
-    margin: "2px",
-    borderRadius: "4px",
-    position: "relative",
-  },
-  imgPreview: {
-    width: "117px",
-  },
-  photos: {
-    display: "flex",
-    marginTop: "20px",
-    flexWrap: "wrap",
-  },
-  deleteButton: {
-    position: "absolute",
-    backgroundColor: "white",
-    border: "1px solid #ccc",
-    padding: 0,
-    "&:hover": {
-      backgroundColor: "#eee",
-    },
-    right: "4px",
-    top: "4px",
-  },
-  closeIcon: {
-    fontSize: "1.2rem",
+  disabled: {
+    pointerEvents: "none",
+    opacity: 0.15,
   },
 }));
 
@@ -141,8 +96,11 @@ const ReviewContent = ({
 
   const [prompt, setPrompt] = useState(false);
 
+  const [disabled, setDisabled] = useState(false);
+
   const onClose = () => {
     setAddComment(false);
+    setFiles([]);
   };
 
   const handleAddPhoto = () => {
@@ -153,11 +111,8 @@ const ReviewContent = ({
     setPrompt((v) => !v);
   };
 
-  const handleDeleteClick = (file) => {
-    setFiles(files.filter((f) => f !== file));
-  };
-
   async function onPostClick() {
+    setDisabled(true);
     const data = {
       place: content.name,
       author: { name: "Donald Trump" },
@@ -166,7 +121,8 @@ const ReviewContent = ({
       text: commentText,
     };
     await createComment(data);
-    setFiles([])
+    setDisabled(false);
+    setFiles([]);
     setCompleteReview(true);
   }
 
@@ -185,92 +141,75 @@ const ReviewContent = ({
         </Typography>
       </DialogTitle>
       {prompt ? <Prompt onCancel={onCancel} onClose={onClose} /> : null}
-
-      <DialogContent classes={{ root: classes.dialogContent }}>
-        <div className={classes.avatarGroup}>
-          <Avatar
-            src="https://lh3.googleusercontent.com/-5Jp3D27Y3Sg/AAAAAAAAAAI/AAAAAAAAAAA/8BDXrJK6CyY/w70-h70-p/photo.jpg"
-            className={classes.avatar}
-          />
-          <div className={classes.commentHeaderName}>
-            <Typography classes={{ body1: classes.lineHeightOne }}>
-              Firstname Lastname
-            </Typography>
-            <Typography
-              classes={{ body2: classes.lineHeightOne }}
-              variant="body2"
-              color="textSecondary"
-            >
-              Posting publicly
-            </Typography>
-          </div>
-        </div>
-        <div className={classes.reviewBlock}>
-          <Rating
-            name="rating"
-            classes={{ label: classes.ratingLabel }}
-            icon={<StarOutlineRoundedIcon fontSize="inherit" />}
-            onChange={(event, newValue) => {
-              setRatingValue(newValue);
-            }}
-          />
-          <TextField
-            classes={{ root: classes.textField }}
-            inputProps={{ "aria-label": "description" }}
-            InputProps={{
-              classes: { root: classes.input },
-              disableUnderline: true,
-            }}
-            multiline
-            rows={4}
-            value={commentText}
-            onChange={changeCommentText}
-          />
-          <div className={classes.photos}>
-            <div className={classes.addPhoto} onClick={handleAddPhoto}>
-              <AddAPhotoOutlinedIcon color="primary" />
+      <div className={disabled ? classes.disabled : ""}>
+        <DialogContent classes={{ root: classes.dialogContent }}>
+          <div className={classes.avatarGroup}>
+            <Avatar
+              src="https://lh3.googleusercontent.com/-5Jp3D27Y3Sg/AAAAAAAAAAI/AAAAAAAAAAA/8BDXrJK6CyY/w70-h70-p/photo.jpg"
+              className={classes.avatar}
+            />
+            <div className={classes.commentHeaderName}>
+              <Typography classes={{ body1: classes.lineHeightOne }}>
+                Firstname Lastname
+              </Typography>
+              <Typography
+                classes={{ body2: classes.lineHeightOne }}
+                variant="body2"
+                color="textSecondary"
+              >
+                Posting publicly
+              </Typography>
             </div>
-            {files.map((file, i) => (
-              <div key={i}>
-                <div className={classes.preview}>
-                  <IconButton
-                    size="small"
-                    aria-label="add an alarm"
-                    className={classes.deleteButton}
-                    onClick={() => handleDeleteClick(file)}
-                  >
-                    <CloseIcon className={classes.closeIcon} />
-                  </IconButton>
-                  <img
-                    className={classes.imgPreview}
-                    src={file.preview}
-                    alt=""
-                  />
-                </div>
-              </div>
-            ))}
           </div>
-        </div>
-      </DialogContent>
-      <DialogActions className={classes.actions}>
-        <Button
-          variant="outlined"
-          onClick={onCancel}
-          className={classes.buttons}
-        >
-          Cancel
-        </Button>
-        <Button
-          variant="contained"
-          disableElevation
-          autoFocus
-          color="primary"
-          className={classes.buttons}
-          onClick={onPostClick}
-        >
-          Post
-        </Button>
-      </DialogActions>
+          <div className={classes.reviewBlock}>
+            <Rating
+              name="rating"
+              classes={{ label: classes.ratingLabel }}
+              icon={<StarOutlineRoundedIcon fontSize="inherit" />}
+              onChange={(event, newValue) => {
+                setRatingValue(newValue);
+              }}
+            />
+            <TextField
+              classes={{ root: classes.textField }}
+              inputProps={{ "aria-label": "description" }}
+              InputProps={{
+                classes: { root: classes.input },
+                disableUnderline: true,
+              }}
+              multiline
+              rows={4}
+              value={commentText}
+              onChange={changeCommentText}
+            />
+
+            <PhotoSection
+              files={files}
+              setFiles={setFiles}
+              handleAddPhoto={handleAddPhoto}
+            />
+          </div>
+        </DialogContent>
+        <DialogActions className={classes.actions}>
+          <Button
+            variant="outlined"
+            onClick={onCancel}
+            className={classes.buttons}
+          >
+            Cancel
+          </Button>
+          <Button
+            variant="contained"
+            disableElevation
+            autoFocus
+            color="primary"
+            className={classes.buttons}
+            onClick={onPostClick}
+          >
+            Post
+          </Button>
+        </DialogActions>
+      </div>
     </>
   );
 };

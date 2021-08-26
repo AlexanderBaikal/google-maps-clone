@@ -11,7 +11,6 @@ import { makeStyles } from "@material-ui/core";
 import CloseIcon from "@material-ui/icons/Close";
 import { useState } from "react";
 import DropzoneContainer from "../../inlines/myDropzone/DropzoneContainer";
-import MyDropzone from "../../inlines/myDropzone/MyDropzone";
 
 const useStyles = makeStyles((theme) => ({
   closeButton: {

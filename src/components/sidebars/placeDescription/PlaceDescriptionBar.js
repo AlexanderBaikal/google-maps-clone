@@ -31,6 +31,8 @@ import CompletePhotoModal from "./../../modals/uploadPhoto/CompletePhotoModal";
 import ReviewModalContainer from "../../modals/review/ReviewModalContainer";
 import EditModalContainer from "../../modals/edit/EditModalContainer";
 import UploadPhotoContainer from "../../modals/uploadPhoto/UploadPhotoContainer";
+import EditInfoContainer from "../../modals/editInfo/EditInfoContainer";
+import CompleteEditInfoModal from "../../modals/editInfo/CompleteEditInfoModal";
 
 const useStyles = makeStyles((theme) => ({
   root: {},
@@ -137,6 +139,8 @@ const PlaceDescriptionBar = ({
           onClick={handleOpenEdit}
         />
         <EditModalContainer />
+        <EditInfoContainer />
+
       </div>
       <Divider />
       <div className={classes.photos}>
