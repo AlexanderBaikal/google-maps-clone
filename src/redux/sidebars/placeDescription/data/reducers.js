@@ -2,6 +2,7 @@ import {
   REQUEST_DATA,
   REQUEST_DATA_FAILED,
   REQUEST_DATA_SUCCESS,
+  SET_DATA,
 } from "./actions";
 
 const defaultState = {
@@ -32,6 +33,11 @@ export const dataReducer = (state = defaultState, action) => {
         content: null,
         loading: false,
         error: true,
+      };
+    case SET_DATA:
+      return {
+        ...state,
+        content: action.payload,
       };
   }
   return state;

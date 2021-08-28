@@ -59,7 +59,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const EditItem = ({ title, IconComponent, value, subTitle, extraIcon }) => {
+const EditItem = ({ title, IconComponent, value, subTitle, extraIcon, onClick }) => {
   const classes = useStyles();
 
   const [inputValue, setinputValue] = useState(value);
@@ -71,7 +71,7 @@ const EditItem = ({ title, IconComponent, value, subTitle, extraIcon }) => {
     setinputValue(value);
   };
   return (
-    <div className={classes.contentInput}>
+    <div className={classes.contentInput} onClick={onClick}>
       {IconComponent ? <IconComponent className={classes.inputIcon} /> : null}
       <div
         className={classes.inputDiv}

@@ -109,6 +109,8 @@ const EditInfoModal = ({
   openEditInfo,
   setOpenEditInfo,
   setOpenCompleteEditInfo,
+  categoryModal,
+  setCategoryModal,
 }) => {
   const classes = useStyles();
 
@@ -159,7 +161,7 @@ const EditInfoModal = ({
   return (
     <div>
       <Dialog
-        open={openEditInfo}
+        open={openEditInfo && !categoryModal}
         PaperProps={{ className: classes.dialog, square: true }}
         fullWidth
       >
@@ -204,6 +206,7 @@ const EditInfoModal = ({
             IconComponent={CategoryIcon}
             value={content.type}
             extraIcon={"forward"}
+            onClick={()=>setCategoryModal(!categoryModal)}
           />
           <EditItem
             title="Location"

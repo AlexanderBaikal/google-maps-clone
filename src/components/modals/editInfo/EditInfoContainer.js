@@ -4,9 +4,14 @@ import {
   setOpenEditInfo,
   setOpenCompleteEditInfo,
 } from "./../../../redux/sidebars/placeDescription/actions";
+import { setData } from "./../../../redux/sidebars/placeDescription/data/actions";
 import CompleteEditInfoModal from "./CompleteEditInfoModal";
+import EditCategory from "./EditCategory";
+import { useState } from "react";
 
 const EditInfoContainer = (props) => {
+  const [categoryModal, setCategoryModal] = useState(false);
+
   return (
     <>
       <EditInfoModal
@@ -14,10 +19,18 @@ const EditInfoContainer = (props) => {
         openEditInfo={props.openEditInfo}
         setOpenEditInfo={props.setOpenEditInfo}
         setOpenCompleteEditInfo={props.setOpenCompleteEditInfo}
+        categoryModal={categoryModal}
+        setCategoryModal={setCategoryModal}
       />
       <CompleteEditInfoModal
         setOpenCompleteEditInfo={props.setOpenCompleteEditInfo}
         openCompleteEditInfo={props.openCompleteEditInfo}
+      />
+      <EditCategory
+        categoryModal={categoryModal}
+        setCategoryModal={setCategoryModal}
+        setData={props.setData}
+        content={props.content}
       />
     </>
   );
@@ -32,6 +45,10 @@ const mapStateToProps = (state) => {
   };
 };
 
-const mapDispatchToProps = { setOpenEditInfo, setOpenCompleteEditInfo };
+const mapDispatchToProps = {
+  setOpenEditInfo,
+  setOpenCompleteEditInfo,
+  setData,
+};
 
 export default connect(mapStateToProps, mapDispatchToProps)(EditInfoContainer);
