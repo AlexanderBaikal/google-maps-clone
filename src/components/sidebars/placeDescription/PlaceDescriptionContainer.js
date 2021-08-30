@@ -22,6 +22,7 @@ const PlaceDescriptionContainer = (props) => {
     dispatch(loadImages(props.descriptionData));
   }, [props.descriptionData]);
 
+
   return (
     <>
       {props.content && (

@@ -40,6 +40,30 @@ export async function uploadPhotoFirebase(file, keyword = "All") {
   }
 }
 
+export async function editDescription(data) {
+  var { content, photos } = data;
+
+  try {
+    if (photos) {
+      var promises = photos.map((file) =>
+        uploadPhotoFirebase(file, content.name)
+      );
+      photos = await Promise.all(promises);
+    }
+
+    const ref = db.collection("descriptions").doc("test");
+
+    await ref.set({
+      ...content,
+      inside: content.inside ? db.doc(`descriptions/${content.inside}`) : null,
+    });
+
+    console.log("Document successfully updated!");
+  } catch (e) {
+    console.error("Error updating document: ", e);
+  }
+}
+
 export async function createComment(data) {
   //! if doc doesn exists ? if commets doesnt exists?
   var { place, author, value, photos, text } = data;

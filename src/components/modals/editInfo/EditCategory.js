@@ -1,18 +1,12 @@
 import {
-  Button,
   DialogContent,
   Divider,
   FormControl,
-  Input,
   InputAdornment,
-  Link,
   InputLabel,
-  TextField,
   List,
-  ListSubheader,
   ListItem,
   Dialog,
-  DialogActions,
   DialogTitle,
   IconButton,
   makeStyles,
@@ -20,28 +14,15 @@ import {
   OutlinedInput,
   ListItemIcon,
   ListItemText,
-  ListItemSecondaryAction,
 } from "@material-ui/core";
 
 import CloseIcon from "@material-ui/icons/Close";
-import StoreIcon from "@material-ui/icons/Store";
-import CategoryIcon from "@material-ui/icons/Category";
-import LocationOnIcon from "@material-ui/icons/LocationOn";
-import WatchLaterOutlinedIcon from "@material-ui/icons/WatchLaterOutlined";
-import PhoneIcon from "@material-ui/icons/Phone";
-import PublicIcon from "@material-ui/icons/Public";
-import AddAPhotoIcon from "@material-ui/icons/AddAPhoto";
-import clsx from "clsx";
-import EditItem from "./EditItem";
 import { useEffect, useRef, useState } from "react";
 import { useCallback } from "react";
-import PhotoSection from "../review/PhotoSection";
-import { getPreviews } from "../../../utils/previews";
 import ArrowBackIcon from "@material-ui/icons/ArrowBack";
 import SearchIcon from "@material-ui/icons/Search";
 import ArrowForwardIosIcon from "@material-ui/icons/ArrowForwardIos";
 import { categoryItems, findCategories } from "./categoryItems";
-import { useDispatch } from "react-redux";
 
 const useStyles = makeStyles((theme) => ({
   root: {},
@@ -70,50 +51,11 @@ const useStyles = makeStyles((theme) => ({
     top: "4px",
     color: theme.palette.grey[700],
   },
-  actions: {
-    padding: "20px 20px",
-  },
+
   dialogContent: {
     padding: 0,
   },
-  contentTitle: {
-    padding: "14px 54px",
-    textTransform: "uppercase",
-    fontSize: "12px",
-    fontWeight: 500,
-    fontFamily: "Google Sans, sans-serif",
-  },
-  centerButton: {
-    display: "flex",
-    justifyContent: "center",
-    marginLeft: "54px",
-    width: "calc(100% - 74px)",
-    marginTop: "14px",
-    marginBottom: "4px",
-    paddingTop: "30px",
-    paddingBottom: "30px",
-    backgroundColor: "#777",
-  },
-  bottomDiv: {
-    display: "flex",
-    flexDirection: "column",
-    alignItems: "center",
-    marginTop: "10px",
-    marginBottom: "10px",
-    marginLeft: "54px",
-    marginRight: "20px",
-  },
-  wideButton: {
-    marginBottom: "10px",
-    marginTop: "30px",
-    width: "100%",
-    padding: "12px",
-    borderColor: theme.palette.grey[400],
-  },
-  bottonIcon: {
-    marginRight: "8px",
-    marginBottom: "4px",
-  },
+
   searchBlock: {
     display: "flex",
     justifyContent: "center",
@@ -148,7 +90,12 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const EditCategory = ({ categoryModal, setCategoryModal, setData, content }) => {
+const EditCategory = ({
+  categoryModal,
+  setCategoryModal,
+  setData,
+  content,
+}) => {
   const classes = useStyles();
 
   const onClose = () => {
@@ -214,7 +161,7 @@ const EditCategory = ({ categoryModal, setCategoryModal, setData, content }) => 
             Category
           </Typography>
           <Typography variant="body1" color="textSecondary" component="span">
-            {"content.name"}
+            {content.name}
           </Typography>
         </div>
 

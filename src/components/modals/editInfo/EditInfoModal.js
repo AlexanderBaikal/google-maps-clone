@@ -1,4 +1,3 @@
-import { Button, DialogContent, Divider, Input, Link } from "@material-ui/core";
 import {
   Dialog,
   DialogActions,
@@ -6,6 +5,11 @@ import {
   IconButton,
   makeStyles,
   Typography,
+  Button,
+  DialogContent,
+  Divider,
+  Link,
+  TextField,
 } from "@material-ui/core";
 import CloseIcon from "@material-ui/icons/Close";
 import StoreIcon from "@material-ui/icons/Store";
@@ -14,13 +18,12 @@ import LocationOnIcon from "@material-ui/icons/LocationOn";
 import WatchLaterOutlinedIcon from "@material-ui/icons/WatchLaterOutlined";
 import PhoneIcon from "@material-ui/icons/Phone";
 import PublicIcon from "@material-ui/icons/Public";
-import AddAPhotoIcon from "@material-ui/icons/AddAPhoto";
-import clsx from "clsx";
 import EditItem from "./EditItem";
 import { useEffect, useRef, useState } from "react";
 import { useCallback } from "react";
-import PhotoSection from "../review/PhotoSection";
-import { getPreviews } from "../../../utils/previews";
+import AddPhotoBlock from "./AddPhotoBlock";
+import { editDescription } from "../../../firebase";
+import clsx from 'clsx'
 
 const useStyles = makeStyles((theme) => ({
   root: {},
@@ -76,43 +79,51 @@ const useStyles = makeStyles((theme) => ({
     marginLeft: "54px",
     marginRight: "20px",
   },
-  wideButton: {
-    marginBottom: "10px",
-    marginTop: "30px",
-    width: "100%",
-    padding: "12px",
-    borderColor: theme.palette.grey[400],
-  },
-  bottonIcon: {
-    marginRight: "8px",
-    marginBottom: "4px",
-  },
   outlinedWhite: {
     color: "white",
     borderColor: "white",
   },
-  underButtonText: {
-    fontStyle: "italic",
-    marginBottom: "40px",
-  },
   underButtonText2: {
     alignSelf: "start",
+    marginTop: "20px",
   },
   actionButton: {
     margin: "0 4px",
     padding: "6px 24px",
   },
+  scheduleDiv: {
+    display: "flex",
+    flexDirection: "column",
+    alignItems: "start",
+  },
+  textFieldHours: {
+    fontSize: "0.9rem",
+    lineHeight: "1.3rem",
+  },
+  disabled: {
+    pointerEvents: "none",
+    opacity: 0.45,
+  },
 }));
 
 const EditInfoModal = ({
   content,
+  contentSnapshot,
   openEditInfo,
   setOpenEditInfo,
   setOpenCompleteEditInfo,
   categoryModal,
   setCategoryModal,
+  setHoursModal,
+  setNewHours,
+  setData,
+  allPlaces,
+  files,
+  setFiles,
 }) => {
   const classes = useStyles();
+
+  console.log("&*&*", files, setFiles);
 
   const onClose = () => {
     setOpenEditInfo(false);
@@ -124,27 +135,31 @@ const EditInfoModal = ({
     }
   }, []);
 
-  const onPostClick = () => {
-    setOpenEditInfo(false);
-    setOpenCompleteEditInfo(true);
-  };
-
-  const inputFileRef = useRef(null);
-
-  const onAddPhotoClick = () => {
-    inputFileRef.current.click();
-  };
-
-  const [files, setFiles] = useState([]);
-
-  async function addPhotoHandler(e) {
-    var newFiles = await getPreviews(Array.from(e.target.files));
-    if (files.length) {
-      setFiles(files.concat(newFiles));
-    } else {
-      setFiles(newFiles);
+  async function onPostClick() {
+    setDisabled(true);
+    var newContent = JSON.parse(JSON.stringify(content));
+    for (var field of canceledFields) {
+      newContent[field] = "No data yet";
     }
+    setData(newContent);
+
+    const data = {
+      content: newContent,
+      photos: files,
+    };
+    await editDescription(data);
+
+    setOpenEditInfo(false);
+    setDisabled(false);
+    setOpenCompleteEditInfo(true);
+    setCanceledFields([]);
+    setFiles([]);
   }
+
+  const onCancel = () => {
+    setOpenEditInfo(false);
+    setData(JSON.parse(JSON.stringify(contentSnapshot)));
+  };
 
   const [shadow, setShadow] = useState(false);
 
@@ -154,6 +169,70 @@ const EditInfoModal = ({
     } else {
       setShadow(false);
     }
+  };
+
+  const onHoursClick = () => {
+    setNewHours(JSON.parse(JSON.stringify(content.schedule)));
+    setHoursModal(true);
+  };
+
+  const onAddressChange = (value) => {
+    setData({ ...content, address: value });
+  };
+
+  const onPhoneChange = (value) => {
+    setData({ ...content, phoneNumber: value });
+  };
+
+  const onInsideChange = (value) => {
+    setData({ ...content, inside: value });
+  };
+
+  const onWebsiteChange = (value) => {
+    setData({ ...content, website: value });
+  };
+
+  const [canceledFields, setCanceledFields] = useState([]);
+
+  const onPhoneCancel = () => {
+    setCanceledFields([...canceledFields, "phoneNumber"]);
+  };
+
+  const onWebsiteCancel = () => {
+    setCanceledFields([...canceledFields, "website"]);
+  };
+
+  const getWeekdayHours = (name, data) => {
+    let status;
+    if (data.closed) status = "Closed";
+    if (data.allDay) status = "24 hours";
+    if (!data.closed && !data.allDay) status = data.open + "-" + data.close;
+    return name.slice(0, 3) + ": " + status;
+  };
+
+  const [disabled, setDisabled] = useState(false);
+
+  const getSchedule = () => {
+    const days = [
+      "monday",
+      "tuesday",
+      "wednesday",
+      "thursday",
+      "friday",
+      "saturday",
+      "sunday",
+    ];
+    return (
+      <TextField
+        InputProps={{ className: classes.textFieldHours }}
+        onClick={onHoursClick}
+        multiline
+        value={days
+          .map((item) => getWeekdayHours(item, content.schedule[item]))
+          .join("\n")}
+        fullWidth
+      />
+    );
   };
 
   // TODO remove event listener
@@ -166,7 +245,11 @@ const EditInfoModal = ({
         fullWidth
       >
         <DialogTitle
-          className={classes.dialogTitle}
+          className={
+            disabled
+              ? clsx(classes.dialogTitle, classes.disabled)
+              : classes.dialogTitle
+          }
           style={{
             boxShadow: shadow
               ? "0 1px 2px rgb(60 64 67 / 30%), 0 2px 6px 2px rgb(60 64 67 / 15%)"
@@ -195,6 +278,7 @@ const EditInfoModal = ({
         <DialogContent
           classes={{ root: classes.dialogContent }}
           ref={dialogRef}
+          className={disabled ? classes.disabled : ""}
         >
           <Typography className={classes.contentTitle} color="textSecondary">
             Overview
@@ -206,12 +290,13 @@ const EditInfoModal = ({
             IconComponent={CategoryIcon}
             value={content.type}
             extraIcon={"forward"}
-            onClick={()=>setCategoryModal(!categoryModal)}
+            onClick={() => setCategoryModal(!categoryModal)}
           />
           <EditItem
             title="Location"
             IconComponent={LocationOnIcon}
             value={content.address}
+            onChange={onAddressChange}
           />
           <div className={classes.centerButton}>
             <Button
@@ -224,20 +309,19 @@ const EditInfoModal = ({
           <EditItem
             title="Located within"
             IconComponent={null}
-            value={""}
+            value={typeof content.inside  === 'string' ? content.inside :  ""}
             subTitle={
               "If this place is located within another, enter the containing place."
             }
+            select={allPlaces}
+            onChange={onInsideChange}
+            disableBlur
           />
           <EditItem
             title="Hours"
             IconComponent={WatchLaterOutlinedIcon}
-            value={
-              "Sun-Sat: " +
-              content.schedule.monday.open +
-              "-" +
-              content.schedule.monday.close
-            }
+            onClick={onHoursClick}
+            jsxValue={getSchedule()}
             extraIcon={"forward"}
           />
           <EditItem
@@ -245,12 +329,16 @@ const EditInfoModal = ({
             IconComponent={PhoneIcon}
             value={content.phoneNumber}
             extraIcon={"close"}
+            onChange={onPhoneChange}
+            onCancel={onPhoneCancel}
           />
           <EditItem
             title="Website"
             IconComponent={PublicIcon}
             value={content.website}
             extraIcon={"close"}
+            onChange={onWebsiteChange}
+            onCancel={onWebsiteCancel}
           />
           <Typography className={classes.contentTitle} color="textSecondary">
             About
@@ -265,47 +353,7 @@ const EditInfoModal = ({
           />
 
           <div className={classes.bottomDiv}>
-            {files.length ? (
-              <PhotoSection
-                files={files}
-                setFiles={setFiles}
-                handleAddPhoto={onAddPhotoClick}
-                fullHeight
-              />
-            ) : (
-              <Button
-                variant="outlined"
-                color="primary"
-                className={classes.wideButton}
-                onClick={onAddPhotoClick}
-              >
-                <AddAPhotoIcon
-                  fontSize="small"
-                  className={classes.bottonIcon}
-                />
-                Add a photo
-              </Button>
-            )}
-
-            <input
-              type="file"
-              id="file"
-              ref={inputFileRef}
-              style={{ display: "none" }}
-              onChange={addPhotoHandler}
-            />
-            <Typography
-              variant="h2"
-              color="textSecondary"
-              className={classes.underButtonText}
-            >
-              Helpful photos include the shopfront, notices and hours. If you
-              add photos, they will appear publicly with your profile name and
-              picture. They will appear on Google services across the web, like
-              Maps and Search, and on third-party sites and apps that use Google
-              services. Google may also use them to update other information
-              about this place.
-            </Typography>
+            <AddPhotoBlock files={files} setFiles={setFiles} />
             <Typography
               variant="h2"
               component="div"
@@ -319,19 +367,20 @@ const EditInfoModal = ({
 
         <DialogActions className={classes.actions}>
           <Button
+            disabled={disabled}
             disableElevation
             autoFocus
-            onClick={onClose}
+            onClick={onCancel}
             color="primary"
             className={classes.actionButton}
           >
             Cancel
           </Button>
           <Button
+            disabled={disabled}
             variant="contained"
             disableElevation
             color="primary"
-            disabled={false}
             onClick={onPostClick}
             className={classes.actionButton}
           >

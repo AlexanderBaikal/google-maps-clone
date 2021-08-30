@@ -1,11 +1,17 @@
-import { Button, DialogContent, Divider, Input } from "@material-ui/core";
 import {
-  Dialog,
-  DialogActions,
-  DialogTitle,
-  IconButton,
-  makeStyles,
+  Button,
+  ClickAwayListener,
+  DialogContent,
+  Divider,
+  Input,
+  List,
+  ListItem,
+  ListItemIcon,
+  ListItemText,
+  Paper,
 } from "@material-ui/core";
+import { IconButton, makeStyles } from "@material-ui/core";
+import LocationOnIcon from "@material-ui/icons/LocationOn";
 import CloseIcon from "@material-ui/icons/Close";
 import clsx from "clsx";
 import { useState } from "react";
@@ -57,21 +63,93 @@ const useStyles = makeStyles((theme) => ({
       borderBottom: "1px solid rgba(0, 0, 0, 0.2)",
     },
   },
+  selectPaper: {
+    position: "absolute",
+    zIndex: 2,
+    width: "100%",
+  },
 }));
 
-const EditItem = ({ title, IconComponent, value, subTitle, extraIcon, onClick }) => {
+const EditItem = ({
+  title,
+  IconComponent,
+  value,
+  jsxValue,
+  subTitle,
+  extraIcon,
+  onClick,
+  onChange,
+  onCancel,
+  select = [],
+  disableBlur=false
+}) => {
   const classes = useStyles();
 
-  const [inputValue, setinputValue] = useState(value);
+  const [inputValue, setinputValue] = useState(value || "");
 
   const [canceled, setCanceled] = useState(false);
-  const handleCanceled = () => setCanceled(!canceled);
 
-  const changeInputValue = (e, value) => {
-    setinputValue(value);
+  const handleCanceled = () => {
+    setCanceled(!canceled);
+    onCancel();
   };
+
+  const changeInputValue = (e) => {
+    setinputValue(e.target.value);
+  };
+
+  const [focused, setFocused] = useState(false);
+
+  const onBlur = (e) => {
+    if (onChange) onChange(e.target.value);
+  };
+
+  // const onFocus = (e) => {
+  //   setFocused(true);
+  // };
+
+  const MySelector = () => {
+    let selected = select
+      .filter((el) =>
+        el.name
+          .toLowerCase()
+          .startsWith(inputValue ? inputValue.toLowerCase() : "")
+      )
+      .slice(0, 3);
+
+    return (
+      <Paper square elevation={8} className={classes.selectPaper}>
+        <List disablePadding>
+          {selected.map((item, i) => (
+            <div key={item.name}>
+              <ListItem
+                button
+                onClick={(e) => {
+                  alert(item.name)
+                  setinputValue(item.name);
+                  setFocused(false);
+                }}
+              >
+                <ListItemIcon>
+                  <LocationOnIcon style={{ marginLeft: "8px" }} />
+                </ListItemIcon>
+                <ListItemText
+                  primaryTypographyProps={{ variant: "body2" }}
+                  primary={item.name}
+                  secondaryTypographyProps={{ variant: "body2" }}
+                  secondary={item.address}
+                />
+              </ListItem>
+              {i < selected.length - 1 ? <Divider variant="inset" /> : null}
+            </div>
+          ))}
+        </List>
+      </Paper>
+    );
+  };
+
   return (
-    <div className={classes.contentInput} onClick={onClick}>
+    <div className={classes.contentInput}>
       {IconComponent ? <IconComponent className={classes.inputIcon} /> : null}
       <div
         className={classes.inputDiv}
@@ -79,36 +157,47 @@ const EditItem = ({ title, IconComponent, value, subTitle, extraIcon, onClick })
       >
         <div className={classes.inputLabel}>{title}</div>
         {subTitle ? <div className={classes.inputLabel}>{subTitle}</div> : null}
-        <Input
-          value={inputValue}
-          inputProps={{
-            style: { textDecoration: canceled ? "line-through" : "none" },
-          }}
-          className={classes.inputField}
-          classes={{ underline: classes.underline }}
-          onChange={changeInputValue}
-          disabled={canceled ? true : false}
-        />
-        {extraIcon ? (
-          <IconButton
-            className={classes.extraIcon}
-            onClick={extraIcon === "close" ? handleCanceled : () => {}}
-          >
-            {extraIcon === "forward" ? (
-              <ArrowForwardIosIcon
-                fontSize="small"
-                classes={{ fontSizeSmall: classes.iconSmall }}
+        {jsxValue ? (
+          jsxValue
+        ) : (
+          <ClickAwayListener onClickAway={() => setFocused(false)}>
+            <div onClick={onClick}>
+              <Input
+                value={inputValue}
+                inputProps={{
+                  style: { textDecoration: canceled ? "line-through" : "none" },
+                }}
+                className={classes.inputField}
+                classes={{ underline: classes.underline }}
+                onChange={changeInputValue}
+                disabled={canceled ? true : false}
+                onClick={() => setFocused(true)}
+                onBlur={disableBlur ? ()=>{} : onBlur}
               />
-            ) : null}
-            {extraIcon === "close" ? (
-              canceled ? (
-                <UndoIcon />
-              ) : (
-                <CloseIcon />
-              )
-            ) : null}
-          </IconButton>
-        ) : null}
+              {extraIcon ? (
+                <IconButton
+                  className={classes.extraIcon}
+                  onClick={extraIcon === "close" ? handleCanceled : onClick}
+                >
+                  {extraIcon === "forward" ? (
+                    <ArrowForwardIosIcon
+                      fontSize="small"
+                      classes={{ fontSizeSmall: classes.iconSmall }}
+                    />
+                  ) : null}
+                  {extraIcon === "close" ? (
+                    canceled ? (
+                      <UndoIcon />
+                    ) : (
+                      <CloseIcon />
+                    )
+                  ) : null}
+                </IconButton>
+              ) : null}
+              {focused ? <MySelector /> : null}
+            </div>
+          </ClickAwayListener>
+        )}
       </div>
     </div>
   );

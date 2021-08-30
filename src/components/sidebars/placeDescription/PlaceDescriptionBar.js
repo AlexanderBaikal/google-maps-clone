@@ -35,7 +35,6 @@ import EditInfoContainer from "../../modals/editInfo/EditInfoContainer";
 import CompleteEditInfoModal from "../../modals/editInfo/CompleteEditInfoModal";
 
 const useStyles = makeStyles((theme) => ({
-  root: {},
   topImage: {
     overflow: "hidden",
     width: "100%",
@@ -86,6 +85,12 @@ const useStyles = makeStyles((theme) => ({
     padding: "5px 15px",
     minWidth: "35px",
   },
+  searchShadow: {
+    position: "fixed",
+    width: "423px",
+    height: "80px",
+    background: "-webkit-linear-gradient(rgba(0,0,0,0.25),rgba(0,0,0,0))",
+  },
 }));
 
 const PlaceDescriptionBar = ({
@@ -120,7 +125,8 @@ const PlaceDescriptionBar = ({
   };
 
   return (
-    <div>
+    <div className={classes.root}>
+      <div className={classes.searchShadow}></div>
       <img
         src={topImgSrc}
         onError={onTopImageError}
@@ -140,7 +146,6 @@ const PlaceDescriptionBar = ({
         />
         <EditModalContainer />
         <EditInfoContainer />
-
       </div>
       <Divider />
       <div className={classes.photos}>

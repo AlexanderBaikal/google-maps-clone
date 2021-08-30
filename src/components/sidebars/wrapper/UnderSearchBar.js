@@ -26,6 +26,7 @@ const useStyles = makeStyles((theme) => ({
   close: {
     display: "none",
   },
+
 }));
 
 const UnderSearchBar = ({ underSearchBar, activeBar }) => {
@@ -56,6 +57,7 @@ const UnderSearchBar = ({ underSearchBar, activeBar }) => {
           activeBar !== MAIN_UNDERSEARCH_BAR ? "white" : "#f0f0f0",
       }}
     >
+     
       {renderSwitch(activeBar)}
     </Paper>
   );

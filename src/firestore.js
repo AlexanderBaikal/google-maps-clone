@@ -13,7 +13,6 @@ firebase.initializeApp({
 
 var db = firebase.firestore();
 
-
 {
   // Add a new document in collection "descriptions"
   // db.collection("descriptions")
@@ -253,3 +252,24 @@ var db = firebase.firestore();
 //   });
 
 // var child = storageRef.child('Yarkomoll/2334e4edcc2678a8c413231e1cc68740.jpg')
+
+var ref = db.collection("descriptions").doc("O'key");
+return ref
+  .update({
+    schedule: {
+      monday: { open: "10:00", close: "20:00", allDay: false, closed: false },
+      tuesday: { open: "10:00", close: "20:00", allDay: false, closed: false },
+      wednesday: { open: "10:00", close: "20:00", allDay: false, closed: false },
+      thursday: { open: "10:00", close: "20:00", allDay: false, closed: false },
+      friday: { open: "10:00", close: "20:00", allDay: false, closed: false },
+      saturday: { open: "10:00", close: "20:00", allDay: false, closed: false },
+      sunday: { open: "10:00", close: "20:00", allDay: false, closed: false },
+    },
+  })
+  .then(() => {
+    console.log("Document successfully updated!");
+  })
+  .catch((error) => {
+    // The document probably doesn't exist.
+    console.error("Error updating document: ", error);
+  });

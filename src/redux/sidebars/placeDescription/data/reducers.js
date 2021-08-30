@@ -9,6 +9,7 @@ const defaultState = {
   content: null,
   loading: false,
   error: false,
+  contentSnapshot: null,
 };
 
 export const dataReducer = (state = defaultState, action) => {
@@ -17,6 +18,7 @@ export const dataReducer = (state = defaultState, action) => {
       return {
         ...state,
         content: null,
+        contentSnapshot: null,
         loading: true,
         error: false,
       };
@@ -24,6 +26,7 @@ export const dataReducer = (state = defaultState, action) => {
       return {
         ...state,
         content: action.payload,
+        contentSnapshot: JSON.parse(JSON.stringify(action.payload)),
         loading: false,
         error: false,
       };
@@ -31,6 +34,7 @@ export const dataReducer = (state = defaultState, action) => {
       return {
         ...state,
         content: null,
+        contentSnapshot: null,
         loading: false,
         error: true,
       };
