@@ -13,6 +13,7 @@ const firebaseConfig = {
 firebase.initializeApp(firebaseConfig);
 
 export const db = firebase.firestore();
+export const firestore = firebase.firestore
 
 // Create a root reference
 export const storageRef = firebase.storage().ref();

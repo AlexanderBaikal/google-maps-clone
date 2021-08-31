@@ -19,13 +19,9 @@ import { green, grey } from "@material-ui/core/colors";
 import clsx from "clsx";
 import Extras from "../../inlines/Extras";
 import History from "../../inlines/History";
-import AccountBalanceIcon from "@material-ui/icons/AccountBalance";
-import LocalGasStationIcon from "@material-ui/icons/LocalGasStation";
-import LocalParkingIcon from "@material-ui/icons/LocalParking";
-import LocalPharmacyOutlinedIcon from "@material-ui/icons/LocalPharmacyOutlined";
-import LocalPostOfficeOutlinedIcon from "@material-ui/icons/LocalPostOfficeOutlined";
-import LocalHospitalOutlinedIcon from "@material-ui/icons/LocalHospitalOutlined";
+
 import { useState } from "react";
+import ExtendedExtras from "../../inlines/ExtendedExtras";
 
 const useStyles = makeStyles((theme) => ({
   card: {
@@ -85,27 +81,6 @@ const useStyles = makeStyles((theme) => ({
   marginZero: {
     margin: 0,
   },
-
-  iconAvatarLarge: {
-    padding: "3px",
-    fill: "white",
-  },
-  options: {
-    display: "block",
-    alignItems: "center",
-    position: "relative",
-    padding: "16px 27px",
-  },
-
-  optionsButton: {
-    borderRadius: "8px",
-    width: "155px",
-    padding: "5px 10px",
-    marginLeft: "10px",
-    "&:hover": {
-      backgroundColor: "rgb(239, 239, 239)",
-    },
-  },
 }));
 
 const MainUnderSearchBar = ({
@@ -121,15 +96,6 @@ const MainUnderSearchBar = ({
   const myPlaces = [
     { name: "Home", iconComponent: HomeOutlinedIcon },
     { name: "Work", iconComponent: WorkOutlinedIcon },
-  ];
-
-  const extrasExtended = [
-    { name: "Banks", iconComponent: AccountBalanceIcon },
-    { name: "Gas stations", iconComponent: LocalGasStationIcon },
-    { name: "Car parks", iconComponent: LocalParkingIcon },
-    { name: "Pharamacies", iconComponent: LocalPharmacyOutlinedIcon },
-    { name: "Post stations", iconComponent: LocalPostOfficeOutlinedIcon },
-    { name: "Hospitals", iconComponent: LocalHospitalOutlinedIcon },
   ];
 
   const [shownMore, setShownMore] = useState(false);
@@ -223,45 +189,11 @@ const MainUnderSearchBar = ({
           shownMore={shownMore}
           setShownMore={setShownMore}
           setActiveBar={setActiveBar}
+          setActiveBar={setActiveBar}
+          setShownMore={setShownMore}
         />
       </Paper>
-      {shownMore ? (
-        <Paper
-          square
-          variant="outlined"
-          className={clsx(classes.card, classes.outlined)}
-          style={{ borderTop: "none" }}
-        >
-          <div style={{ display: "flex", justifyContent: "center" }}>
-            <div className={classes.options}>
-              {extrasExtended.map((item) => (
-                <ButtonBase
-                  aria-label="show extras"
-                  className={classes.optionsButton}
-                  key={item.name}
-                >
-                  <Avatar
-                    className={classes.iconAvatarLarge}
-                    style={{
-                      backgroundColor: "#78909c",
-                      marginBottom: "10px",
-                    }}
-                  >
-                    <item.iconComponent />
-                  </Avatar>
-                  <ListItemText
-                    secondaryTypographyProps={{
-                      style: { textAlign: "left", marginLeft: "10px" },
-                    }}
-                    classes={{ secondary: classes.textSmall }}
-                    secondary={item.name}
-                  />
-                </ButtonBase>
-              ))}
-            </div>
-          </div>
-        </Paper>
-      ) : null}
+      {shownMore ? <ExtendedExtras setActiveBar={setActiveBar}/> : null}
       <Fab
         size="small"
         variant="extended"

@@ -3,6 +3,7 @@ import {
   REQUEST_DATA_FAILED,
   REQUEST_DATA_SUCCESS,
   SET_CONTENT,
+  SET_CONTENT_SNAPSHOT,
   SET_DESCRIPTION_DATA,
 } from "./actions";
 
@@ -44,6 +45,12 @@ const placeReducer = (state = defaultState, action) => {
       return {
         ...state,
         content: action.payload,
+      };
+
+    case SET_CONTENT_SNAPSHOT:
+      return {
+        ...state,
+        contentSnapshot: action.payload,
       };
 
     case SET_DESCRIPTION_DATA:

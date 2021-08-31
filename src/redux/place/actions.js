@@ -3,6 +3,7 @@ export const REQUEST_DATA_SUCCESS = "REQUEST_DATA_SUCCESS";
 export const REQUEST_DATA_FAILED = "REQUEST_DATA_FAILED";
 export const REQUEST_DATA = "REQUEST_DATA";
 export const SET_CONTENT = "SET_CONTENT"
+export const SET_CONTENT_SNAPSHOT = "SET_CONTENT_SNAPSHOT"
 
 export const requestDataSuccess = (dataFromServer) => {
   return {
@@ -33,6 +34,13 @@ export const loadData = (data) => {
 export const setContent = (data) => {
   return {
     type: SET_CONTENT,
+    payload: data,
+  };
+};
+
+export const setContentSnapshot = (data) => {
+  return {
+    type: SET_CONTENT_SNAPSHOT,
     payload: data,
   };
 };

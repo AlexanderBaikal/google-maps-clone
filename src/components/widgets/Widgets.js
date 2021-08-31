@@ -7,6 +7,7 @@ import MinimapWidget from "./minimapWidget/MinimapWidget";
 import SearchbarContainer from "./searchBar/SearchbarContainer";
 import UserWidget from "./userWidget/UserWidget";
 import VerticalContainer from "./verticalWidget/VerticalContainer";
+import BottomGalleryContainer from "./bottomGallery/BottomGalleryContainer";
 
 const useStyles = makeStyles({
   bottomRightWidgets: {
@@ -80,7 +81,7 @@ const Widgets = ({ underSearchBar, bottomGallery }) => {
             <VerticalContainer />
             <HorizontalContainer />
           </div>
-          {bottomGallery ? <BottomGallery /> : null}
+          {bottomGallery ? <BottomGalleryContainer /> : null}
         </div>
         <div className={classes.bottomLeftWidgets}>
           <MinimapWidget bottomGallery={bottomGallery} />

@@ -4,6 +4,7 @@ import WidgetsContainer from "./widgets/WidgetsContainer";
 import theme from "../theme";
 import MenuSidebarContainer from "./sidebars/sideMenu/MenuSidebarContainer";
 import MapContainer from "./map/MapContainer";
+import OutterModals from "./modals/OutterModals";
 
 function App({}) {
   return (
@@ -12,6 +13,7 @@ function App({}) {
         <MapContainer />
         <WidgetsContainer />
         <MenuSidebarContainer />
+        <OutterModals />
       </div>
     </ThemeProvider>
   );

@@ -1,11 +1,6 @@
 //
 
-import {
-  Divider,
-  Input,
-  makeStyles,
-  Button,
-} from "@material-ui/core";
+import { Divider, Input, makeStyles, Button } from "@material-ui/core";
 
 import SearchOutlinedIcon from "@material-ui/icons/SearchOutlined";
 import CreateOutlinedIcon from "@material-ui/icons/CreateOutlined";
@@ -27,12 +22,8 @@ import HeaderBar from "./../../inlines/HeaderBar";
 import BottomButton from "./../../inlines/BottomButton";
 import CompletePhotoModal from "./../../modals/uploadPhoto/CompletePhotoModal";
 import ReviewModalContainer from "../../modals/review/ReviewModalContainer";
-import EditModalContainer from "../../modals/edit/EditModalContainer";
+
 import UploadPhotoContainer from "../../modals/uploadPhoto/UploadPhotoContainer";
-import EditInfoContainer from "../../modals/editInfo/EditInfoContainer";
-import EditCategoryContainer from "../../modals/editCategory/EditCategoryContainer";
-import ScheduleModalContainer from "../../modals/scheduleModal/ScheduleModalContainer";
-import EditHoursContainer from "./../../modals/editHours/EditHoursContainer";
 
 const useStyles = makeStyles((theme) => ({
   topImage: {
@@ -144,11 +135,6 @@ const PlaceDescriptionBar = ({
           startIcon={CreateOutlinedIcon}
           onClick={handleOpenEdit}
         />
-        <EditModalContainer />
-        <EditInfoContainer />
-        <EditCategoryContainer />
-        <ScheduleModalContainer />
-        <EditHoursContainer />
       </div>
       <Divider />
       <div className={classes.photos}>
@@ -206,29 +192,31 @@ const PlaceDescriptionBar = ({
         />
       </div>
       <Divider />
-      <div className={classes.comments}>
-        <ReviewModalContainer />
-        <HeaderBar
-          title="Reviews"
-          buttons={
-            <>
-              <Button
-                className={classes.subheaderButton}
-                variant="outlined"
-                style={{ padding: "7px 8px", marginRight: "5px" }}
-              >
-                <SearchOutlinedIcon fontSize="small" color="primary" />
-              </Button>
-              <Button variant="outlined" className={classes.subheaderButton}>
-                <SortOutlinedIcon fontSize="small" color="primary" />
-                Sort
-              </Button>
-            </>
-          }
-        />
+      <ReviewModalContainer />
+      {comments ? (
+        <div className={classes.comments}>
+          <HeaderBar
+            title="Reviews"
+            buttons={
+              <>
+                <Button
+                  className={classes.subheaderButton}
+                  variant="outlined"
+                  style={{ padding: "7px 8px", marginRight: "5px" }}
+                >
+                  <SearchOutlinedIcon fontSize="small" color="primary" />
+                </Button>
+                <Button variant="outlined" className={classes.subheaderButton}>
+                  <SortOutlinedIcon fontSize="small" color="primary" />
+                  Sort
+                </Button>
+              </>
+            }
+          />
 
-        <Comments comments={comments} />
-      </div>
+          <Comments comments={comments} />
+        </div>
+      ) : null}
     </div>
   );
 };

@@ -8,6 +8,11 @@ import {
 } from "@material-ui/core";
 import PhotoCameraIcon from "@material-ui/icons/PhotoCamera";
 import { useHorizontalScroll } from "../../inlines/HorizontalScroll";
+import { LazyLoadImage } from "react-lazy-load-image-component";
+import "react-lazy-load-image-component/src/effects/blur.css";
+import { useSelector } from "react-redux";
+import Skeleton from "@material-ui/lab/Skeleton";
+import { createRef, useEffect, useState } from "react";
 
 const useStyles = makeStyles((theme) => {
   return {
@@ -16,6 +21,7 @@ const useStyles = makeStyles((theme) => {
       right: "0px",
       bottom: "0px",
       width: "100%",
+      minHeight: "128px",
       padding: "8px 0",
       display: "flex",
       justifyContent: "flex-end",
@@ -45,61 +51,47 @@ const useStyles = makeStyles((theme) => {
     },
     imageListItem: {
       borderRadius: "8px",
-      cursor: "pointer"
+      cursor: "pointer",
     },
 
     iconButton: {
       padding: "6px",
     },
+    lazyLoadWrapper: {
+      width: "100%",
+      height: "100%",
+    },
+    lazyLoad: {
+      width: "100%",
+      height: "100%",
+      objectFit: "cover",
+    },
   };
 });
 
-const BottomGallery = () => {
+const BottomGallery = ({ images = [] }) => {
   const classes = useStyles();
   const scrollRef = useHorizontalScroll();
 
-  const itemData = [
-    {
-      img: "https://material-ui.com/static/images/image-list/breakfast.jpg",
-      title: "Summer breakfast",
-      author: "author",
-    },
-    {
-      img: "https://material-ui.com/static/images/image-list/burgers.jpg",
-      title: "Hamburger",
-      author: "author",
-    },
-    {
-      img: "https://material-ui.com/static/images/image-list/camera.jpg",
-      title: "Something",
-      author: "author",
-    },
-    {
-      img: "https://material-ui.com/static/images/image-list/morning.jpg",
-      title: "Morning coffee",
-      author: "author",
-    },
-    {
-      img: "http://material-ui.com/static/images/image-list/breakfast.jpg",
-      title: "Image",
-      author: "author",
-    },
-    {
-      img: "http://material-ui.com/static/images/image-list/burgers.jpg",
-      title: "Unnamed",
-      author: "author",
-    },
-    {
-      img: "http://material-ui.com/static/images/image-list/camera.jpg",
-      title: "",
-      author: "author",
-    },
-    {
-      img: "http://material-ui.com/static/images/image-list/morning.jpg",
-      title: "Image",
-      author: "author",
-    },
-  ];
+  const [imgListRefs, setImgListRefs] = useState([]);
+
+  useEffect(() => {
+    setImgListRefs((imgListRefs) =>
+      Array(images.length)
+        .fill()
+        .map((_, i) => imgListRefs[i] || createRef())
+    );
+  }, [images.length]);
+
+  const onImageError = (index) => {
+    if (imgListRefs[index].current) imgListRefs[index].current.remove();
+  };
+
+  let loading = useSelector((state) => state.images.loading);
+
+  useEffect(() => {
+    console.log(loading);
+  }, [loading]);
 
   return (
     <Paper className={classes.bottomGallery} square>
@@ -112,34 +104,52 @@ const BottomGallery = () => {
           gap={12}
           ref={scrollRef}
         >
-          {itemData.map((item) => (
-            <ImageListItem
-              key={item.img}
-              classes={{ item: classes.imageListItem }}
-              style={{ width: "220px" }}
-            >
-              <img src={item.img} alt={item.title} />
-              <ImageListItemBar
-                title={item.title}
-                actionPosition="left"
-                classes={{
-                  root: classes.titleBar,
-                  title: classes.title,
-                }}
-                actionIcon={
-                  <IconButton
-                    classes={{ root: classes.iconButton }}
-                    aria-label={`icon ${item.title}`}
-                  >
-                    <PhotoCameraIcon
-                      className={classes.icon}
-                      fontSize="small"
-                    />
-                  </IconButton>
-                }
-              />
-            </ImageListItem>
-          ))}
+          {!loading
+            ? images.map((item, i) => (
+                <ImageListItem
+                  key={item}
+                  ref={imgListRefs[i]}
+                  classes={{ item: classes.imageListItem }}
+                  style={{ width: "220px" }}
+                >
+                  <LazyLoadImage
+                    src={item}
+                    effect="blur"
+                    className={classes.lazyLoad}
+                    wrapperClassName={classes.lazyLoadWrapper}
+                    onError={() => onImageError(i)}
+                  />
+                  <ImageListItemBar
+                    title={""}
+                    actionPosition="left"
+                    classes={{
+                      root: classes.titleBar,
+                      title: classes.title,
+                    }}
+                    actionIcon={
+                      <IconButton
+                        classes={{ root: classes.iconButton }}
+                        aria-label={`icon ${item.title}`}
+                      >
+                        <PhotoCameraIcon
+                          className={classes.icon}
+                          fontSize="small"
+                        />
+                      </IconButton>
+                    }
+                  />
+                </ImageListItem>
+              ))
+            : [...Array(10)].map((item, i) => (
+                <ImageListItem
+                  key={i}
+                  classes={{ item: classes.imageListItem }}
+                  style={{ width: "220px" }}
+                >
+                  <Skeleton variant="rect" height={118} />
+                </ImageListItem>
+              ))}
+
           <div style={{ width: 0, height: 0 }} />
         </ImageList>
       </div>

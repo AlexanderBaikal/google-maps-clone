@@ -125,9 +125,9 @@ const EditItem = ({
               <ListItem
                 button
                 onClick={(e) => {
-                  alert(item.name)
                   setinputValue(item.name);
                   setFocused(false);
+                  onChange(item.name)
                 }}
               >
                 <ListItemIcon>

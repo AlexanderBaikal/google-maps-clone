@@ -22,9 +22,40 @@ export const requestImages = () => {
   };
 };
 
-export const loadImages = (data = "All") => {
+export const loadImages = (data) => {
   return {
     type: LOAD_IMAGES,
+    payload: data,
+  };
+};
+
+export const LOAD_ALL_IMAGES = "LOAD_ALL_IMAGES";
+export const REQUEST_ALL_IMAGES_SUCCESS = "REQUEST_ALL_IMAGES_SUCCESS";
+export const REQUEST_ALL_IMAGES_FAILED = "REQUEST_ALL_IMAGES_FAILED";
+export const REQUEST_ALL_IMAGES = "REQUEST_ALL_IMAGES";
+
+export const requestAllImagesSuccess = (dataFromServer) => {
+  return {
+    type: REQUEST_ALL_IMAGES_SUCCESS,
+    payload: dataFromServer,
+  };
+};
+
+export const requestAllImagesFailed = () => {
+  return {
+    type: REQUEST_ALL_IMAGES_FAILED,
+  };
+};
+
+export const requestAllImages = () => {
+  return {
+    type: REQUEST_ALL_IMAGES,
+  };
+};
+
+export const loadAllImages = (data) => {
+  return {
+    type: LOAD_ALL_IMAGES,
     payload: data,
   };
 };

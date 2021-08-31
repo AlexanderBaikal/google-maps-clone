@@ -4,6 +4,7 @@ import {
   ListItemText,
   makeStyles,
 } from "@material-ui/core";
+
 import ShoppingCartOutlinedIcon from "@material-ui/icons/ShoppingCartOutlined";
 import RestaurantOutlinedIcon from "@material-ui/icons/RestaurantOutlined";
 import LocalCafeOutlinedIcon from "@material-ui/icons/LocalCafeOutlined";
@@ -78,48 +79,56 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const Extras = ({ countItems = 5, shownMore, setShownMore, setActiveBar }) => {
-  const classes = useStyles();
+const extras = ({ handleActiveBar, handleShownMore }) => [
+  {
+    name: "Grocery stores",
+    iconComponent: ShoppingCartOutlinedIcon,
+    color: "#388e3c",
+    onClick: handleActiveBar,
+  },
+  {
+    name: "Restaurants",
+    iconComponent: RestaurantOutlinedIcon,
+    color: "#42a5f5",
+    onClick: handleActiveBar,
+  },
+  {
+    name: "Takeaway food",
+    iconComponent: LocalCafeOutlinedIcon,
+    color: "#d32f2f",
+    onClick: handleActiveBar,
+  },
+  {
+    name: "Hostels",
+    iconComponent: HotelIcon,
+    color: "#f57c00",
+    onClick: handleActiveBar,
+  },
+  {
+    name: "Show more",
+    iconComponent: MoreHorizIcon,
+    color: "#78909c",
+    onClick: handleShownMore,
+    alt: ExpandLessOutlinedIcon,
+  },
+];
 
-  const handleShownMore = () => setShownMore((value) => !value);
+const Extras = ({
+  countItems = 5,
+  shownMore,
+  setActiveBar = () => {},
+  setShownMore = () => {},
+}) => {
+  const classes = useStyles();
 
   const handleActiveBar = () => {
     setActiveBar(PLACES_BAR);
   };
+  const handleShownMore = () => {
+    setShownMore((v) => !v);
+  };
 
-  const extras = [
-    {
-      name: "Grocery stores",
-      iconComponent: ShoppingCartOutlinedIcon,
-      color: "#388e3c",
-      onClick: handleActiveBar,
-    },
-    {
-      name: "Restaurants",
-      iconComponent: RestaurantOutlinedIcon,
-      color: "#42a5f5",
-      onClick: handleActiveBar,
-    },
-    {
-      name: "Takeaway food",
-      iconComponent: LocalCafeOutlinedIcon,
-      color: "#d32f2f",
-      onClick: handleActiveBar,
-    },
-    {
-      name: "Hostels",
-      iconComponent: HotelIcon,
-      color: "#f57c00",
-      onClick: handleActiveBar,
-    },
-    {
-      name: "Show more",
-      iconComponent: MoreHorizIcon,
-      color: "#78909c",
-      onClick: handleShownMore,
-      alt: ExpandLessOutlinedIcon,
-    },
-  ];
+  const items = extras({ handleActiveBar, handleShownMore });
 
   return (
     <div key={"Options"} className={classes.extras}>
@@ -137,7 +146,7 @@ const Extras = ({ countItems = 5, shownMore, setShownMore, setActiveBar }) => {
         </div>
       </div>
       <div className={classes.options}>
-        {extras.slice(0, countItems).map((item) => (
+        {items.slice(0, countItems).map((item) => (
           <ButtonBase
             aria-label="show extras"
             className={classes.optionsButton}

@@ -13,7 +13,7 @@ import CallIcon from "@material-ui/icons/Call";
 import VerifiedUserOutlinedIcon from "@material-ui/icons/VerifiedUserOutlined";
 import LabelOutlinedIcon from "@material-ui/icons/LabelOutlined";
 import LocationOnOutlinedIcon from "@material-ui/icons/LocationOnOutlined";
-import moment from 'moment'
+import moment from "moment";
 
 const useStyles = makeStyles((theme) => ({
   root: {},
@@ -34,7 +34,9 @@ const ListInfo = ({ content }) => {
 
   const listInfo = [
     {
-      text: moment({}).seconds(content.lastVisit.seconds).format("dddd, MMMM Do YYYY, h:mm:ss a"),
+      text: moment({})
+        .seconds(content.lastVisit.seconds ? content.lastVisit.seconds : 0)
+        .format("dddd, MMMM Do YYYY, h:mm:ss a"),
       iconComponent: TimelineOutlinedIcon,
     },
     {

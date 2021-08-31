@@ -24,6 +24,7 @@ import { useCallback } from "react";
 import AddPhotoBlock from "../nested/AddPhotoBlock";
 import { editDescription } from "../../../firebase";
 import clsx from "clsx";
+import MySchedule from "./MySchedule";
 
 const useStyles = makeStyles((theme) => ({
   root: {},
@@ -191,6 +192,10 @@ const EditInfoModal = ({
     setContent({ ...content, website: value });
   };
 
+  const onNameChange = (value) => {
+    setContent({ ...content, name: value });
+  };
+
   const [canceledFields, setCanceledFields] = useState([]);
 
   const onPhoneCancel = () => {
@@ -210,29 +215,6 @@ const EditInfoModal = ({
   };
 
   const [disabled, setDisabled] = useState(false);
-
-  const getSchedule = () => {
-    const days = [
-      "monday",
-      "tuesday",
-      "wednesday",
-      "thursday",
-      "friday",
-      "saturday",
-      "sunday",
-    ];
-    return (
-      <TextField
-        InputProps={{ className: classes.textFieldHours }}
-        onClick={onHoursClick}
-        multiline
-        value={days
-          .map((item) => getWeekdayHours(item, content.schedule[item]))
-          .join("\n")}
-        fullWidth
-      />
-    );
-  };
 
   // TODO remove event listener
 
@@ -283,11 +265,16 @@ const EditInfoModal = ({
             Overview
           </Typography>
           <Divider />
-          <EditItem title="Name" IconComponent={StoreIcon} value="Yarkomoll" />
+          <EditItem
+            title="Name"
+            IconComponent={StoreIcon}
+            value={content.name}
+            onChange={onNameChange}
+          />
           <EditItem
             title="Category"
             IconComponent={CategoryIcon}
-            value={content.type}
+            value={content.type || "Add category"}
             extraIcon={"forward"}
             onClick={() => setCategoryModal(!categoryModal)}
           />
@@ -320,7 +307,14 @@ const EditInfoModal = ({
             title="Hours"
             IconComponent={WatchLaterOutlinedIcon}
             onClick={onHoursClick}
-            jsxValue={getSchedule()}
+            jsxValue={
+              <MySchedule
+                classes={classes}
+                onHoursClick={onHoursClick}
+                getWeekdayHours={getWeekdayHours}
+                content={content}
+              />
+            }
             extraIcon={"forward"}
           />
           <EditItem
