@@ -96,8 +96,8 @@ const ScheduleModal = ({
   setNewHours,
   scheduleModal,
   setScheduleModal,
-  selectedDays,
-  setSelectedDays,
+  selectedWeekdays,
+  setSelectedWeekdays,
 }) => {
   const classes = useStyles();
 
@@ -107,7 +107,7 @@ const ScheduleModal = ({
     setClosed(false);
     setOpened24(true);
     var updatedSchedule = Object.assign({}, newSchedule);
-    for (var day of selectedDays) {
+    for (var day of selectedWeekdays) {
       updatedSchedule[day].closed = false;
       updatedSchedule[day].allDay = true;
     }
@@ -121,7 +121,7 @@ const ScheduleModal = ({
     setOpened24(false);
     if (opened24) setOpened24(false);
     var updatedSchedule = Object.assign({}, newSchedule);
-    for (var day of selectedDays) {
+    for (var day of selectedWeekdays) {
       updatedSchedule[day].allDay = false;
       updatedSchedule[day].closed = true;
     }
@@ -136,7 +136,7 @@ const ScheduleModal = ({
     var value = e.target.value;
     setOpenTime(value);
     var updatedSchedule = Object.assign({}, newSchedule);
-    for (var day of selectedDays) {
+    for (var day of selectedWeekdays) {
       updatedSchedule[day].open = value;
       updatedSchedule[day].closed = false;
       updatedSchedule[day].allDay = false;
@@ -152,7 +152,7 @@ const ScheduleModal = ({
     var value = e.target.value;
     setCloseTime(value);
     var updatedSchedule = Object.assign({}, newSchedule);
-    for (var day of selectedDays) {
+    for (var day of selectedWeekdays) {
       updatedSchedule[day].close = value;
       updatedSchedule[day].closed = false;
       updatedSchedule[day].allDay = false;
@@ -171,10 +171,10 @@ const ScheduleModal = ({
   };
 
   const handleWeekdays = (i) => {
-    if (selectedDays.includes(i)) {
-      setSelectedDays([...selectedDays.filter((el) => el !== i)]);
+    if (selectedWeekdays.includes(i)) {
+      setSelectedWeekdays([...selectedWeekdays.filter((el) => el !== i)]);
     } else {
-      setSelectedDays([...selectedDays, i]);
+      setSelectedWeekdays([...selectedWeekdays, i]);
     }
   };
 
@@ -200,7 +200,7 @@ const ScheduleModal = ({
                 key={item.key}
                 className={classes.avatar}
                 style={{
-                  backgroundColor: selectedDays.includes(item.key)
+                  backgroundColor: selectedWeekdays.includes(item.key)
                     ? "#eeeeee"
                     : "white",
                 }}

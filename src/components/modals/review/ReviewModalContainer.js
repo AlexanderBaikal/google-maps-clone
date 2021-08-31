@@ -1,7 +1,7 @@
 import { connect } from "react-redux";
-import { setAddComment } from "../../../redux/sidebars/placeDescription/actions";
-import { setAddPhoto } from "../../../redux/modals/review/actions";
-import { setFiles } from "../../../redux/modals/uploadPhoto/actions";
+import { setAddComment } from "../../../redux/active/actions";
+import { setPhotoFiles } from "../../../redux/modals/actions";
+import { setAddPhoto } from "../../../redux/active/actions";
 
 import ReviewModal from "./ReviewModal";
 
@@ -12,8 +12,8 @@ const ReviewModalContainer = (props) => {
       setAddComment={props.setAddComment}
       addPhoto={props.addPhoto}
       setAddPhoto={props.setAddPhoto}
-      files={props.files}
-      setFiles={props.setFiles}
+      photoFiles={props.photoFiles}
+      setPhotoFiles={props.setPhotoFiles}
       content={props.content}
     />
   );
@@ -21,17 +21,17 @@ const ReviewModalContainer = (props) => {
 
 const mapStateToProps = (state) => {
   return {
-    addComment: state.sidebars.descriptionBar.main.addComment,
-    addPhoto: state.modals.review.addPhoto,
-    files: state.modals.uploadPhoto.files,
-    content: state.sidebars.descriptionBar.data.content,
+    addComment: state.active.addComment,
+    addPhoto: state.active.addPhoto,
+    photoFiles: state.modals.photoFiles,
+    content: state.place.content,
   };
 };
 
 const mapDispatchToProps = {
   setAddComment,
   setAddPhoto,
-  setFiles,
+  setPhotoFiles,
 };
 
 export default connect(

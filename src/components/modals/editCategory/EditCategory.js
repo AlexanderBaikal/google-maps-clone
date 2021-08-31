@@ -93,7 +93,7 @@ const useStyles = makeStyles((theme) => ({
 const EditCategory = ({
   categoryModal,
   setCategoryModal,
-  setData,
+  setContent,
   content,
 }) => {
   const classes = useStyles();
@@ -138,7 +138,7 @@ const EditCategory = ({
 
   const onChoose = (item) => {
     onClose();
-    setData({ ...content, type: item });
+    setContent({ ...content, type: item });
   };
 
   return (

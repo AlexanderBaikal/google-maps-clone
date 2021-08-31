@@ -52,15 +52,15 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const PhotoSection = ({
-  files,
-  setFiles,
+  photoFiles,
+  setPhotoFiles,
   handleAddPhoto,
   fullHeight = false,
 }) => {
   const classes = useStyles();
 
   const handleDeleteClick = (file) => {
-    setFiles(files.filter((f) => f !== file));
+    setPhotoFiles(photoFiles.filter((f) => f !== file));
   };
 
   return (
@@ -81,7 +81,7 @@ const PhotoSection = ({
       >
         <AddAPhotoOutlinedIcon color="primary" />
       </div>
-      {files.map((file, i) => (
+      {photoFiles.map((file, i) => (
         <div key={i}>
           <div
             className={classes.preview}

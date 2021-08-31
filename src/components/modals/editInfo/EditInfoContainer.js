@@ -1,26 +1,15 @@
 import { connect } from "react-redux";
-import EditInfoModal from "./EditInfoModal";
+import EditInfoModal from "../editInfo/EditInfoModal";
 import {
   setOpenEditInfo,
   setOpenCompleteEditInfo,
-} from "./../../../redux/sidebars/placeDescription/actions";
-import { setData } from "./../../../redux/sidebars/placeDescription/data/actions";
-import CompleteEditInfoModal from "./CompleteEditInfoModal";
-import EditCategory from "./EditCategory";
-import { useState } from "react";
-import EditHoursModal from "./EditHoursModal";
-import ScheduleModal from "./ScheduleModal";
-import { setFiles } from "../../../redux/modals/uploadPhoto/actions";
+} from "./../../../redux/active/actions";
+import { setContent } from "../../../redux/place/actions";
+import CompleteEditInfoModal from "../editInfo/CompleteEditInfoModal";
+import { setPhotoFiles, setNewHours } from "../../../redux/modals/actions";
+import { setCategoryModal, setHoursModal } from "../../../redux/active/actions";
 
 const EditInfoContainer = (props) => {
-  const [categoryModal, setCategoryModal] = useState(false);
-  const [hoursModal, setHoursModal] = useState(false);
-  const [scheduleModal, setScheduleModal] = useState(false);
-  const [selectedDays, setSelectedDays] = useState([]);
-  const [newHours, setNewHours] = useState(
-    JSON.parse(JSON.stringify(props.content.schedule))
-  );
-
   return (
     <>
       <EditInfoModal
@@ -29,45 +18,18 @@ const EditInfoContainer = (props) => {
         openEditInfo={props.openEditInfo}
         setOpenEditInfo={props.setOpenEditInfo}
         setOpenCompleteEditInfo={props.setOpenCompleteEditInfo}
-        categoryModal={categoryModal}
-        setCategoryModal={setCategoryModal}
-        setHoursModal={setHoursModal}
-        setNewHours={setNewHours}
-        setData={props.setData}
+        categoryModal={props.categoryModal}
+        setCategoryModal={props.setCategoryModal}
+        setHoursModal={props.setHoursModal}
+        setNewHours={props.setNewHours}
+        setContent={props.setContent}
         allPlaces={props.allPlaces}
-        files={props.files}
-        setFiles={props.setFiles}
+        photoFiles={props.photoFiles}
+        setPhotoFiles={props.setPhotoFiles}
       />
       <CompleteEditInfoModal
         setOpenCompleteEditInfo={props.setOpenCompleteEditInfo}
         openCompleteEditInfo={props.openCompleteEditInfo}
-      />
-      <EditCategory
-        categoryModal={categoryModal}
-        setCategoryModal={setCategoryModal}
-        setData={props.setData}
-        content={props.content}
-      />
-      <EditHoursModal
-        content={props.content}
-        setData={props.setData}
-        hoursModal={hoursModal}
-        setHoursModal={setHoursModal}
-        setScheduleModal={setScheduleModal}
-        contentSnapshot={props.contentSnapshot}
-        setSelectedDays={setSelectedDays}
-        newHours={newHours}
-        setNewHours={setNewHours}
-        files={props.files}
-        setFiles={props.setFiles}
-      />
-      <ScheduleModal
-        scheduleModal={scheduleModal}
-        setScheduleModal={setScheduleModal}
-        selectedDays={selectedDays}
-        setSelectedDays={setSelectedDays}
-        newHours={newHours}
-        setNewHours={setNewHours}
       />
     </>
   );
@@ -75,21 +37,25 @@ const EditInfoContainer = (props) => {
 
 const mapStateToProps = (state) => {
   return {
-    content: state.sidebars.descriptionBar.data.content,
-    openEditInfo: state.sidebars.descriptionBar.main.openEditInfo,
+    content: state.place.content,
+    openEditInfo: state.active.openEditInfo,
     openCompleteEditInfo:
-      state.sidebars.descriptionBar.main.openCompleteEditInfo,
-    contentSnapshot: state.sidebars.descriptionBar.data.contentSnapshot,
-    allPlaces: state.sidebars.placesBar.allPlaces,
-    files: state.modals.uploadPhoto.files,
+      state.active.openCompleteEditInfo,
+    contentSnapshot: state.place.contentSnapshot,
+    allPlaces: state.places.allPlaces,
+    photoFiles: state.modals.photoFiles,
+    categoryModal: state.active.categoryModal,
   };
 };
 
 const mapDispatchToProps = {
   setOpenEditInfo,
   setOpenCompleteEditInfo,
-  setData,
-  setFiles,
+  setContent,
+  setPhotoFiles,
+  setCategoryModal,
+  setNewHours,
+  setHoursModal,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(EditInfoContainer);

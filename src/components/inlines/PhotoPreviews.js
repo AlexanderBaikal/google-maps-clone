@@ -43,7 +43,7 @@ const useStyles = makeStyles((theme) => {
   };
 });
 
-const PhotoPreviews = ({ files, setFiles, previewFiles, setPreviewFiles }) => {
+const PhotoPreviews = ({ photoFiles, setPhotoFiles, previewFiles, setPreviewFiles }) => {
   const classes = useStyles();
 
   const [activeElem, setActiveElem] = useState(null);
@@ -57,7 +57,7 @@ const PhotoPreviews = ({ files, setFiles, previewFiles, setPreviewFiles }) => {
   };
 
   const onDeleteClick = (file) => {
-    setFiles(files.filter((f) => f !== file));
+    setPhotoFiles(photoFiles.filter((f) => f !== file));
     setPreviewFiles(previewFiles.filter((f) => f !== file));
   };
 

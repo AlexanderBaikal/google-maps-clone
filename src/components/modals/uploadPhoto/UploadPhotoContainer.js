@@ -2,7 +2,7 @@ import { connect } from "react-redux";
 import {
   setOpenUploadPhoto,
   setOpenCompletePhoto,
-} from "../../../redux/sidebars/placeDescription/actions";
+} from "../../../redux/active/actions";
 import UploadPhotoModal from "./UploadPhotoModal";
 
 const UploadPhotoContainer = (props) => {
@@ -20,8 +20,8 @@ const UploadPhotoContainer = (props) => {
 
 const mapStateToProps = (state) => {
   return {
-    openUploadPhoto: state.sidebars.descriptionBar.main.openUploadPhoto,
-    keyword: state.sidebars.descriptionBar.data.content.name,
+    openUploadPhoto: state.active.openUploadPhoto,
+    keyword: state.place.content.name,
   };
 };
 

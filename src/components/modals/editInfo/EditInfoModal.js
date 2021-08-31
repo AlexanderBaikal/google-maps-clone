@@ -21,9 +21,9 @@ import PublicIcon from "@material-ui/icons/Public";
 import EditItem from "./EditItem";
 import { useEffect, useRef, useState } from "react";
 import { useCallback } from "react";
-import AddPhotoBlock from "./AddPhotoBlock";
+import AddPhotoBlock from "../nested/AddPhotoBlock";
 import { editDescription } from "../../../firebase";
-import clsx from 'clsx'
+import clsx from "clsx";
 
 const useStyles = makeStyles((theme) => ({
   root: {},
@@ -116,16 +116,15 @@ const EditInfoModal = ({
   setCategoryModal,
   setHoursModal,
   setNewHours,
-  setData,
+  setContent,
   allPlaces,
-  files,
-  setFiles,
+  photoFiles,
+  setPhotoFiles,
 }) => {
   const classes = useStyles();
 
-  console.log("&*&*", files, setFiles);
-
   const onClose = () => {
+    setContent(JSON.parse(JSON.stringify(contentSnapshot)));
     setOpenEditInfo(false);
   };
 
@@ -141,11 +140,11 @@ const EditInfoModal = ({
     for (var field of canceledFields) {
       newContent[field] = "No data yet";
     }
-    setData(newContent);
+    setContent(newContent);
 
     const data = {
       content: newContent,
-      photos: files,
+      photos: photoFiles,
     };
     await editDescription(data);
 
@@ -153,12 +152,12 @@ const EditInfoModal = ({
     setDisabled(false);
     setOpenCompleteEditInfo(true);
     setCanceledFields([]);
-    setFiles([]);
+    setPhotoFiles([]);
   }
 
   const onCancel = () => {
     setOpenEditInfo(false);
-    setData(JSON.parse(JSON.stringify(contentSnapshot)));
+    setContent(JSON.parse(JSON.stringify(contentSnapshot)));
   };
 
   const [shadow, setShadow] = useState(false);
@@ -177,19 +176,19 @@ const EditInfoModal = ({
   };
 
   const onAddressChange = (value) => {
-    setData({ ...content, address: value });
+    setContent({ ...content, address: value });
   };
 
   const onPhoneChange = (value) => {
-    setData({ ...content, phoneNumber: value });
+    setContent({ ...content, phoneNumber: value });
   };
 
   const onInsideChange = (value) => {
-    setData({ ...content, inside: value });
+    setContent({ ...content, inside: value });
   };
 
   const onWebsiteChange = (value) => {
-    setData({ ...content, website: value });
+    setContent({ ...content, website: value });
   };
 
   const [canceledFields, setCanceledFields] = useState([]);
@@ -309,7 +308,7 @@ const EditInfoModal = ({
           <EditItem
             title="Located within"
             IconComponent={null}
-            value={typeof content.inside  === 'string' ? content.inside :  ""}
+            value={typeof content.inside === "string" ? content.inside : ""}
             subTitle={
               "If this place is located within another, enter the containing place."
             }
@@ -353,7 +352,10 @@ const EditInfoModal = ({
           />
 
           <div className={classes.bottomDiv}>
-            <AddPhotoBlock files={files} setFiles={setFiles} />
+            <AddPhotoBlock
+              photoFiles={photoFiles}
+              setPhotoFiles={setPhotoFiles}
+            />
             <Typography
               variant="h2"
               component="div"

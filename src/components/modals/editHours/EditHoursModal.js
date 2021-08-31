@@ -19,7 +19,7 @@ import { useCallback } from "react";
 import ArrowBackIcon from "@material-ui/icons/ArrowBack";
 import ArrowForwardIosIcon from "@material-ui/icons/ArrowForwardIos";
 import CreateOutlinedIcon from "@material-ui/icons/CreateOutlined";
-import AddPhotoBlock from "./AddPhotoBlock";
+import AddPhotoBlock from "../nested/AddPhotoBlock";
 import EditLocationOutlinedIcon from "@material-ui/icons/EditLocationOutlined";
 
 const useStyles = makeStyles((theme) => ({
@@ -187,17 +187,17 @@ const weekdays = [
 ];
 
 const EditHoursModal = ({
-  setData,
+  setContent,
   content,
   hoursModal,
   setHoursModal,
   setScheduleModal,
   contentSnapshot,
-  setSelectedDays,
+  setSelectedWeekdays,
   newHours,
   setNewHours,
-  files,
-  setFiles,
+  photoFiles,
+  setPhotoFiles,
 }) => {
   const classes = useStyles();
 
@@ -226,11 +226,11 @@ const EditHoursModal = ({
 
   const handleSchedule = (key) => {
     setScheduleModal(true);
-    setSelectedDays([key.toLowerCase()]);
+    setSelectedWeekdays([key.toLowerCase()]);
   };
 
   const onDoneClick = () => {
-    setData({ ...content, schedule: newHours });
+    setContent({ ...content, schedule: newHours });
     setHoursModal(false);
   };
 
@@ -351,7 +351,7 @@ const EditHoursModal = ({
             Take a close-up photo that clearly shows the hours for Google to
             scan
           </Typography>
-          <AddPhotoBlock files={files} setFiles={setFiles} />
+          <AddPhotoBlock photoFiles={photoFiles} setPhotoFiles={setPhotoFiles} />
         </div>
       </DialogContent>
       <DialogActions className={classes.actions}>

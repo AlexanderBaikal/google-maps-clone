@@ -1,23 +1,18 @@
-import widgetReducer from "./widgets/reducers";
-
 import { combineReducers } from "redux";
-import { SET_MENU_SIDEBAR } from "./actions";
 import { SET_ZOOM_DELTA } from "./actions";
-import sidebarBarReducer from "./sidebars/reducers";
 import modalReducer from "./modals/reducers";
+import activeReducer from "./active/reducers";
+import commentsReducer from "./comments/reducers";
+import placeReducer from "./place/reducers";
+import placesReducer from "./places/reducers";
+import imagesReducer from "./images/reducers";
 
 const defaultState = {
-  menuSidebar: false,
   zoomDelta: 0,
 };
 
 export const appReducer = (state = defaultState, action) => {
   switch (action.type) {
-    case SET_MENU_SIDEBAR:
-      return {
-        ...state,
-        menuSidebar: !action.payload,
-      };
     case SET_ZOOM_DELTA:
       return {
         ...state,
@@ -28,8 +23,11 @@ export const appReducer = (state = defaultState, action) => {
 };
 
 export default combineReducers({
-  widgets: widgetReducer,
   app: appReducer,
-  sidebars: sidebarBarReducer,
   modals: modalReducer,
+  active: activeReducer,
+  comments: commentsReducer,
+  place: placeReducer,
+  places: placesReducer,
+  images: imagesReducer,
 });

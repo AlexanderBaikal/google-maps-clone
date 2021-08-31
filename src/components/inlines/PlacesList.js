@@ -8,7 +8,7 @@ import {
   Typography,
   Box,
 } from "@material-ui/core";
-import { DESCRIPTION_BAR } from "../../redux/sidebars/actions";
+import { DESCRIPTION_BAR } from "../../redux/active/actions";
 import { useDispatch } from "react-redux";
 import { createRef, useEffect, useRef, useState } from "react";
 

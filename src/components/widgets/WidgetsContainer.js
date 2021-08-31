@@ -14,8 +14,8 @@ const WidgetsContainer = (props) => {
 
 const mapStateToProps = (state) => {
   return {
-    underSearchBar: state.widgets.all.underSearchBar,
-    bottomGallery: state.widgets.all.bottomGallery,
+    underSearchBar: state.active.underSearchBar,
+    bottomGallery: state.active.bottomGallery,
   };
 };
 

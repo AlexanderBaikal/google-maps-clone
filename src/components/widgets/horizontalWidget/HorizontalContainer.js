@@ -1,5 +1,5 @@
 import { connect } from "react-redux";
-import { setBottomGallery } from "../../../redux/widgets/actions";
+import { setBottomGallery } from "../../../redux/active/actions";
 import HorizontalWidget from "./HorizontalWidget";
 
 const HorizontalContainer = (props) => {
@@ -13,7 +13,7 @@ const HorizontalContainer = (props) => {
 
 const mapStateToProps = (state) => {
   return {
-    bottomGallery: state.widgets.all.bottomGallery,
+    bottomGallery: state.active.bottomGallery,
   };
 };
 

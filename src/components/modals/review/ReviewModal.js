@@ -17,8 +17,8 @@ const ReviewModal = ({
   setAddComment,
   addPhoto,
   setAddPhoto,
-  files,
-  setFiles,
+  photoFiles,
+  setPhotoFiles,
   keyword,
   content,
 }) => {
@@ -54,7 +54,7 @@ const ReviewModal = ({
             onClose={handleAddPhoto}
             onComplete={onCompleteUploadPhoto}
             onSelect={onSelect}
-            files={files}
+            photoFiles={photoFiles}
           />
         ) : completeReview ? (
           <SuccessContent onClose={onClose} />
@@ -64,8 +64,8 @@ const ReviewModal = ({
             setCompleteReview={setCompleteReview}
             setAddPhoto={setAddPhoto}
             addPhoto={addPhoto}
-            files={files}
-            setFiles={setFiles}
+            photoFiles={photoFiles}
+            setPhotoFiles={setPhotoFiles}
             keyword={keyword}
             content={content}
           />

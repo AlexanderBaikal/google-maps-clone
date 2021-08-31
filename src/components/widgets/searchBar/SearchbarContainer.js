@@ -1,8 +1,8 @@
 import SearchBar from "./SearchBar";
-import { setSearchPrompt } from "./../../../redux/widgets/search/actions";
-import { setMenuSidebar } from "./../../../redux/actions";
-import { setUnderSearchBar } from "./../../../redux/widgets/actions";
-import { setActiveBar } from "./../../../redux/sidebars/actions";
+import { setSearchPrompt } from "./../../../redux/active/actions";
+import { setMenuSidebar } from "./../../../redux/active/actions";
+import { setUnderSearchBar } from "./../../../redux/active/actions";
+import { setActiveBar } from "./../../../redux/active/actions";
 import { connect } from "react-redux";
 
 const SearchbarContainer = (props) => {
@@ -22,9 +22,9 @@ const SearchbarContainer = (props) => {
 
 const mapStateToProps = (state) => {
   return {
-    activeBar: state.sidebars.activeBar,
-    underSearchBar: state.widgets.all.underSearchBar,
-    searchPrompt: state.widgets.searchPrompt.searchPrompt,
+    activeBar: state.active.activeBar,
+    underSearchBar: state.active.underSearchBar,
+    searchPrompt: state.active.searchPrompt,
     menuSidebar: state.app.menuSidebar,
   };
 };

@@ -1,9 +1,9 @@
 import PlacesUnderSearchBar from "./PlacesUnderSearchBar";
-import { setActiveBar } from "../../../redux/sidebars/actions";
+import { setActiveBar } from "../../../redux/active/actions";
 import { connect, useDispatch } from "react-redux";
 import { useEffect } from "react";
-import { loadAllPlaces } from "../../../redux/sidebars/placesBar/actions";
-import { setDescriptionData } from "./../../../redux/sidebars/placeDescription/actions";
+import { loadAllPlaces } from "../../../redux/places/actions";
+import { setDescriptionData } from "./../../../redux/place/actions";
 
 const PlacesContainer = (props) => {
   const dispatch = useDispatch();
@@ -23,7 +23,7 @@ const PlacesContainer = (props) => {
 
 const mapStateToProps = (state) => {
   return {
-    allPlaces: state.sidebars.placesBar.allPlaces,
+    allPlaces: state.places.allPlaces,
   };
 };
 

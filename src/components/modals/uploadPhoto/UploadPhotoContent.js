@@ -57,7 +57,7 @@ const UploadPhotoContent = ({
   onComplete,
   onSelect,
   lite = false,
-  files,
+  photoFiles,
 }) => {
   const classes = useStyles();
 
@@ -101,7 +101,7 @@ const UploadPhotoContent = ({
           variant="contained"
           disableElevation
           color="primary"
-          disabled={lite && files.length ? false : true}
+          disabled={lite && photoFiles.length ? false : true}
           classes={{ containedSizeSmall: classes.small }}
           onClick={onSelect}
           size="small"

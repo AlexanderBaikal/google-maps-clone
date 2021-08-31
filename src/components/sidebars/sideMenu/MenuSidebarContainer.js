@@ -1,6 +1,6 @@
 import { connect } from "react-redux";
 import MenuSidebar from "./MenuSidebar";
-import { setMenuSidebar } from "../../../redux/actions";
+import { setMenuSidebar } from "../../../redux/active/actions";
 
 const MenuSidebarContainer = (props) => {
   return (
@@ -13,7 +13,7 @@ const MenuSidebarContainer = (props) => {
 
 const mapStateToProps = (state) => {
   return {
-    menuSidebar: state.app.menuSidebar,
+    menuSidebar: state.active.menuSidebar,
   };
 };
 

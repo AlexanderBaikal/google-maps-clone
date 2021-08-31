@@ -78,8 +78,8 @@ const useStyles = makeStyles((theme) => {
 const MyDropzone = ({
   onComplete,
   openUploadPhoto,
-  files,
-  setFiles,
+  photoFiles,
+  setPhotoFiles,
   keyword,
 }) => {
   const classes = useStyles();
@@ -111,7 +111,7 @@ const MyDropzone = ({
     if (!openUploadPhoto) {
       setPreviewFiles(files);
       var newFiles = await getPreviews(files);
-      setFiles(files.concat(newFiles));
+      setPhotoFiles(files.concat(newFiles));
       setDropzoneState(dropStates.PREVIEW);
     } else {
       standardUpload(files);
@@ -164,8 +164,8 @@ const MyDropzone = ({
                 <input {...getInputProps()} />
                 {dropzoneState === dropStates.PREVIEW ? (
                   <PhotoPreviews
-                    files={files}
-                    setFiles={setFiles}
+                    photoFiles={photoFiles}
+                    setPhotoFiles={setPhotoFiles}
                     previewFiles={previewFiles}
                     setPreviewFiles={setPreviewFiles}
                   />

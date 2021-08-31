@@ -1,39 +1,40 @@
 import {
-  LOAD_ALL_PLACES,
-  REQUEST_ALL_PLACES,
-  REQUEST_ALL_PLACES_FAILED,
-  REQUEST_ALL_PLACES_SUCCESS,
+  REQUEST_IMAGES,
+  REQUEST_IMAGES_FAILED,
+  REQUEST_IMAGES_SUCCESS,
 } from "./actions";
 
 const defaultState = {
-  allPlaces: null,
+  images: null,
   loading: false,
   error: false,
 };
 
-export const placesBarReducer = (state = defaultState, action) => {
+const imagesReducer = (state = defaultState, action) => {
   switch (action.type) {
-    case REQUEST_ALL_PLACES:
+    case REQUEST_IMAGES:
       return {
         ...state,
-        allPlaces: null,
+        images: null,
         loading: true,
         error: false,
       };
-    case REQUEST_ALL_PLACES_SUCCESS:
+    case REQUEST_IMAGES_SUCCESS:
       return {
         ...state,
-        allPlaces: action.payload,
+        images: action.payload,
         loading: false,
         error: false,
       };
-    case REQUEST_ALL_PLACES_FAILED:
+    case REQUEST_IMAGES_FAILED:
       return {
         ...state,
-        allPlaces: null,
+        images: null,
         loading: false,
         error: true,
       };
   }
   return state;
 };
+
+export default imagesReducer;

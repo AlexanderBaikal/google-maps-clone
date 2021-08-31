@@ -10,7 +10,7 @@ import LocalCafeOutlinedIcon from "@material-ui/icons/LocalCafeOutlined";
 import HotelIcon from "@material-ui/icons/Hotel";
 import MoreHorizIcon from "@material-ui/icons/MoreHoriz";
 import ExpandLessOutlinedIcon from "@material-ui/icons/ExpandLessOutlined";
-import { PLACES_BAR } from "../../redux/sidebars/actions";
+import { PLACES_BAR } from "../../redux/active/actions";
 
 const useStyles = makeStyles((theme) => ({
   iconAvatarLarge: {
@@ -84,7 +84,6 @@ const Extras = ({ countItems = 5, shownMore, setShownMore, setActiveBar }) => {
   const handleShownMore = () => setShownMore((value) => !value);
 
   const handleActiveBar = () => {
-    
     setActiveBar(PLACES_BAR);
   };
 

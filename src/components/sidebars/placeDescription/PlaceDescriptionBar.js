@@ -4,7 +4,6 @@ import {
   Divider,
   Input,
   makeStyles,
-  Typography,
   Button,
 } from "@material-ui/core";
 
@@ -26,13 +25,14 @@ import ActionButtons from "./../../inlines/ActionButtons";
 import BasicInfo from "./../../inlines/BasicInfo";
 import HeaderBar from "./../../inlines/HeaderBar";
 import BottomButton from "./../../inlines/BottomButton";
-import UploadPhotoModal from "./../../modals/uploadPhoto/UploadPhotoModal";
 import CompletePhotoModal from "./../../modals/uploadPhoto/CompletePhotoModal";
 import ReviewModalContainer from "../../modals/review/ReviewModalContainer";
 import EditModalContainer from "../../modals/edit/EditModalContainer";
 import UploadPhotoContainer from "../../modals/uploadPhoto/UploadPhotoContainer";
 import EditInfoContainer from "../../modals/editInfo/EditInfoContainer";
-import CompleteEditInfoModal from "../../modals/editInfo/CompleteEditInfoModal";
+import EditCategoryContainer from "../../modals/editCategory/EditCategoryContainer";
+import ScheduleModalContainer from "../../modals/scheduleModal/ScheduleModalContainer";
+import EditHoursContainer from "./../../modals/editHours/EditHoursContainer";
 
 const useStyles = makeStyles((theme) => ({
   topImage: {
@@ -146,6 +146,9 @@ const PlaceDescriptionBar = ({
         />
         <EditModalContainer />
         <EditInfoContainer />
+        <EditCategoryContainer />
+        <ScheduleModalContainer />
+        <EditHoursContainer />
       </div>
       <Divider />
       <div className={classes.photos}>

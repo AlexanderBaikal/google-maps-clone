@@ -18,7 +18,7 @@ import History from "../../inlines/History";
 import CloseIcon from "@material-ui/icons/Close";
 import {
   MAIN_UNDERSEARCH_BAR,
-} from "../../../redux/sidebars/actions";
+} from "../../../redux/active/actions";
 
 const useStyles = makeStyles((theme) => {
   return {
@@ -131,22 +131,22 @@ const SearchBar = ({
   setSearchPrompt,
 }) => {
   const handleUnderSearchBar = () => {
-    setUnderSearchBar(underSearchBar);
+    setUnderSearchBar(!underSearchBar);
     if (!underSearchBar) {
       inputRef.current.focus();
     }
   };
 
   const handleSearchPrompt = () => {
-    setSearchPrompt(searchPrompt);
+    setSearchPrompt();
   };
 
   const handleClickOutside = () => {
-    if (searchPrompt) setSearchPrompt(searchPrompt);
+    if (searchPrompt) setSearchPrompt();
   };
 
   const handleMenuSidebar = () => {
-    setMenuSidebar(menuSidebar);
+    setMenuSidebar(!menuSidebar);
   };
 
   const promptText = "Show traffic jams, expected time and places close to you";

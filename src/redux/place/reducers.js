@@ -2,7 +2,8 @@ import {
   REQUEST_DATA,
   REQUEST_DATA_FAILED,
   REQUEST_DATA_SUCCESS,
-  SET_DATA,
+  SET_CONTENT,
+  SET_DESCRIPTION_DATA,
 } from "./actions";
 
 const defaultState = {
@@ -10,9 +11,10 @@ const defaultState = {
   loading: false,
   error: false,
   contentSnapshot: null,
+  descriptionData: null,
 };
 
-export const dataReducer = (state = defaultState, action) => {
+const placeReducer = (state = defaultState, action) => {
   switch (action.type) {
     case REQUEST_DATA:
       return {
@@ -38,11 +40,19 @@ export const dataReducer = (state = defaultState, action) => {
         loading: false,
         error: true,
       };
-    case SET_DATA:
+    case SET_CONTENT:
       return {
         ...state,
         content: action.payload,
       };
+
+    case SET_DESCRIPTION_DATA:
+      return {
+        ...state,
+        descriptionData: action.payload,
+      };
   }
   return state;
 };
+
+export default placeReducer;

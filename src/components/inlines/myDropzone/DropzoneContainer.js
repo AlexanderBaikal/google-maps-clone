@@ -1,14 +1,14 @@
 import { connect } from "react-redux";
 import MyDropzone from "./MyDropzone";
-import {setFiles} from './../../../redux/modals/uploadPhoto/actions'
+import {setPhotoFiles} from './../../../redux/modals/actions'
 
 const DropzoneContainer = (props) => {
   return (
     <MyDropzone
       onComplete={props.onComplete}
       openUploadPhoto={props.openUploadPhoto}
-      files={props.files}
-      setFiles={props.setFiles}
+      photoFiles={props.photoFiles}
+      setPhotoFiles={props.setPhotoFiles}
       keyword={props.keyword}
     />
   );
@@ -16,14 +16,14 @@ const DropzoneContainer = (props) => {
 
 const mapStateToProps = (state) => {
   return {
-    files: state.modals.uploadPhoto.files,
-    openUploadPhoto: state.sidebars.descriptionBar.main.openUploadPhoto,
-    keyword: state.sidebars.descriptionBar.data.content.name,
+    photoFiles: state.modals.photoFiles,
+    openUploadPhoto: state.active.openUploadPhoto,
+    keyword: state.place.content.name,
   };
 };
 
 const mapDispatchToProps = {
-  setFiles,
+  setPhotoFiles,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(DropzoneContainer);

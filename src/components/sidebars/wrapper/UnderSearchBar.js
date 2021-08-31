@@ -5,7 +5,7 @@ import {
   DESCRIPTION_BAR,
   MAIN_UNDERSEARCH_BAR,
   PLACES_BAR,
-} from "../../../redux/sidebars/actions";
+} from "../../../redux/active/actions";
 import MainUnderSearchContainer from "../mainUnderSearch/MainUnderSearchContainer";
 import PlaceDescriptionContainer from "../placeDescription/PlaceDescriptionContainer";
 import PlacesContainer from "../places/PlacesContainer";

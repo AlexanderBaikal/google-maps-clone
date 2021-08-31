@@ -5,32 +5,30 @@ import {
   requestComments,
   requestCommentsFailed,
   requestCommentsSuccess,
-} from "./sidebars/placeDescription/comments/actions";
+} from "./comments/actions";
 import {
   LOAD_DATA,
   requestData,
   requestDataFailed,
   requestDataSuccess,
-} from "./sidebars/placeDescription/data/actions";
+} from "./place/actions";
 import {
   LOAD_IMAGES,
   requesImagesFailed,
   requestImages,
   requestImagesSuccess,
-} from "./sidebars/placeDescription/images/actions";
+} from "./images/actions";
 import {
   loadPlaces,
   LOAD_PLACES,
   requestPlaces,
   requestPlacesFailed,
   requestPlacesSuccess,
-} from "./sidebars/placeDescription/places/actions";
-import {
   LOAD_ALL_PLACES,
   requestAllPlaces,
   requestAllPlacesFailed,
   requestAllPlacesSuccess,
-} from "./sidebars/placesBar/actions";
+} from "./places/actions";
 
 function fetchData(document) {
   return db

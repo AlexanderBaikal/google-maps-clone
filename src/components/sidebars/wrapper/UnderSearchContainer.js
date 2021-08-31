@@ -12,8 +12,8 @@ const UnderSearchContainer = (props) => {
 
 const mapStateToProps = (state) => {
   return {
-    underSearchBar: state.widgets.all.underSearchBar,
-    activeBar: state.sidebars.activeBar.activeBar,
+    underSearchBar: state.active.underSearchBar,
+    activeBar: state.active.activeBar,
   };
 };
 

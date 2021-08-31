@@ -1,17 +1,18 @@
 import PlaceDescriptionBar from "./PlaceDescriptionBar";
+import { setDescriptionData } from "./../../../redux/place/actions";
+import { setActiveBar } from "./../../../redux/active/actions";
+import { connect, useDispatch } from "react-redux";
+import { useEffect } from "react";
+import { loadData } from "../../../redux/place/actions";
+import { loadImages } from "../../../redux/images/actions";
+import { loadComments } from "../../../redux/comments/actions";
+
 import {
-  setDescriptionData,
   setAddComment,
   setOpenEdit,
   setOpenUploadPhoto,
   setOpenCompletePhoto,
-} from "./../../../redux/sidebars/placeDescription/actions";
-import { setActiveBar } from "./../../../redux/sidebars/actions";
-import { connect, useDispatch } from "react-redux";
-import { useEffect } from "react";
-import { loadData } from "../../../redux/sidebars/placeDescription/data/actions";
-import { loadImages } from "../../../redux/sidebars/placeDescription/images/actions";
-import { loadComments } from "../../../redux/sidebars/placeDescription/comments/actions";
+} from "./../../../redux/active/actions";
 
 const PlaceDescriptionContainer = (props) => {
   const dispatch = useDispatch();
@@ -21,7 +22,6 @@ const PlaceDescriptionContainer = (props) => {
     dispatch(loadComments(props.descriptionData));
     dispatch(loadImages(props.descriptionData));
   }, [props.descriptionData]);
-
 
   return (
     <>
@@ -46,12 +46,12 @@ const PlaceDescriptionContainer = (props) => {
 
 const mapStateToProps = (state) => {
   return {
-    content: state.sidebars.descriptionBar.data.content,
-    images: state.sidebars.descriptionBar.images.images,
-    places: state.sidebars.descriptionBar.places.places,
-    descriptionData: state.sidebars.descriptionBar.main.descriptionData,
-    comments: state.sidebars.descriptionBar.comments.comments,
-    openCompletePhoto: state.sidebars.descriptionBar.main.openCompletePhoto,
+    content: state.place.content,
+    images: state.images.images,
+    places: state.places.places,
+    descriptionData: state.place.descriptionData,
+    comments: state.comments.comments,
+    openCompletePhoto: state.active.openCompletePhoto,
   };
 };
 

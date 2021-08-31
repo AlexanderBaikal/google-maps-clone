@@ -22,7 +22,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const AddPhotoBlock = ({ files, setFiles }) => {
+const AddPhotoBlock = ({ photoFiles, setPhotoFiles }) => {
   const classes = useStyles();
 
   const inputFileRef = useRef(null);
@@ -33,20 +33,19 @@ const AddPhotoBlock = ({ files, setFiles }) => {
 
   async function addPhotoHandler(e) {
     var newFiles = await getPreviews(Array.from(e.target.files));
-    if (files.length) {
-      setFiles(files.concat(newFiles));
+    if (photoFiles.length) {
+      setPhotoFiles(photoFiles.concat(newFiles));
     } else {
-      setFiles(newFiles);
+      setPhotoFiles(newFiles);
     }
   }
 
-
   return (
     <div>
-      {files.length ? (
+      {photoFiles.length ? (
         <PhotoSection
-          files={files}
-          setFiles={setFiles}
+          photoFiles={photoFiles}
+          setPhotoFiles={setPhotoFiles}
           handleAddPhoto={onAddPhotoClick}
           fullHeight
         />

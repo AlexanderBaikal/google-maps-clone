@@ -115,7 +115,7 @@ const MainUnderSearchBar = ({
 }) => {
   const classes = useStyles();
   const handleUnderSearchBar = () => {
-    setUnderSearchBar(underSearchBar);
+    setUnderSearchBar(!underSearchBar);
   };
 
   const myPlaces = [

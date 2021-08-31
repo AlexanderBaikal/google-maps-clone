@@ -88,8 +88,8 @@ const ReviewContent = ({
   setCompleteReview,
   setAddPhoto,
   addPhoto,
-  files,
-  setFiles,
+  photoFiles,
+  setPhotoFiles,
   content,
 }) => {
   const classes = useStyles();
@@ -100,7 +100,7 @@ const ReviewContent = ({
 
   const onClose = () => {
     setAddComment(false);
-    setFiles([]);
+    setPhotoFiles([]);
   };
 
   const handleAddPhoto = () => {
@@ -117,12 +117,12 @@ const ReviewContent = ({
       place: content.name,
       author: { name: "Donald Trump" },
       value: ratingValue,
-      photos: files,
+      photos: photoFiles,
       text: commentText,
     };
     await createComment(data);
     setDisabled(false);
-    setFiles([]);
+    setPhotoFiles([]);
     setCompleteReview(true);
   }
 
@@ -184,8 +184,8 @@ const ReviewContent = ({
             />
 
             <PhotoSection
-              files={files}
-              setFiles={setFiles}
+              photoFiles={photoFiles}
+              setPhotoFiles={setPhotoFiles}
               handleAddPhoto={handleAddPhoto}
             />
           </div>

@@ -1,38 +1,41 @@
 import {
-  REQUEST_IMAGES,
-  REQUEST_IMAGES_FAILED,
-  REQUEST_IMAGES_SUCCESS,
+  REQUEST_COMMENTS,
+  REQUEST_COMMENTS_FAILED,
+  REQUEST_COMMENTS_SUCCESS,
 } from "./actions";
 
 const defaultState = {
-  images: null,
+  comments: null,
   loading: false,
   error: false,
 };
 
-export const imagesReducer = (state = defaultState, action) => {
+const commentsReducer = (state = defaultState, action) => {
   switch (action.type) {
-    case REQUEST_IMAGES:
+    case REQUEST_COMMENTS:
       return {
         ...state,
-        images: null,
+        comments: null,
         loading: true,
         error: false,
       };
-    case REQUEST_IMAGES_SUCCESS:
+    case REQUEST_COMMENTS_SUCCESS:
       return {
         ...state,
-        images: action.payload,
+        comments: action.payload,
         loading: false,
         error: false,
       };
-    case REQUEST_IMAGES_FAILED:
+    case REQUEST_COMMENTS_FAILED:
       return {
         ...state,
-        images: null,
+        comments: null,
         loading: false,
         error: true,
       };
   }
   return state;
 };
+
+export default commentsReducer
+

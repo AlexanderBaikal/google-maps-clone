@@ -2,7 +2,7 @@ import { connect } from "react-redux";
 import {
   setOpenEdit,
   setOpenEditInfo,
-} from "../../../redux/sidebars/placeDescription/actions";
+} from "../../../redux/active/actions";
 import EditModal from "./EditModal";
 
 const EditModalContainer = (props) => {
@@ -17,7 +17,7 @@ const EditModalContainer = (props) => {
 
 const mapStateToProps = (state) => {
   return {
-    openEdit: state.sidebars.descriptionBar.main.openEdit,
+    openEdit: state.active.openEdit,
   };
 };
 
