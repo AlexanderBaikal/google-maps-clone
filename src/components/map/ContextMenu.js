@@ -40,17 +40,16 @@ const ContextMenu = ({
 
   const onAddClick = () => {
     setOpened(false);
-    setContent(emptyContent);
+    setContent({ ...emptyContent, coords: getCoords(geoCoords) });
     setContentSnapshot(emptyContent);
     setOpenEditInfo(true);
   };
 
   const getCoords = (coords) => {
-    return (
-      Math.round(coords.lat * 10000) / 10000 +
-      " " +
-      Math.round(coords.lng * 10000) / 10000
-    );
+    return [
+      Math.round(coords.lat * 10000) / 10000,
+      Math.round(coords.lng * 10000) / 10000,
+    ];
   };
 
   return (
@@ -58,7 +57,9 @@ const ContextMenu = ({
       <Paper className={classes.paper}>
         <List disablePadding>
           <ListItem button className={classes.listItem}>
-            <ListItemText primary={getCoords(geoCoords)}></ListItemText>
+            <ListItemText
+              primary={getCoords(geoCoords).join(" ")}
+            ></ListItemText>
           </ListItem>
           <ListItem button className={classes.listItem} onClick={onAddClick}>
             <ListItemText primary={"Add missing place"}></ListItemText>

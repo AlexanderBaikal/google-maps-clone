@@ -2,10 +2,6 @@ import PlaceDescriptionBar from "./PlaceDescriptionBar";
 import { setDescriptionData } from "./../../../redux/place/actions";
 import { setActiveBar } from "./../../../redux/active/actions";
 import { connect, useDispatch } from "react-redux";
-import { useEffect } from "react";
-import { loadData } from "../../../redux/place/actions";
-import { loadImages } from "../../../redux/images/actions";
-import { loadComments } from "../../../redux/comments/actions";
 
 import {
   setAddComment,
@@ -15,14 +11,6 @@ import {
 } from "./../../../redux/active/actions";
 
 const PlaceDescriptionContainer = (props) => {
-  const dispatch = useDispatch();
-
-  useEffect(() => {
-    dispatch(loadData(props.descriptionData));
-    dispatch(loadComments(props.descriptionData));
-    dispatch(loadImages(props.descriptionData));
-  }, [props.descriptionData]);
-
   return (
     <>
       {props.content && (

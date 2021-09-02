@@ -76,7 +76,6 @@ const useStyles = makeStyles((theme) => {
 });
 
 const MyDropzone = ({
-  onComplete,
   openUploadPhoto,
   photoFiles,
   setPhotoFiles,
@@ -111,7 +110,7 @@ const MyDropzone = ({
     if (!openUploadPhoto) {
       setPreviewFiles(files);
       var newFiles = await getPreviews(files);
-      setPhotoFiles(files.concat(newFiles));
+      setPhotoFiles(photoFiles.concat(newFiles));
       setDropzoneState(dropStates.PREVIEW);
     } else {
       standardUpload(files);
@@ -123,7 +122,6 @@ const MyDropzone = ({
     var promises = files.map((file) => uploadPhotoFirebase(file, keyword));
     await Promise.all(promises);
     setDropzoneState(dropStates.UPLOAD);
-    onComplete();
   }
 
   return (

@@ -3,6 +3,7 @@ import { setSearchPrompt } from "./../../../redux/active/actions";
 import { setMenuSidebar } from "./../../../redux/active/actions";
 import { setUnderSearchBar } from "./../../../redux/active/actions";
 import { setActiveBar } from "./../../../redux/active/actions";
+import { setContent } from "../../../redux/place/actions";
 import { connect } from "react-redux";
 
 const SearchbarContainer = (props) => {
@@ -16,6 +17,8 @@ const SearchbarContainer = (props) => {
       setMenuSidebar={props.setMenuSidebar}
       searchPrompt={props.searchPrompt}
       setSearchPrompt={props.setSearchPrompt}
+      setContent={props.setContent}
+      anyLoading={props.anyLoading}
     />
   );
 };
@@ -26,6 +29,7 @@ const mapStateToProps = (state) => {
     underSearchBar: state.active.underSearchBar,
     searchPrompt: state.active.searchPrompt,
     menuSidebar: state.app.menuSidebar,
+    anyLoading: state.places.loading || state.place.loading,
   };
 };
 
@@ -34,6 +38,7 @@ const mapDispatchToProps = {
   setMenuSidebar,
   setSearchPrompt,
   setActiveBar,
+  setContent,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(SearchbarContainer);

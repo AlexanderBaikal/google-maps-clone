@@ -1,11 +1,18 @@
-import { connect } from "react-redux";
+import { connect, useDispatch } from "react-redux";
 import { setAddComment } from "../../../redux/active/actions";
 import { setPhotoFiles } from "../../../redux/modals/actions";
 import { setAddPhoto } from "../../../redux/active/actions";
+import { loadComments } from "../../../redux/comments/actions";
 
 import ReviewModal from "./ReviewModal";
+import { useEffect } from "react";
 
 const ReviewModalContainer = (props) => {
+  // const dispatch = useDispatch();
+  // useEffect(() => {
+
+  // }, [props.comments]);
+
   return (
     <ReviewModal
       addComment={props.addComment}
@@ -15,6 +22,7 @@ const ReviewModalContainer = (props) => {
       photoFiles={props.photoFiles}
       setPhotoFiles={props.setPhotoFiles}
       content={props.content}
+      loadComments={props.loadComments}
     />
   );
 };
@@ -32,6 +40,7 @@ const mapDispatchToProps = {
   setAddComment,
   setAddPhoto,
   setPhotoFiles,
+  loadComments,
 };
 
 export default connect(

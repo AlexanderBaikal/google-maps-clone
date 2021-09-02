@@ -26,6 +26,9 @@ const theme = createTheme({
     },
     h3:{
       fontSize: "1.2rem",
+    },
+    body2: {
+      overflowX: "hidden"
     }
   },
   props: {

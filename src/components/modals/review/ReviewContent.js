@@ -15,6 +15,7 @@ import { useEffect, useState } from "react";
 import { createComment } from "../../../firebase";
 import Prompt from "./Prompt";
 import PhotoSection from "./PhotoSection";
+import { loadComments } from "../../../redux/comments/actions";
 
 const useStyles = makeStyles((theme) => ({
   root: {},
@@ -91,6 +92,7 @@ const ReviewContent = ({
   photoFiles,
   setPhotoFiles,
   content,
+  loadComments
 }) => {
   const classes = useStyles();
 
@@ -124,6 +126,7 @@ const ReviewContent = ({
     setDisabled(false);
     setPhotoFiles([]);
     setCompleteReview(true);
+    loadComments(content.name)
   }
 
   const [ratingValue, setRatingValue] = useState(0);

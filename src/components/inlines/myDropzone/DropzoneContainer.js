@@ -5,7 +5,6 @@ import {setPhotoFiles} from './../../../redux/modals/actions'
 const DropzoneContainer = (props) => {
   return (
     <MyDropzone
-      onComplete={props.onComplete}
       openUploadPhoto={props.openUploadPhoto}
       photoFiles={props.photoFiles}
       setPhotoFiles={props.setPhotoFiles}

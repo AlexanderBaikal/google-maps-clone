@@ -11,6 +11,8 @@ export const emptyContent = {
   ratingCount: 0,
   ratingValue: 5,
   inside: null,
+  type: 'Shopping mall',
+  imageUrl: null,
   schedule: {
     monday: {
       open: "8:00",

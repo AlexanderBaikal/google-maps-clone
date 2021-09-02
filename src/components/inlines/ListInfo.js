@@ -52,18 +52,24 @@ const ListInfo = ({ content }) => {
 
   return (
     <List>
-      {listInfo.map((item, i) => (
-        <ListItem button classes={{ gutters: classes.listItemGutters }} key={i}>
-          <ListItemIcon classes={{ root: classes.listItemIcon }}>
-            <item.iconComponent color="primary" />
-          </ListItemIcon>
-          <ListItemText
-            primary={item.text}
-            primaryTypographyProps={{ variant: "body2" }}
-            classes={{ root: classes.marginZero }}
-          />
-        </ListItem>
-      ))}
+      {listInfo.map((item, i) =>
+        item.text ? (
+          <ListItem
+            button
+            classes={{ gutters: classes.listItemGutters }}
+            key={item.text}
+          >
+            <ListItemIcon classes={{ root: classes.listItemIcon }}>
+              <item.iconComponent color="primary" />
+            </ListItemIcon>
+            <ListItemText
+              primary={item.text}
+              primaryTypographyProps={{ variant: "body2" }}
+              classes={{ root: classes.marginZero }}
+            />
+          </ListItem>
+        ) : null
+      )}
     </List>
   );
 };

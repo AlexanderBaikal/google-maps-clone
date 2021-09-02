@@ -3,7 +3,7 @@ import { setActiveBar } from "../../../redux/active/actions";
 import { connect, useDispatch } from "react-redux";
 import { useEffect } from "react";
 import { loadAllPlaces } from "../../../redux/places/actions";
-import { setDescriptionData } from "./../../../redux/place/actions";
+import { setDescriptionData, setContent } from "./../../../redux/place/actions";
 
 const PlacesContainer = (props) => {
   const dispatch = useDispatch();
@@ -17,6 +17,8 @@ const PlacesContainer = (props) => {
       setActiveBar={props.setActiveBar}
       allPlaces={props.allPlaces}
       setDescriptionData={props.setDescriptionData}
+      dataLoading={props.dataLoading}
+      content={props.content}
     />
   );
 };
@@ -24,6 +26,8 @@ const PlacesContainer = (props) => {
 const mapStateToProps = (state) => {
   return {
     allPlaces: state.places.allPlaces,
+    dataLoading: state.place.loading,
+    content: state.place.content,
   };
 };
 

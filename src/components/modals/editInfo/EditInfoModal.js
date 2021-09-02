@@ -121,6 +121,7 @@ const EditInfoModal = ({
   allPlaces,
   photoFiles,
   setPhotoFiles,
+  loadAllPoints
 }) => {
   const classes = useStyles();
 
@@ -154,6 +155,7 @@ const EditInfoModal = ({
     setOpenCompleteEditInfo(true);
     setCanceledFields([]);
     setPhotoFiles([]);
+    loadAllPoints()
   }
 
   const onCancel = () => {

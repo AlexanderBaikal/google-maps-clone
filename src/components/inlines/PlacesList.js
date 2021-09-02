@@ -9,12 +9,15 @@ import {
   Box,
 } from "@material-ui/core";
 import { DESCRIPTION_BAR } from "../../redux/active/actions";
-import { useDispatch } from "react-redux";
+import numeral from "numeral";
 import { createRef, useEffect, useRef, useState } from "react";
+import { Skeleton } from "@material-ui/lab";
+import { useDispatch, useSelector } from "react-redux";
 
 const useStyles = makeStyles((theme) => ({
   image: {
     minWidth: "84px",
+    maxWidth: "84px",
     height: "84px",
     borderRadius: "8px",
     marginLeft: "10px",
@@ -36,6 +39,15 @@ const useStyles = makeStyles((theme) => ({
     height: "520px",
     overflowY: "auto",
   },
+  listItemSkeleton: {
+    display: "flex",
+  },
+  textSkeleton: {
+    marginRight: "20px",
+  },
+  imageSkeleton: {
+    borderRadius: "8px",
+  },
 }));
 
 const PlacesList = ({
@@ -44,18 +56,27 @@ const PlacesList = ({
   short = false,
   setActiveBar,
   setDescriptionData,
+  loading,
+  data
 }) => {
   const classes = useStyles();
   items = maxCount ? items.slice(0, maxCount) : items;
 
+
+
   const showDescription = (value) => {
-    setActiveBar(DESCRIPTION_BAR);
     setDescriptionData(value);
   };
 
   items = items || [];
 
   const [imgRefs, setImgRefs] = useState([]);
+
+  useEffect(() => {
+    if (!loading && data) {
+      setActiveBar(DESCRIPTION_BAR);
+    }
+  }, [loading, data]);
 
   useEffect(() => {
     // add or remove refs
@@ -74,64 +95,96 @@ const PlacesList = ({
 
   return (
     <List aria-label="places" className={short ? "" : classes.list}>
-      {items.map((item, id) => (
-        <div key={id}>
-          <ListItem
-            button
-            classes={{ gutters: classes.listItemGutters }}
-            onClick={() => showDescription(item.name)}
-          >
-            <ListItemText
-              primary={item.name}
-              primaryTypographyProps={{ style: { fontWeight: 500 } }}
-              style={{ marginTop: 0 }}
-              secondaryTypographyProps={{ component: "div" }}
-              secondary={
-                <>
-                  <div className={classes.rating}>
-                    <Box mr="3px">{item.ratingValue}</Box>
-                    <Rating
-                      name="read-only"
-                      value={item.ratingValue}
-                      readOnly
-                      size="small"
-                    />
-                    <Box ml="3px">({item.ratingCount})</Box>
+      {items.length
+        ? items.map((item, id) => (
+            <div key={item.name}>
+              <ListItem
+                button
+                classes={{ gutters: classes.listItemGutters }}
+                onClick={() => showDescription(item.name)}
+              >
+                <ListItemText
+                  primary={item.name}
+                  primaryTypographyProps={{ style: { fontWeight: 500 } }}
+                  style={{ marginTop: 0 }}
+                  secondaryTypographyProps={{ component: "div" }}
+                  secondary={
+                    <>
+                      <div className={classes.rating}>
+                        <Box mr="3px">
+                          {numeral(item.ratingValue).format("0.0")}
+                        </Box>
+                        <Rating
+                          name="read-only"
+                          value={item.ratingValue}
+                          readOnly
+                          size="small"
+                        />
+                        <Box ml="3px">
+                          ({numeral(item.ratingCount).format("0,0")})
+                        </Box>
+                      </div>
+                      <Typography variant="body2" className={classes.inline}>
+                        {item.type} · {item.address}
+                        {item.openInfo ? (
+                          <>
+                            <br />
+                            {item.openInfo}
+                          </>
+                        ) : (
+                          ""
+                        )}
+                        {!short && item.extraInfo ? (
+                          <>
+                            <br />
+                            <br />
+                            {item.extraInfo}
+                          </>
+                        ) : (
+                          ""
+                        )}
+                      </Typography>
+                    </>
+                  }
+                />
+                <img
+                  src={item.imageUrl}
+                  alt=""
+                  ref={imgRefs[id]}
+                  onError={() => onImageError(id)}
+                  className={classes.image}
+                />
+              </ListItem>
+              {!short && id < items.length - 1 ? <Divider /> : null}
+            </div>
+          ))
+        : [...Array(10)].map((item, i) => (
+            <div key={i}>
+              <ListItem
+                classes={{ gutters: classes.listItemGutters }}
+                className={classes.listItemSkeleton}
+              >
+                <div className={classes.textSkeleton}>
+                  <Skeleton variant="text" width={200} />
+                  <Skeleton variant="text" width={260} />
+                  <Skeleton variant="text" width={260} />
+                  <div
+                    style={{ display: "flex", justifyContent: "space-around" }}
+                  >
+                    <Skeleton variant="text" width={60} />
+                    <Skeleton variant="text" width={60} />
+                    <Skeleton variant="text" width={60} />
                   </div>
-                  <Typography variant="body2" className={classes.inline}>
-                    {item.type} · {item.address}
-                    {item.openInfo ? (
-                      <>
-                        <br />
-                        {item.openInfo}
-                      </>
-                    ) : (
-                      ""
-                    )}
-                    {!short && item.extraInfo ? (
-                      <>
-                        <br />
-                        <br />
-                        {item.extraInfo}
-                      </>
-                    ) : (
-                      ""
-                    )}
-                  </Typography>
-                </>
-              }
-            />
-            <img
-              src={item.imageUrl}
-              alt=""
-              ref={imgRefs[id]}
-              onError={() => onImageError(id)}
-              className={classes.image}
-            />
-          </ListItem>
-          {!short && id < items.length - 1 ? <Divider /> : null}
-        </div>
-      ))}
+                </div>
+                <Skeleton
+                  className={classes.imageSkeleton}
+                  variant="rect"
+                  height={84}
+                  width={84}
+                />
+              </ListItem>
+            </div>
+          ))}
     </List>
   );
 };

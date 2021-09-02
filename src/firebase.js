@@ -13,7 +13,7 @@ const firebaseConfig = {
 firebase.initializeApp(firebaseConfig);
 
 export const db = firebase.firestore();
-export const firestore = firebase.firestore
+export const firestore = firebase.firestore;
 
 // Create a root reference
 export const storageRef = firebase.storage().ref();
@@ -52,12 +52,22 @@ export async function editDescription(data) {
       photos = await Promise.all(promises);
     }
 
-    const ref = db.collection("descriptions").doc("test");
+    const ref = db.collection("descriptions").doc(content.name);
 
     await ref.set({
       ...content,
       inside: content.inside ? db.doc(`descriptions/${content.inside}`) : null,
+      imageUrl: content.imageUrl || photos[0] || null
     });
+
+    if (content.coords) {
+      const ref = db.collection("places").doc(content.name);
+      await ref.set({
+        name: content.name,
+        type: content.type,
+        coords: content.coords,
+      });
+    }
 
     console.log("Document successfully updated!");
   } catch (e) {

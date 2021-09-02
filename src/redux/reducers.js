@@ -6,6 +6,7 @@ import commentsReducer from "./comments/reducers";
 import placeReducer from "./place/reducers";
 import placesReducer from "./places/reducers";
 import imagesReducer from "./images/reducers";
+import pointsReducer from "./points/reducers";
 
 const defaultState = {
   zoomDelta: 0,
@@ -30,4 +31,5 @@ export default combineReducers({
   place: placeReducer,
   places: placesReducer,
   images: imagesReducer,
+  points: pointsReducer
 });

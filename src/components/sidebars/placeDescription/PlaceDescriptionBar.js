@@ -107,7 +107,7 @@ const PlaceDescriptionBar = ({
     setOpenUploadPhoto(true);
   };
 
-  const [topImgSrc, setTopImgSrc] = useState(content.imageUrl);
+  const [topImgSrc, setTopImgSrc] = useState(content.imageUrl || "https://maps.gstatic.com/tactile/pane/default_geocode-2x.png");
 
   const onTopImageError = () => {
     setTopImgSrc(

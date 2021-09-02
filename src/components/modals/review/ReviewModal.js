@@ -21,6 +21,7 @@ const ReviewModal = ({
   setPhotoFiles,
   keyword,
   content,
+  loadComments
 }) => {
   const classes = useStyles();
 
@@ -33,7 +34,6 @@ const ReviewModal = ({
     setAddPhoto(!addPhoto);
   };
 
-  const onCompleteUploadPhoto = () => {};
 
   const onSelect = () => {
     handleAddPhoto();
@@ -52,7 +52,6 @@ const ReviewModal = ({
           <UploadPhotoContent
             lite
             onClose={handleAddPhoto}
-            onComplete={onCompleteUploadPhoto}
             onSelect={onSelect}
             photoFiles={photoFiles}
           />
@@ -68,6 +67,7 @@ const ReviewModal = ({
             setPhotoFiles={setPhotoFiles}
             keyword={keyword}
             content={content}
+            loadComments={loadComments}
           />
         )}
       </Dialog>

@@ -10,15 +10,14 @@ import {
   ListItemText,
   makeStyles,
   ClickAwayListener,
+  CircularProgress,
 } from "@material-ui/core";
 import { useRef } from "react";
 import clsx from "clsx";
 import Extras from "./../../inlines/Extras";
 import History from "../../inlines/History";
 import CloseIcon from "@material-ui/icons/Close";
-import {
-  MAIN_UNDERSEARCH_BAR,
-} from "../../../redux/active/actions";
+import { MAIN_UNDERSEARCH_BAR } from "../../../redux/active/actions";
 
 const useStyles = makeStyles((theme) => {
   return {
@@ -129,6 +128,8 @@ const SearchBar = ({
   setActiveBar,
   searchPrompt,
   setSearchPrompt,
+  setContent,
+  anyLoading,
 }) => {
   const handleUnderSearchBar = () => {
     setUnderSearchBar(!underSearchBar);
@@ -136,7 +137,7 @@ const SearchBar = ({
       inputRef.current.focus();
     }
   };
-
+  console.log(anyLoading);
   const handleSearchPrompt = () => {
     setSearchPrompt();
   };
@@ -194,11 +195,16 @@ const SearchBar = ({
             aria-label="directions"
             onClick={
               activeBar !== MAIN_UNDERSEARCH_BAR
-                ? () => setActiveBar(MAIN_UNDERSEARCH_BAR)
+                ? () => {
+                    setContent(null);
+                    setActiveBar(MAIN_UNDERSEARCH_BAR);
+                  }
                 : () => {}
             }
           >
-            {activeBar !== MAIN_UNDERSEARCH_BAR ? (
+            {anyLoading ? (
+              <CircularProgress size={20} />
+            ) : activeBar !== MAIN_UNDERSEARCH_BAR ? (
               <CloseIcon />
             ) : (
               <DirectionsIcon />

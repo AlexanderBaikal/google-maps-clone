@@ -33,6 +33,12 @@ import {
   requestAllPlacesFailed,
   requestAllPlacesSuccess,
 } from "./places/actions";
+import {
+  LOAD_ALL_POINTS,
+  requestAllPoints,
+  requestAllPointsFailed,
+  requestAllPointsSuccess,
+} from "./points/actions";
 
 function fetchData(document) {
   return db
@@ -157,6 +163,27 @@ function* workerLoadAllPlaces() {
 export function* watchLoadAllPlaces() {
   yield takeEvery(LOAD_ALL_PLACES, workerLoadAllPlaces);
 }
+// ----------------------------
+
+async function fetchAllPoints(collection = "places") {
+  var res = await db.collection(collection).get();
+  return res.docs.map((doc) => doc.data());
+}
+
+function* workerLoadAllPoints() {
+  try {
+    yield put(requestAllPoints());
+    const data = yield call(fetchAllPoints);
+    yield put(requestAllPointsSuccess(data));
+  } catch (error) {
+    console.error(error);
+    yield put(requestAllPointsFailed());
+  }
+}
+
+export function* watchLoadAllPoints() {
+  yield takeEvery(LOAD_ALL_POINTS, workerLoadAllPoints);
+}
 
 // ----------------------------
 
@@ -185,5 +212,6 @@ export function* rootSaga() {
     fork(watchLoadPlaces),
     fork(watchLoadAllPlaces),
     fork(watchLoadComments),
+    fork(watchLoadAllPoints),
   ]);
 }

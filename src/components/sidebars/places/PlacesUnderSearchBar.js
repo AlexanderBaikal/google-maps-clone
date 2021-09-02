@@ -61,7 +61,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const PlacesUnderSearchBar = ({ setActiveBar, allPlaces, setDescriptionData }) => {
+const PlacesUnderSearchBar = ({ setActiveBar, allPlaces, setDescriptionData, dataLoading, content }) => {
   const classes = useStyles();
 
   const [anchorEl, setAnchorEl] = useState(null);
@@ -198,6 +198,8 @@ const PlacesUnderSearchBar = ({ setActiveBar, allPlaces, setDescriptionData }) =
         setActiveBar={setActiveBar}
         items={allPlaces}
         setDescriptionData={setDescriptionData}
+        loading={dataLoading}
+        data={content}
       />
       <div className={classes.footer}>
         <Divider />

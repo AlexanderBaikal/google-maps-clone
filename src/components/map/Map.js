@@ -1,11 +1,33 @@
-import { MapContainer, Marker, Popup, TileLayer, useMap } from "react-leaflet";
+import {
+  MapContainer,
+  Marker,
+  Popup,
+  TileLayer,
+  Tooltip,
+  useMap,
+} from "react-leaflet";
 import "leaflet/dist/leaflet.css";
 import "./_map.css";
 import { useEffect, useState } from "react";
 import ContextMenu from "./ContextMenu";
+import { getIcon } from "../../icons/typeIcons";
+import { DESCRIPTION_BAR } from "../../redux/active/actions";
 
-const Map = ({ zoomDelta, setZoomDelta, setOpenEditInfo, setContent, setContentSnapshot }) => {
+const Map = ({
+  zoomDelta,
+  setZoomDelta,
+  setOpenEditInfo,
+  setContent,
+  setContentSnapshot,
+  points,
+  setActiveBar,
+  setDescriptionData,
+  loadData,
+  setUnderSearchBar,
+}) => {
   const [map, setMap] = useState(null);
+
+  points = points || [];
 
   const [contextCoords, setContextCoords] = useState(null);
 
@@ -20,6 +42,13 @@ const Map = ({ zoomDelta, setZoomDelta, setOpenEditInfo, setContent, setContentS
   const onContextMenu = (e) => {
     setOpened(true);
     setContextCoords({ point: e.containerPoint, latlng: e.latlng });
+  };
+
+  const onMarkerClick = (point) => {
+    setUnderSearchBar(true);
+    setDescriptionData(point.name);
+    setActiveBar(DESCRIPTION_BAR);
+    loadData(point.name);
   };
 
   const [opened, setOpened] = useState(false);
@@ -42,6 +71,19 @@ const Map = ({ zoomDelta, setZoomDelta, setOpenEditInfo, setContent, setContentS
           tileSize={512}
           zoomOffset={-1}
         />
+        {points.map((point) => (
+          <Marker
+            position={Object.values(point.coords)}
+            icon={getIcon(point.type)}
+            eventHandlers={{
+              click: (e) => onMarkerClick(point),
+            }}
+          >
+            <Tooltip direction="right" offset={[-8, -2]} opacity={1} sticky>
+              <span>{point.name}</span>
+            </Tooltip>
+          </Marker>
+        ))}
       </MapContainer>
       {contextCoords && opened ? (
         <ContextMenu
