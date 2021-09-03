@@ -11,7 +11,7 @@ import LocalCafeOutlinedIcon from "@material-ui/icons/LocalCafeOutlined";
 import HotelIcon from "@material-ui/icons/Hotel";
 import MoreHorizIcon from "@material-ui/icons/MoreHoriz";
 import ExpandLessOutlinedIcon from "@material-ui/icons/ExpandLessOutlined";
-import { PLACES_BAR } from "../../redux/active/actions";
+import { PLACES_BAR, setUnderSearchBar } from "../../redux/active/actions";
 
 const useStyles = makeStyles((theme) => ({
   iconAvatarLarge: {
@@ -84,26 +84,26 @@ const extras = ({ handleActiveBar, handleShownMore }) => [
     name: "Grocery stores",
     iconComponent: ShoppingCartOutlinedIcon,
     color: "#388e3c",
-    onClick: handleActiveBar,
+    onClick: () => handleActiveBar("Grocery stores"),
   },
   {
     name: "Restaurants",
     iconComponent: RestaurantOutlinedIcon,
     color: "#42a5f5",
-    onClick: handleActiveBar,
+    onClick: () => handleActiveBar("Restaurants"),
   },
   {
     name: "Takeaway food",
     iconComponent: LocalCafeOutlinedIcon,
     color: "#d32f2f",
-    onClick: handleActiveBar,
+    onClick: () => handleActiveBar("Takeaway food"),
   },
   {
     name: "Hostels",
     iconComponent: HotelIcon,
     color: "#f57c00",
-    onClick: handleActiveBar,
-  },
+    onClick: () => handleActiveBar("Hostels"),
+  }, 
   {
     name: "Show more",
     iconComponent: MoreHorizIcon,
@@ -118,11 +118,17 @@ const Extras = ({
   shownMore,
   setActiveBar = () => {},
   setShownMore = () => {},
+  setUnderSearchBar,
+  setSearchPrompt,
+  setPlacesData,
 }) => {
   const classes = useStyles();
 
-  const handleActiveBar = () => {
+  const handleActiveBar = (category) => {
+    setUnderSearchBar(true);
+    setSearchPrompt(false);
     setActiveBar(PLACES_BAR);
+    setPlacesData(category)
   };
   const handleShownMore = () => {
     setShownMore((v) => !v);

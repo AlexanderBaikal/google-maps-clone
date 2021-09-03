@@ -7,7 +7,7 @@ import {
   makeStyles,
 } from "@material-ui/core";
 
-import  ScheduleOutlinedIcon  from "@material-ui/icons/ScheduleOutlined";
+import ScheduleOutlinedIcon from "@material-ui/icons/ScheduleOutlined";
 
 const useStyles = makeStyles((theme) => {
   return {
@@ -30,28 +30,34 @@ const useStyles = makeStyles((theme) => {
   };
 });
 
-const History = ({ searchPrompt }) => {
+const History = ({ historyItems, setPlacePosition, handleSearchPrompt }) => {
   const classes = useStyles();
 
-  const historyItems = ["United Kingdom", "Big Ben"];
+  const onPlaceClick = (coords) => {
+    setPlacePosition(coords);
+    if (handleSearchPrompt) handleSearchPrompt(false);
+  };
 
-  return (
-    // <Paper elevation={!searchPrompt ? 0 : 2} className={classes.history}>
-      <List>
-        {historyItems.map((item) => (
-          <ListItem button key={item} className={classes.listItem}>
-            <ListItemIcon className={classes.listItemIcon}>
-              <ScheduleOutlinedIcon fontSize="small" />
-            </ListItemIcon>
-            <ListItemText
-              primary={item}
-              classes={{ primary: classes.listItemText }}
-            />
-          </ListItem>
-        ))}
-      </List>
-    // </Paper>
-  );
+  return historyItems && historyItems.length ? (
+    <List>
+      {historyItems.map((item) => (
+        <ListItem
+          button
+          key={item.name}
+          className={classes.listItem}
+          onClick={() => onPlaceClick(item.coords)}
+        >
+          <ListItemIcon className={classes.listItemIcon}>
+            <ScheduleOutlinedIcon fontSize="small" />
+          </ListItemIcon>
+          <ListItemText
+            primary={item.name}
+            classes={{ primary: classes.listItemText }}
+          />
+        </ListItem>
+      ))}
+    </List>
+  ) : null;
 };
 
 export default History;

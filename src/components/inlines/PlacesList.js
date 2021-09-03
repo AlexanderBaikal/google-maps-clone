@@ -48,6 +48,11 @@ const useStyles = makeStyles((theme) => ({
   imageSkeleton: {
     borderRadius: "8px",
   },
+  center: {
+    display: "flex",
+    justifyContent: "center",
+    marginTop: "20px"
+  },
 }));
 
 const PlacesList = ({
@@ -57,18 +62,16 @@ const PlacesList = ({
   setActiveBar,
   setDescriptionData,
   loading,
-  data
+  data,
 }) => {
   const classes = useStyles();
   items = maxCount ? items.slice(0, maxCount) : items;
-
-
 
   const showDescription = (value) => {
     setDescriptionData(value);
   };
 
-  items = items || [];
+  // items = items || [];
 
   const [imgRefs, setImgRefs] = useState([]);
 
@@ -80,12 +83,13 @@ const PlacesList = ({
 
   useEffect(() => {
     // add or remove refs
-    setImgRefs((imgRefs) =>
-      Array(items.length)
-        .fill()
-        .map((_, i) => imgRefs[i] || createRef())
-    );
-  }, [items.length]);
+    if (items)
+      setImgRefs((imgRefs) =>
+        Array(items.length)
+          .fill()
+          .map((_, i) => imgRefs[i] || createRef())
+      );
+  }, [items]);
 
   const onImageError = (index) => {
     console.log("@", imgRefs, index, imgRefs[index]);
@@ -95,96 +99,105 @@ const PlacesList = ({
 
   return (
     <List aria-label="places" className={short ? "" : classes.list}>
-      {items.length
-        ? items.map((item, id) => (
-            <div key={item.name}>
-              <ListItem
-                button
-                classes={{ gutters: classes.listItemGutters }}
-                onClick={() => showDescription(item.name)}
-              >
-                <ListItemText
-                  primary={item.name}
-                  primaryTypographyProps={{ style: { fontWeight: 500 } }}
-                  style={{ marginTop: 0 }}
-                  secondaryTypographyProps={{ component: "div" }}
-                  secondary={
-                    <>
-                      <div className={classes.rating}>
-                        <Box mr="3px">
-                          {numeral(item.ratingValue).format("0.0")}
-                        </Box>
-                        <Rating
-                          name="read-only"
-                          value={item.ratingValue}
-                          readOnly
-                          size="small"
-                        />
-                        <Box ml="3px">
-                          ({numeral(item.ratingCount).format("0,0")})
-                        </Box>
-                      </div>
-                      <Typography variant="body2" className={classes.inline}>
-                        {item.type} · {item.address}
-                        {item.openInfo ? (
-                          <>
-                            <br />
-                            {item.openInfo}
-                          </>
-                        ) : (
-                          ""
-                        )}
-                        {!short && item.extraInfo ? (
-                          <>
-                            <br />
-                            <br />
-                            {item.extraInfo}
-                          </>
-                        ) : (
-                          ""
-                        )}
-                      </Typography>
-                    </>
-                  }
-                />
-                <img
-                  src={item.imageUrl}
-                  alt=""
-                  ref={imgRefs[id]}
-                  onError={() => onImageError(id)}
-                  className={classes.image}
-                />
-              </ListItem>
-              {!short && id < items.length - 1 ? <Divider /> : null}
-            </div>
-          ))
-        : [...Array(10)].map((item, i) => (
-            <div key={i}>
-              <ListItem
-                classes={{ gutters: classes.listItemGutters }}
-                className={classes.listItemSkeleton}
-              >
-                <div className={classes.textSkeleton}>
-                  <Skeleton variant="text" width={200} />
-                  <Skeleton variant="text" width={260} />
-                  <Skeleton variant="text" width={260} />
-                  <div
-                    style={{ display: "flex", justifyContent: "space-around" }}
-                  >
-                    <Skeleton variant="text" width={60} />
-                    <Skeleton variant="text" width={60} />
-                    <Skeleton variant="text" width={60} />
-                  </div>
+      {items !== null && items.length ? (
+        items.map((item, id) => (
+          <div key={item.name}>
+            <ListItem
+              button
+              classes={{ gutters: classes.listItemGutters }}
+              onClick={() => showDescription(item.name)}
+            >
+              <ListItemText
+                primary={item.name}
+                primaryTypographyProps={{ style: { fontWeight: 500 } }}
+                style={{ marginTop: 0 }}
+                secondaryTypographyProps={{ component: "div" }}
+                secondary={
+                  <>
+                    <div className={classes.rating}>
+                      <Box mr="3px">
+                        {numeral(item.ratingValue).format("0.0")}
+                      </Box>
+                      <Rating
+                        name="read-only"
+                        value={item.ratingValue}
+                        readOnly
+                        size="small"
+                      />
+                      <Box ml="3px">
+                        ({numeral(item.ratingCount).format("0,0")})
+                      </Box>
+                    </div>
+                    <Typography variant="body2" className={classes.inline}>
+                      {item.type} · {item.address}
+                      {item.openInfo ? (
+                        <>
+                          <br />
+                          {item.openInfo}
+                        </>
+                      ) : (
+                        ""
+                      )}
+                      {!short && item.extraInfo ? (
+                        <>
+                          <br />
+                          <br />
+                          {item.extraInfo}
+                        </>
+                      ) : (
+                        ""
+                      )}
+                    </Typography>
+                  </>
+                }
+              />
+              <img
+                src={
+                  item.imageUrl ||
+                  "https://maps.gstatic.com/tactile/pane/result-no-thumbnail-2x.png"
+                }
+                alt=""
+                ref={imgRefs[id]}
+                onError={() => onImageError(id)}
+                className={classes.image}
+              />
+            </ListItem>
+            {!short && id < items.length - 1 ? <Divider /> : null}
+          </div>
+        ))
+      ) : items === null ? (
+        [...Array(10)].map((item, i) => (
+          <div key={i}>
+            <ListItem
+              classes={{ gutters: classes.listItemGutters }}
+              className={classes.listItemSkeleton}
+            >
+              <div className={classes.textSkeleton}>
+                <Skeleton variant="text" width={200} />
+                <Skeleton variant="text" width={260} />
+                <Skeleton variant="text" width={260} />
+                <div
+                  style={{ display: "flex", justifyContent: "space-around" }}
+                >
+                  <Skeleton variant="text" width={60} />
+                  <Skeleton variant="text" width={60} />
+                  <Skeleton variant="text" width={60} />
                 </div>
-                <Skeleton
-                  className={classes.imageSkeleton}
-                  variant="rect"
-                  height={84}
-                  width={84}
-                />
-              </ListItem>
-            </div>
-          ))}
+              </div>
+              <Skeleton
+                className={classes.imageSkeleton}
+                variant="rect"
+                height={84}
+                width={84}
+              />
+            </ListItem>
+          </div>
+        ))
+      ) : (
+        <div className={classes.center}>
+          <Typography variant="body1">No places</Typography>
+        </div>
+      )}
     </List>
   );
 };

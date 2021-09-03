@@ -5,7 +5,7 @@ import {
 } from "./actions";
 
 const defaultState = {
-  comments: null,
+  all: null,
   loading: false,
   error: false,
 };
@@ -15,21 +15,21 @@ const commentsReducer = (state = defaultState, action) => {
     case REQUEST_COMMENTS:
       return {
         ...state,
-        comments: null,
+        all: null,
         loading: true,
         error: false,
       };
     case REQUEST_COMMENTS_SUCCESS:
       return {
         ...state,
-        comments: action.payload,
+        all: action.payload,
         loading: false,
         error: false,
       };
     case REQUEST_COMMENTS_FAILED:
       return {
         ...state,
-        comments: null,
+        all: null,
         loading: false,
         error: true,
       };

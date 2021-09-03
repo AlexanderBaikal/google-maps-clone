@@ -24,6 +24,7 @@ const Map = ({
   setDescriptionData,
   loadData,
   setUnderSearchBar,
+  currentCoords,
 }) => {
   const [map, setMap] = useState(null);
 
@@ -53,6 +54,19 @@ const Map = ({
 
   const [opened, setOpened] = useState(false);
 
+  useEffect(() => {
+    if (map) {
+      if (currentCoords && currentCoords.latitude) {
+        map.flyTo({
+          lat: currentCoords.latitude,
+          lng: currentCoords.longitude,
+        });
+      } else {
+        map.flyTo({ lat: 52.2, lng: 104.2 });
+      }
+    }
+  }, [currentCoords]);
+
   return (
     <>
       <MapContainer
@@ -73,6 +87,7 @@ const Map = ({
         />
         {points.map((point) => (
           <Marker
+            key={Object.values(point.coords).join("")}
             position={Object.values(point.coords)}
             icon={getIcon(point.type)}
             eventHandlers={{

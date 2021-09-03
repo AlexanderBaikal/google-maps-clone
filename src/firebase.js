@@ -57,7 +57,8 @@ export async function editDescription(data) {
     await ref.set({
       ...content,
       inside: content.inside ? db.doc(`descriptions/${content.inside}`) : null,
-      imageUrl: content.imageUrl || photos[0] || null
+      imageUrl: content.imageUrl || photos[0] || null,
+      coords: new firebase.firestore.GeoPoint(content.coords[0], content.coords[1])
     });
 
     if (content.coords) {
@@ -78,6 +79,7 @@ export async function editDescription(data) {
 export async function createComment(data) {
   //! if doc doesn exists ? if commets doesnt exists?
   var { place, author, value, photos, text } = data;
+  console.log(data);
 
   try {
     if (photos) {
@@ -85,23 +87,19 @@ export async function createComment(data) {
       photos = await Promise.all(promises);
     }
 
-    const ref = db.collection("comments").doc(place);
-    const doc = await ref.get();
-    if (!doc.exists) {
-      ref.set({ comments: [] });
-    }
-    await ref.update({
-      comments: firebase.firestore.FieldValue.arrayUnion({
-        author: {
-          name: author.name,
-          link: author.link || "/",
-          reviewCount: author.reviewCount || 1,
-        },
-        date: firebase.firestore.Timestamp.fromDate(new Date()),
-        value,
-        text,
-        photos: photos || [],
-      }),
+    const ref = db.collection("comments").doc(Date.now().toString());
+
+    await ref.set({
+      forPlace: place,
+      author: {
+        name: author.name,
+        link: author.link || "/",
+        reviewCount: author.reviewCount || 1,
+      },
+      date: firebase.firestore.Timestamp.fromDate(new Date()),
+      value,
+      text,
+      photos: photos || [],
     });
 
     console.log("Document successfully written!");
@@ -110,10 +108,18 @@ export async function createComment(data) {
   }
 }
 
-export async function getComments(document, limit = 3) {
+export async function getComments({data, limit}) {
+  limit = limit || 3;
   try {
-    const doc = await db.collection("comments").doc(document).get();
-    return doc.data();
+    const query = await db
+      .collection("comments")
+      .where("forPlace", "==", data)
+      .orderBy("date", "desc")
+      .limit(limit)
+      .get();
+    let result = [];
+    query.forEach((doc) => result.push(doc.data()));
+    return result;
   } catch (e) {
     console.error("Error getting document: ", e);
   }

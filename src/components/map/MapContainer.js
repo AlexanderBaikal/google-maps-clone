@@ -27,6 +27,7 @@ const MapContainer = (props) => {
       setActiveBar={props.setActiveBar}
       loadData={props.loadData}
       setUnderSearchBar={props.setUnderSearchBar}
+      currentCoords={props.currentCoords}
     />
   );
 };
@@ -35,6 +36,7 @@ const mapStateToProps = (state) => {
   return {
     zoomDelta: state.app.zoomDelta,
     points: state.points.all,
+    currentCoords: state.map.coords
   };
 };
 
@@ -46,7 +48,7 @@ const mapDispatchToProps = {
   setActiveBar,
   setDescriptionData,
   loadData,
-  setUnderSearchBar
+  setUnderSearchBar,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(MapContainer);

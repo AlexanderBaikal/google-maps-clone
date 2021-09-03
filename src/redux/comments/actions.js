@@ -22,9 +22,9 @@ export const requestComments = () => {
   };
 };
 
-export const loadComments = (data) => {
+export const loadComments = (data, limit=3) => {
   return {
     type: LOAD_COMMENTS,
-    payload: data,
+    payload: {data, limit},
   };
 };

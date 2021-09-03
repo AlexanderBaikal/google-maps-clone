@@ -5,13 +5,8 @@ import { setAddPhoto } from "../../../redux/active/actions";
 import { loadComments } from "../../../redux/comments/actions";
 
 import ReviewModal from "./ReviewModal";
-import { useEffect } from "react";
 
 const ReviewModalContainer = (props) => {
-  // const dispatch = useDispatch();
-  // useEffect(() => {
-
-  // }, [props.comments]);
 
   return (
     <ReviewModal

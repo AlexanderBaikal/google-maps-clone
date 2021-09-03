@@ -39,6 +39,7 @@ import {
   requestAllPointsFailed,
   requestAllPointsSuccess,
 } from "./points/actions";
+import { byCategory } from "../components/modals/editCategory/categoryItems";
 
 function fetchData(document) {
   return db
@@ -144,15 +145,21 @@ export function* watchLoadPlaces() {
 
 // ----------------------------
 
-async function fetchAllPlaces(collection = "descriptions") {
-  var res = await db.collection(collection).get();
+async function fetchAllPlaces(category) {
+  let res;
+  if (category)
+    res = await db
+      .collection("descriptions")
+      .where("type", 'in', byCategory(category)) // byCategory(category)
+      .get();
+  else res = await db.collection("descriptions").get();
   return res.docs.map((doc) => doc.data());
 }
 
-function* workerLoadAllPlaces() {
+function* workerLoadAllPlaces(action) {
   try {
     yield put(requestAllPlaces());
-    const data = yield call(fetchAllPlaces);
+    const data = yield call(fetchAllPlaces, action.payload);
     yield put(requestAllPlacesSuccess(data));
   } catch (error) {
     console.log(error);

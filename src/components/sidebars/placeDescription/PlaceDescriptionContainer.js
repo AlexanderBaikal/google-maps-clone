@@ -2,6 +2,7 @@ import PlaceDescriptionBar from "./PlaceDescriptionBar";
 import { setDescriptionData } from "./../../../redux/place/actions";
 import { setActiveBar } from "./../../../redux/active/actions";
 import { connect, useDispatch } from "react-redux";
+import { loadComments } from "../../../redux/comments/actions";
 
 import {
   setAddComment,
@@ -26,6 +27,7 @@ const PlaceDescriptionContainer = (props) => {
           setOpenUploadPhoto={props.setOpenUploadPhoto}
           openCompletePhoto={props.openCompletePhoto}
           setOpenCompletePhoto={props.setOpenCompletePhoto}
+          loadComments={props.loadComments}
         />
       )}
     </>
@@ -38,7 +40,7 @@ const mapStateToProps = (state) => {
     images: state.images.images,
     places: state.places.places,
     descriptionData: state.place.descriptionData,
-    comments: state.comments.comments,
+    comments: state.comments.all,
     openCompletePhoto: state.active.openCompletePhoto,
   };
 };
@@ -50,6 +52,7 @@ const mapDispatchToProps = {
   setOpenEdit,
   setOpenUploadPhoto,
   setOpenCompletePhoto,
+  loadComments
 };
 
 export default connect(

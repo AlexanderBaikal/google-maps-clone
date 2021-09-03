@@ -55,40 +55,41 @@ const extras = ({ handleActiveBar }) => [
   {
     name: "Banks",
     iconComponent: AccountBalanceIcon,
-    onClick: handleActiveBar,
+    onClick: () => handleActiveBar("Banks"),
   },
   {
     name: "Gas stations",
     iconComponent: LocalGasStationIcon,
-    onClick: handleActiveBar,
+    onClick: () => handleActiveBar("Gas stations"),
   },
   {
     name: "Car parks",
     iconComponent: LocalParkingIcon,
-    onClick: handleActiveBar,
+    onClick: () => handleActiveBar("Car parks"),
   },
   {
     name: "Pharamacies",
     iconComponent: LocalPharmacyOutlinedIcon,
-    onClick: handleActiveBar,
+    onClick: () => handleActiveBar("Pharamacies"),
   },
   {
     name: "Post stations",
     iconComponent: LocalPostOfficeOutlinedIcon,
-    onClick: handleActiveBar,
+    onClick: () => handleActiveBar("Post stations"),
   },
   {
     name: "Hospitals",
     iconComponent: LocalHospitalOutlinedIcon,
-    onClick: handleActiveBar,
+    onClick: () => handleActiveBar("Hospitals"),
   },
 ];
 
-const ExtendedExtras = ({ setActiveBar }) => {
+const ExtendedExtras = ({ setActiveBar, setPlacesData }) => {
   const classes = useStyles();
 
-  const handleActiveBar = () => {
+  const handleActiveBar = (category) => {
     setActiveBar(PLACES_BAR);
+    setPlacesData(category);
   };
 
   const items = extras({ handleActiveBar });

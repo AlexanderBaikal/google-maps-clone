@@ -9,7 +9,7 @@ const PlacesContainer = (props) => {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(loadAllPlaces());
+    dispatch(loadAllPlaces(props.placesData));
   }, []);
 
   return (
@@ -28,6 +28,7 @@ const mapStateToProps = (state) => {
     allPlaces: state.places.allPlaces,
     dataLoading: state.place.loading,
     content: state.place.content,
+    placesData: state.places.placesData
   };
 };
 

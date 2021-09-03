@@ -41,7 +41,7 @@ const ContextMenu = ({
   const onAddClick = () => {
     setOpened(false);
     setContent({ ...emptyContent, coords: getCoords(geoCoords) });
-    setContentSnapshot(emptyContent);
+    setContentSnapshot({ ...emptyContent, coords: getCoords(geoCoords) });
     setOpenEditInfo(true);
   };
 

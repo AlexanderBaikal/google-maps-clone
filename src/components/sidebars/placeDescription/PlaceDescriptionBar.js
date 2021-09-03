@@ -96,6 +96,7 @@ const PlaceDescriptionBar = ({
   setOpenUploadPhoto,
   openCompletePhoto,
   setOpenCompletePhoto,
+  loadComments,
 }) => {
   const classes = useStyles();
 
@@ -107,12 +108,22 @@ const PlaceDescriptionBar = ({
     setOpenUploadPhoto(true);
   };
 
-  const [topImgSrc, setTopImgSrc] = useState(content.imageUrl || "https://maps.gstatic.com/tactile/pane/default_geocode-2x.png");
+  const [topImgSrc, setTopImgSrc] = useState(
+    content.imageUrl ||
+      "https://maps.gstatic.com/tactile/pane/default_geocode-2x.png"
+  );
 
   const onTopImageError = () => {
     setTopImgSrc(
       "https://maps.gstatic.com/tactile/pane/default_geocode-2x.png"
     );
+  };
+
+  const [extended, setExtended] = useState(false);
+  const handleExtended = () => {
+    const limit = !extended ? 20 : 3;
+    setExtended((v) => !v);
+    loadComments(content.name, limit);
   };
 
   return (
@@ -193,30 +204,35 @@ const PlaceDescriptionBar = ({
       </div>
       <Divider />
       <ReviewModalContainer />
-      {comments ? (
-        <div className={classes.comments}>
-          <HeaderBar
-            title="Reviews"
-            buttons={
-              <>
-                <Button
-                  className={classes.subheaderButton}
-                  variant="outlined"
-                  style={{ padding: "7px 8px", marginRight: "5px" }}
-                >
-                  <SearchOutlinedIcon fontSize="small" color="primary" />
-                </Button>
-                <Button variant="outlined" className={classes.subheaderButton}>
-                  <SortOutlinedIcon fontSize="small" color="primary" />
-                  Sort
-                </Button>
-              </>
-            }
-          />
 
-          <Comments comments={comments} />
-        </div>
-      ) : null}
+      <div className={classes.comments}>
+        <HeaderBar
+          title="Reviews"
+          buttons={
+            <>
+              <Button
+                className={classes.subheaderButton}
+                variant="outlined"
+                style={{ padding: "7px 8px", marginRight: "5px" }}
+                onClick={handleExtended}
+              >
+                <SearchOutlinedIcon fontSize="small" color="primary" />
+              </Button>
+              <Button variant="outlined" className={classes.subheaderButton} onClick={handleExtended}>
+                <SortOutlinedIcon fontSize="small" color="primary" />
+                Sort
+              </Button>
+            </>
+          }
+        />
+
+        <Comments
+          comments={comments}
+          content={content}
+          handleExtended={handleExtended}
+          extended={extended}
+        />
+      </div>
     </div>
   );
 };

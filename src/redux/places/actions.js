@@ -1,5 +1,4 @@
 export const LOAD_PLACES = "LOAD_PLACES";
-
 export const REQUEST_PLACES_SUCCESS = "REQUEST_PLACES_SUCCESS";
 export const REQUEST_PLACES_FAILED = "REQUEST_PLACES_FAILED";
 export const REQUEST_PLACES = "REQUEST_PLACES";
@@ -31,9 +30,10 @@ export const loadPlaces = (refs) => {
 
 export const LOAD_ALL_PLACES = "LOAD_ALL_PLACES";
 
-export const loadAllPlaces = () => {
+export const loadAllPlaces = (data) => {
   return {
     type: LOAD_ALL_PLACES,
+    payload: data,
   };
 };
 
@@ -58,5 +58,14 @@ export const REQUEST_ALL_PLACES = "REQUEST_ALL_PLACES";
 export const requestAllPlaces = () => {
   return {
     type: REQUEST_ALL_PLACES,
+  };
+};
+
+export const SET_PLACES_DATA = "SET_PLACES_DATA";
+
+export const setPlacesData = (data) => {
+  return {
+    type: SET_PLACES_DATA,
+    payload: data
   };
 };

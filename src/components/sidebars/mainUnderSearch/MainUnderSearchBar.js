@@ -87,11 +87,17 @@ const MainUnderSearchBar = ({
   underSearchBar,
   setUnderSearchBar,
   setActiveBar,
+  anyPlaces,
+  setPlacePosition,
+  setSearchPrompt,
+  setPlacesData,
 }) => {
   const classes = useStyles();
   const handleUnderSearchBar = () => {
     setUnderSearchBar(!underSearchBar);
   };
+
+  let historyItems = (anyPlaces || []).slice(0, 3);
 
   const myPlaces = [
     { name: "Home", iconComponent: HomeOutlinedIcon },
@@ -106,11 +112,14 @@ const MainUnderSearchBar = ({
         square
         variant="outlined"
         className={clsx(classes.card, classes.outlined)}
-        style={{ height: "158px" }}
+        style={{ height: "195px" }}
       >
         <div style={{ marginTop: "6px", marginLeft: "7px" }}>
           <div style={{ height: "50px" }} />
-          <History />
+          <History
+            historyItems={historyItems}
+            setPlacePosition={setPlacePosition}
+          />
         </div>
       </Paper>
       <Paper
@@ -191,9 +200,17 @@ const MainUnderSearchBar = ({
           setActiveBar={setActiveBar}
           setActiveBar={setActiveBar}
           setShownMore={setShownMore}
+          setUnderSearchBar={setUnderSearchBar}
+          setSearchPrompt={setSearchPrompt}
+          setPlacesData={setPlacesData}
         />
       </Paper>
-      {shownMore ? <ExtendedExtras setActiveBar={setActiveBar}/> : null}
+      {shownMore ? (
+        <ExtendedExtras
+          setPlacesData={setPlacesData}
+          setActiveBar={setActiveBar}
+        />
+      ) : null}
       <Fab
         size="small"
         variant="extended"

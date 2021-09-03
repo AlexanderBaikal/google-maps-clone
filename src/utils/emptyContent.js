@@ -13,6 +13,7 @@ export const emptyContent = {
   inside: null,
   type: 'Shopping mall',
   imageUrl: null,
+  coords: null,
   schedule: {
     monday: {
       open: "8:00",

@@ -22,10 +22,10 @@ function App({}) {
 export default App;
 
 // TODO
-// loader + 
-// comments 
-// places by category
-// search 
+// loader +
+// comments +
+// places by category +
+// search +
 // auth
 // animations
 // bugs

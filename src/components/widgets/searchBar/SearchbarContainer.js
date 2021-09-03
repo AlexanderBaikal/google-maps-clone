@@ -5,8 +5,16 @@ import { setUnderSearchBar } from "./../../../redux/active/actions";
 import { setActiveBar } from "./../../../redux/active/actions";
 import { setContent } from "../../../redux/place/actions";
 import { connect } from "react-redux";
+import { loadAllPlaces } from "./../../../redux/places/actions";
+import {setPlacePosition } from '../../../redux/map/actions'
+import { setPlacesData } from "./../../../redux/places/actions";
+import { useEffect } from "react";
 
 const SearchbarContainer = (props) => {
+  useEffect(() => {
+    props.loadAllPlaces();
+  }, []);
+
   return (
     <SearchBar
       activeBar={props.activeBar}
@@ -19,6 +27,9 @@ const SearchbarContainer = (props) => {
       setSearchPrompt={props.setSearchPrompt}
       setContent={props.setContent}
       anyLoading={props.anyLoading}
+      anyPlaces={props.anyPlaces}
+      setPlacePosition={props.setPlacePosition}
+      setPlacesData={props.setPlacesData}
     />
   );
 };
@@ -30,6 +41,7 @@ const mapStateToProps = (state) => {
     searchPrompt: state.active.searchPrompt,
     menuSidebar: state.app.menuSidebar,
     anyLoading: state.places.loading || state.place.loading,
+    anyPlaces: state.places.anyPlaces,
   };
 };
 
@@ -39,6 +51,9 @@ const mapDispatchToProps = {
   setSearchPrompt,
   setActiveBar,
   setContent,
+  loadAllPlaces,
+  setPlacePosition,
+  setPlacesData
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(SearchbarContainer);

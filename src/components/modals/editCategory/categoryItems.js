@@ -80,6 +80,7 @@ export const categoryItems = [
   },
   {
     key: "Hotels & lodging",
+    byCategory: "Hotel",
     value: {
       IconComponent: HotelIcon,
       nested: [
@@ -177,6 +178,64 @@ export const categoryItems = [
     },
   },
 ];
+
+export const byCategory = (category) => {
+  switch (category) {
+    case "Grocery stores":
+      return [
+        "Convenience store",
+        "Market",
+        "Shopping Centre",
+        "Supermarket",
+        "Tobacco shop",
+      ];
+    case "Restaurants":
+      return [
+        "Bakery",
+        "Bar",
+        "Butchers",
+        "Coffee shop",
+        "Farm",
+        "Ice cream shop",
+        "Soup kitchen",
+        "Restaurant",
+        "Cafe",
+      ];
+    case "Takeaway food":
+      return [
+        "Fast food",
+        "Bar",
+        "Ice cream shop",
+        "Cafe",
+        "Supermarket",
+        "Grocery store",
+      ];
+    case "Hostels":
+      return [
+        "Hotel",
+        "Bed & breakfast",
+        "Camping cabin",
+        "Campsite",
+        "Holiday apartmant rental",
+        "Home Stay",
+        "Hostel",
+        "Motel",
+        "Villa",
+      ];
+    case "Banks":
+      return ["Bank", "ATM", "Cashpoint"];
+    case "Gas stations":
+      return ["Gas station", "Electric vehicle charging station"];
+    case "Car parks":
+      return ["Car Park", "Car rental company", "Car wash"];
+    case "Pharamacies":
+      return ["Pharmacy", "Medical/Health services", "Hospital"];
+    case "Post stations":
+      return ["Post office", "Post station"];
+    case "Hospitals":
+      return ["Pharmacy", "Medical/Health services", "Hospital"];
+  }
+};
 
 export const findCategories = (substring) => {
   var result = [];
