@@ -51,7 +51,7 @@ const useStyles = makeStyles((theme) => ({
   center: {
     display: "flex",
     justifyContent: "center",
-    marginTop: "20px"
+    marginTop: "20px",
   },
 }));
 
@@ -71,7 +71,7 @@ const PlacesList = ({
     setDescriptionData(value);
   };
 
-  // items = items || [];
+  const itemsLength = items ? items.length : 0;
 
   const [imgRefs, setImgRefs] = useState([]);
 
@@ -89,7 +89,7 @@ const PlacesList = ({
           .fill()
           .map((_, i) => imgRefs[i] || createRef())
       );
-  }, [items]);
+  }, [itemsLength]);
 
   const onImageError = (index) => {
     console.log("@", imgRefs, index, imgRefs[index]);

@@ -1,8 +1,10 @@
 export const SET_PLACE_POSITION = "SET_PLACE_POSITION";
 
-export const setPlacePosition = (dataFromServer) => {
+export const setPlacePosition = (data) => {
   return {
     type: SET_PLACE_POSITION,
-    payload: dataFromServer,
+    payload: data,
   };
 };
+
+

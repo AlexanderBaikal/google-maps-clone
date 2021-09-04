@@ -10,8 +10,6 @@ const mapReducer = (state = defaultState, action) => {
       return {
         ...state,
         coords: action.payload,
-        loading: true,
-        error: false,
       };
   }
   return state;

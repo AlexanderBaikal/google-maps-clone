@@ -8,6 +8,7 @@ import placesReducer from "./places/reducers";
 import imagesReducer from "./images/reducers";
 import pointsReducer from "./points/reducers";
 import mapReducer from "./map/reducers";
+import authReducer from "./auth/reducers";
 
 const defaultState = {
   zoomDelta: 0,
@@ -33,5 +34,6 @@ export default combineReducers({
   places: placesReducer,
   images: imagesReducer,
   points: pointsReducer,
-  map: mapReducer
+  map: mapReducer,
+  auth: authReducer
 });

@@ -31,6 +31,7 @@ const ContextMenu = ({
   setOpenEditInfo,
   setContent,
   setContentSnapshot,
+  profile,
 }) => {
   const classes = useStyles({ screenCoords });
 
@@ -40,8 +41,13 @@ const ContextMenu = ({
 
   const onAddClick = () => {
     setOpened(false);
-    setContent({ ...emptyContent, coords: getCoords(geoCoords) });
-    setContentSnapshot({ ...emptyContent, coords: getCoords(geoCoords) });
+    const gotCoords = getCoords(geoCoords);
+    const coords = {
+      latitude: gotCoords[0],
+      longitude: gotCoords[1],
+    };
+    setContent({ ...emptyContent, coords });
+    setContentSnapshot({ ...emptyContent, coords });
     setOpenEditInfo(true);
   };
 
@@ -61,8 +67,19 @@ const ContextMenu = ({
               primary={getCoords(geoCoords).join(" ")}
             ></ListItemText>
           </ListItem>
-          <ListItem button className={classes.listItem} onClick={onAddClick}>
-            <ListItemText primary={"Add missing place"}></ListItemText>
+
+          <ListItem
+            button
+            className={classes.listItem}
+            onClick={profile ? onAddClick : () => {}}
+          >
+            <ListItemText
+              primary={
+                profile
+                  ? "Add missing place"
+                  : "Please, sing in to make changes"
+              }
+            ></ListItemText>
           </ListItem>
         </List>
       </Paper>

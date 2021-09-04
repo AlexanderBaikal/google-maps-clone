@@ -171,7 +171,7 @@ const Comments = ({ comments, content, handleExtended, extended }) => {
         ? [...Array(3)].map((item, i) => (
             <div key={i} className={classes.skeletonWrapper}>
               <Skeleton
-                variant="square"
+                variant="rect"
                 height={150}
                 width={380}
                 className={classes.skeletonSquare}

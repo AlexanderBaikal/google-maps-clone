@@ -1,8 +1,10 @@
 import PlaceDescriptionBar from "./PlaceDescriptionBar";
 import { setDescriptionData } from "./../../../redux/place/actions";
-import { setActiveBar } from "./../../../redux/active/actions";
+import { setActiveBar, setPhotoGallery } from "./../../../redux/active/actions";
 import { connect, useDispatch } from "react-redux";
 import { loadComments } from "../../../redux/comments/actions";
+import { login } from "../../../redux/auth/actions";
+import { setImagesType } from "../../../redux/images/actions";
 
 import {
   setAddComment,
@@ -28,6 +30,11 @@ const PlaceDescriptionContainer = (props) => {
           openCompletePhoto={props.openCompletePhoto}
           setOpenCompletePhoto={props.setOpenCompletePhoto}
           loadComments={props.loadComments}
+          profile={props.profile}
+          login={props.login}
+          anyLoading={props.anyLoading}
+          setPhotoGallery={props.setPhotoGallery}
+          setImagesType={props.setImagesType}
         />
       )}
     </>
@@ -42,6 +49,8 @@ const mapStateToProps = (state) => {
     descriptionData: state.place.descriptionData,
     comments: state.comments.all,
     openCompletePhoto: state.active.openCompletePhoto,
+    profile: state.auth.profile,
+    anyLoading: state.places.loading || state.place.loading,
   };
 };
 
@@ -52,7 +61,10 @@ const mapDispatchToProps = {
   setOpenEdit,
   setOpenUploadPhoto,
   setOpenCompletePhoto,
-  loadComments
+  loadComments,
+  login,
+  setPhotoGallery,
+  setImagesType,
 };
 
 export default connect(

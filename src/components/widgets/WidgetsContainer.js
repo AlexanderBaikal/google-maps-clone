@@ -8,6 +8,7 @@ const WidgetsContainer = (props) => {
       setZoomDelta={props.setZoomDelta}
       underSearchBar={props.underSearchBar}
       bottomGallery={props.bottomGallery}
+      profile={props.profile}
     />
   );
 };
@@ -16,6 +17,7 @@ const mapStateToProps = (state) => {
   return {
     underSearchBar: state.active.underSearchBar,
     bottomGallery: state.active.bottomGallery,
+    profile: state.auth.profile
   };
 };
 

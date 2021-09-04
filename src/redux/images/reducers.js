@@ -1,10 +1,12 @@
 import {
+  ALL,
   REQUEST_ALL_IMAGES,
   REQUEST_ALL_IMAGES_FAILED,
   REQUEST_ALL_IMAGES_SUCCESS,
   REQUEST_IMAGES,
   REQUEST_IMAGES_FAILED,
   REQUEST_IMAGES_SUCCESS,
+  SET_IMAGES_TYPE,
 } from "./actions";
 
 const defaultState = {
@@ -12,6 +14,7 @@ const defaultState = {
   allImages: [],
   loading: false,
   error: false,
+  imagesType: null
 };
 
 const imagesReducer = (state = defaultState, action) => {
@@ -58,6 +61,11 @@ const imagesReducer = (state = defaultState, action) => {
         loading: false,
         error: true,
       };
+      case SET_IMAGES_TYPE:
+        return {
+          ...state,
+          imagesType: action.payload,
+        };
   }
   return state;
 };

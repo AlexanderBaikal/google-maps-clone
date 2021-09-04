@@ -4,6 +4,7 @@ import EditCategoryContainer from "./editCategory/EditCategoryContainer";
 import ScheduleModalContainer from "./scheduleModal/ScheduleModalContainer";
 import EditHoursContainer from "./editHours/EditHoursContainer";
 import { connect } from "react-redux";
+import EditLocationContainer from "./editLocation/EditLocationContainer";
 
 const ModalsContainer = (props) => {
   return props.content ? (
@@ -13,6 +14,7 @@ const ModalsContainer = (props) => {
       <EditCategoryContainer />
       <ScheduleModalContainer />
       <EditHoursContainer />
+      <EditLocationContainer/>
     </>
   ) : null;
 };

@@ -9,6 +9,8 @@ import CompleteEditInfoModal from "../editInfo/CompleteEditInfoModal";
 import { setPhotoFiles, setNewHours } from "../../../redux/modals/actions";
 import { setCategoryModal, setHoursModal } from "../../../redux/active/actions";
 import { loadAllPoints } from "../../../redux/points/actions";
+import { setLocationModal } from "../../../redux/active/actions";
+
 
 const EditInfoContainer = (props) => {
   return (
@@ -28,6 +30,7 @@ const EditInfoContainer = (props) => {
         photoFiles={props.photoFiles}
         setPhotoFiles={props.setPhotoFiles}
         loadAllPoints={props.loadAllPoints}
+        setLocationModal={props.setLocationModal}
       />
       <CompleteEditInfoModal
         setOpenCompleteEditInfo={props.setOpenCompleteEditInfo}
@@ -58,7 +61,8 @@ const mapDispatchToProps = {
   setCategoryModal,
   setNewHours,
   setHoursModal,
-  loadAllPoints
+  loadAllPoints,
+  setLocationModal
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(EditInfoContainer);

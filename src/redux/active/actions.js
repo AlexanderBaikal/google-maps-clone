@@ -16,6 +16,15 @@ export const setAddPhoto = (data) => {
   };
 };
 
+export const SET_LOCATION_MODAL = "SET_LOCATION_MODAL";
+
+export const setLocationModal = (data) => {
+  return {
+    type: SET_LOCATION_MODAL,
+    payload: data,
+  };
+};
+
 export const SET_HOURS_MODAL = "SET_HOURS_MODAL";
 
 export const setHoursModal = (data) => {
@@ -126,4 +135,11 @@ export const SET_MENU_SIDEBAR = "SET_MENU_SIDEBAR";
 export const setMenuSidebar = (menuSidebar) => ({
   type: SET_MENU_SIDEBAR,
   payload: menuSidebar,
+});
+
+export const SET_PHOTO_GALLERY = "SET_PHOTO_GALLERY";
+
+export const setPhotoGallery = (data) => ({
+  type: SET_PHOTO_GALLERY,
+  payload: data,
 });

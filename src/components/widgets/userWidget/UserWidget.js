@@ -1,5 +1,8 @@
 import { makeStyles } from "@material-ui/core";
 import AppsIcon from "@material-ui/icons/Apps";
+import { useDispatch } from "react-redux";
+import { login, logOut } from "../../../redux/auth/actions";
+import VpnKeyOutlinedIcon from "@material-ui/icons/VpnKeyOutlined";
 
 const useStyles = makeStyles((theme) => {
   return {
@@ -19,17 +22,43 @@ const useStyles = makeStyles((theme) => {
       marginLeft: "17px",
       cursor: "pointer",
     },
+    signIn: {
+      marginLeft: "17px",
+      cursor: "pointer",
+    },
   };
 });
 
-const UserWidget = () => {
+const UserWidget = ({ profile }) => {
   const classes = useStyles();
-  const userUrl =
-    "https://lh3.googleusercontent.com/ogw/ADea4I7Dz8wO9N1xzOyUGD0z__B6G0Oa_Vtvs5KPTVfl3w=s32-c-mo";
+
+  const dispatch = useDispatch();
+
+  const signIn = () => {
+    dispatch(login());
+  };
+
+  const signOut = () => {
+    dispatch(logOut());
+  };
+
   return (
     <div className={classes.userWidget}>
-      <AppsIcon size={28} className={classes.apps} />
-      <img className={classes.userImage} src={userUrl} alt="avatar" />
+      <AppsIcon
+        size={28}
+        className={classes.apps}
+        onClick={profile ? signOut : signIn}
+      />
+      {profile ? (
+        <img
+          className={classes.userImage}
+          src={profile.photoURL}
+          onClick={signOut}
+          alt="avatar"
+        />
+      ) : (
+        <VpnKeyOutlinedIcon className={classes.signIn} onClick={signIn} />
+      )}
     </div>
   );
 };

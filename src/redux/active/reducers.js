@@ -13,15 +13,18 @@ import {
   SET_ACTIVE_BAR,
   SET_SEARCH_PROMPT,
   SET_UNDERSEARCH_BAR,
-  SET_BOTTOM_GALLERY,SET_MENU_SIDEBAR
+  SET_BOTTOM_GALLERY,
+  SET_MENU_SIDEBAR,
+  SET_LOCATION_MODAL,
+  SET_PHOTO_GALLERY,
 } from "./actions";
-
 
 const defaultState = {
   categoryModal: false,
   addPhoto: false,
   hoursModal: false,
   scheduleModal: false,
+  locationModal: false,
   addComment: false,
   openEdit: false,
   openEditInfo: false,
@@ -33,6 +36,7 @@ const defaultState = {
   underSearchBar: false,
   bottomGallery: false,
   menuSidebar: false,
+  photoGallery: false,
 };
 
 export const activeReducer = (state = defaultState, action) => {
@@ -46,6 +50,11 @@ export const activeReducer = (state = defaultState, action) => {
       return {
         ...state,
         categoryModal: action.payload,
+      };
+    case SET_LOCATION_MODAL:
+      return {
+        ...state,
+        locationModal: action.payload,
       };
     case SET_HOURS_MODAL:
       return {
@@ -112,6 +121,11 @@ export const activeReducer = (state = defaultState, action) => {
       return {
         ...state,
         menuSidebar: action.payload,
+      };
+    case SET_PHOTO_GALLERY:
+      return {
+        ...state,
+        photoGallery: action.payload,
       };
   }
   return state;

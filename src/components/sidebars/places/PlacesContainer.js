@@ -17,7 +17,7 @@ const PlacesContainer = (props) => {
       setActiveBar={props.setActiveBar}
       allPlaces={props.allPlaces}
       setDescriptionData={props.setDescriptionData}
-      dataLoading={props.dataLoading}
+      anyLoading={props.anyLoading}
       content={props.content}
     />
   );
@@ -26,7 +26,7 @@ const PlacesContainer = (props) => {
 const mapStateToProps = (state) => {
   return {
     allPlaces: state.places.allPlaces,
-    dataLoading: state.place.loading,
+    anyLoading: state.places.loading || state.place.loading,
     content: state.place.content,
     placesData: state.places.placesData
   };

@@ -1,5 +1,5 @@
 import { takeEvery, put, call, fork, all } from "redux-saga/effects";
-import { db, getComments, storageRef } from "../firebase";
+import { auth, db, getComments, storageRef } from "../firebase";
 import {
   LOAD_COMMENTS,
   requestComments,
@@ -40,6 +40,16 @@ import {
   requestAllPointsSuccess,
 } from "./points/actions";
 import { byCategory } from "../components/modals/editCategory/categoryItems";
+import {
+  LOGIN,
+  loginFail,
+  loginRequest,
+  loginSuccess,
+  logOut,
+  LOG_OUT,
+} from "./auth/actions";
+
+import firebase from "firebase/app";
 
 function fetchData(document) {
   return db
@@ -150,7 +160,7 @@ async function fetchAllPlaces(category) {
   if (category)
     res = await db
       .collection("descriptions")
-      .where("type", 'in', byCategory(category)) // byCategory(category)
+      .where("type", "in", byCategory(category)) // byCategory(category)
       .get();
   else res = await db.collection("descriptions").get();
   return res.docs.map((doc) => doc.data());
@@ -211,6 +221,55 @@ export function* watchLoadComments() {
 
 // ----------------------------
 
+async function loginFirebase() {
+  const provider = new firebase.auth.GoogleAuthProvider();
+  const res = await auth.signInWithPopup(provider);
+  console.log(res);
+  const profile = {
+    name: res.additionalUserInfo.profile.name,
+    photoURL: res.additionalUserInfo.profile.picture,
+    email: res.additionalUserInfo.profile.email,
+  };
+  sessionStorage.setItem("gmc-user", JSON.stringify(profile));
+  return profile;
+}
+
+function* workerLogin() {
+  try {
+    yield put(loginRequest());
+    const data = yield call(loginFirebase);
+    yield put(loginSuccess(data));
+  } catch (error) {
+    console.log(error);
+    yield put(loginFail());
+  }
+}
+
+export function* watchLogin() {
+  yield takeEvery(LOGIN, workerLogin);
+}
+
+// ----------------------------
+
+async function logOutFirebase() {
+  await auth.signOut()
+  sessionStorage.removeItem("gmc-user");
+}
+
+function* workerLogOut() {
+  try {
+    yield call(logOutFirebase);
+  } catch (error) {
+    console.log(error);
+  }
+}
+
+export function* watchLogOut() {
+  yield takeEvery(LOG_OUT, workerLogOut);
+}
+
+// ----------------------------
+
 export function* rootSaga() {
   yield all([
     fork(watchLoadImages),
@@ -220,5 +279,7 @@ export function* rootSaga() {
     fork(watchLoadAllPlaces),
     fork(watchLoadComments),
     fork(watchLoadAllPoints),
+    fork(watchLogin),
+    fork(watchLogOut),
   ]);
 }

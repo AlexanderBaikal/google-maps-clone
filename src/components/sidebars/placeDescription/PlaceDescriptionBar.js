@@ -82,6 +82,12 @@ const useStyles = makeStyles((theme) => ({
     height: "80px",
     background: "-webkit-linear-gradient(rgba(0,0,0,0.25),rgba(0,0,0,0))",
   },
+  signInButton: {
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
+    margin: "8px",
+  },
 }));
 
 const PlaceDescriptionBar = ({
@@ -97,6 +103,11 @@ const PlaceDescriptionBar = ({
   openCompletePhoto,
   setOpenCompletePhoto,
   loadComments,
+  profile,
+  login,
+  anyLoading,
+  setPhotoGallery,
+  setImagesType
 }) => {
   const classes = useStyles();
 
@@ -141,22 +152,37 @@ const PlaceDescriptionBar = ({
       <Divider />
       <div className={classes.listInfo}>
         <ListInfo content={content} />
-        <BottomButton
-          title="Suggest an edit"
-          startIcon={CreateOutlinedIcon}
-          onClick={handleOpenEdit}
-        />
+        {profile ? (
+          <BottomButton
+            title="Suggest an edit"
+            startIcon={CreateOutlinedIcon}
+            onClick={handleOpenEdit}
+          />
+        ) : (
+          <div className={classes.signInButton}>
+            <Button color="primary" variant="outlined" onClick={login}>
+              Sign in to edit
+            </Button>
+          </div>
+        )}
       </div>
       <Divider />
       <div className={classes.photos}>
         <HeaderBar title="Photos" />
-        <PhotoCards images={images} />
-
-        <BottomButton
-          title="Add a photo"
-          startIcon={CameraAltOutlinedIcon}
-          onClick={handleOpenUploadPhoto}
-        />
+        <PhotoCards images={images} setPhotoGallery={setPhotoGallery} setImagesType={setImagesType}/>
+        {profile ? (
+          <BottomButton
+            title="Add a photo"
+            startIcon={CameraAltOutlinedIcon}
+            onClick={handleOpenUploadPhoto}
+          />
+        ) : (
+          <div className={classes.signInButton}>
+            <Button color="primary" variant="outlined" onClick={login}>
+              Sign in upload photo
+            </Button>
+          </div>
+        )}
         <UploadPhotoContainer />
         <CompletePhotoModal
           setOpenCompletePhoto={setOpenCompletePhoto}
@@ -187,6 +213,8 @@ const PlaceDescriptionBar = ({
               short
               setActiveBar={setActiveBar}
               setDescriptionData={setDescriptionData}
+              loading={anyLoading}
+              data={content}
             />
           </div>
         ) : null}
@@ -196,11 +224,19 @@ const PlaceDescriptionBar = ({
       <div className={classes.review}>
         <HeaderBar title="Review Summary" />
         <RatingReview content={content} />
-        <BottomButton
-          onClick={() => setAddComment(true)}
-          title="Write a review"
-          startIcon={RateReviewOutlinedIcon}
-        />
+        {profile ? (
+          <BottomButton
+            onClick={() => setAddComment(true)}
+            title="Write a review"
+            startIcon={RateReviewOutlinedIcon}
+          />
+        ) : (
+          <div className={classes.signInButton}>
+            <Button color="primary" variant="outlined" onClick={login}>
+              Sign in to write a review
+            </Button>
+          </div>
+        )}
       </div>
       <Divider />
       <ReviewModalContainer />
@@ -218,7 +254,11 @@ const PlaceDescriptionBar = ({
               >
                 <SearchOutlinedIcon fontSize="small" color="primary" />
               </Button>
-              <Button variant="outlined" className={classes.subheaderButton} onClick={handleExtended}>
+              <Button
+                variant="outlined"
+                className={classes.subheaderButton}
+                onClick={handleExtended}
+              >
                 <SortOutlinedIcon fontSize="small" color="primary" />
                 Sort
               </Button>

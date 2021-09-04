@@ -5,6 +5,7 @@ import theme from "../theme";
 import MenuSidebarContainer from "./sidebars/sideMenu/MenuSidebarContainer";
 import MapContainer from "./map/MapContainer";
 import OutterModals from "./modals/OutterModals";
+import PhotoGalleryContainer from "./photoGallery/PhotoGalleryContainer";
 
 function App({}) {
   return (
@@ -14,6 +15,7 @@ function App({}) {
         <WidgetsContainer />
         <MenuSidebarContainer />
         <OutterModals />
+        <PhotoGalleryContainer />
       </div>
     </ThemeProvider>
   );
@@ -26,6 +28,8 @@ export default App;
 // comments +
 // places by category +
 // search +
-// auth
-// animations
+// auth +
+// update location +
+// photo gallery +
 // bugs
+// animations

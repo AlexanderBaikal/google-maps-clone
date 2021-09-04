@@ -9,6 +9,7 @@ import ArrowBackIosOutlinedIcon from "@material-ui/icons/ArrowBackIosOutlined";
 import ArrowForwardIosOutlinedIcon from "@material-ui/icons/ArrowForwardIosOutlined";
 import clsx from "clsx";
 import { useState } from "react";
+import { TYPE_PLACE } from "../../redux/images/actions";
 
 const useStyles = makeStyles((theme) => ({
   root: {},
@@ -49,23 +50,22 @@ const useStyles = makeStyles((theme) => ({
     backgroundColor: "white",
     position: "absolute",
     top: "calc(50% - 20px)",
+    pointerEvents: "auto",
   },
   fabContainer: {
     height: "100%",
     width: "100%",
     position: "absolute",
     top: 0,
-    opacity: 0,
-    "&:hover": {
-      opacity: 1,
-    },
+    opacity: 1,
+    pointerEvents: "none",
   },
   shiftEnd: {
-    marginLeft: "-220px!important", // coz there is a bug with styles
+    marginLeft: "-220px!important",
   },
 }));
 
-const PhotoCards = ({ images }) => {
+const PhotoCards = ({ images, setPhotoGallery, setImagesType }) => {
   const classes = useStyles();
 
   const [shiftedEnd, setShiftedEnd] = useState(false);
@@ -78,12 +78,19 @@ const PhotoCards = ({ images }) => {
     setShiftedEnd(false);
   };
 
+  const onPhotoClick = () => {
+    setImagesType(TYPE_PLACE)
+    setPhotoGallery(true);
+  };
+
   const itemData = () => {
     var titles = ["All", "Latest", "Inside", "Street View", "Videos"];
     return titles.map((title, i) => {
       return {
         img: images
-          ? images[i] || images[0] || "https://maps.gstatic.com/tactile/pane/result-no-thumbnail-2x.png"
+          ? images[i] ||
+            images[0] ||
+            "https://maps.gstatic.com/tactile/pane/result-no-thumbnail-2x.png"
           : "https://maps.gstatic.com/tactile/pane/result-no-thumbnail-2x.png",
         title,
       };
@@ -107,6 +114,7 @@ const PhotoCards = ({ images }) => {
             key={i}
             classes={{ item: classes.imageListItem }}
             style={{ width: "120px" }}
+            onClick={onPhotoClick}
           >
             <img src={item.img} alt={item.title} />
             <ImageListItemBar

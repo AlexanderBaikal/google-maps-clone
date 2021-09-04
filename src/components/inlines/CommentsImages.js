@@ -45,7 +45,6 @@ const CommentsImages = ({ images }) => {
           >
             <img
               src={item}
-              className={classes.image}
               alt=""
               onError={() => onImageError(i)}
             />

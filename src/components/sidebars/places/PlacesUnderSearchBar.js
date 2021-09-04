@@ -61,7 +61,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const PlacesUnderSearchBar = ({ setActiveBar, allPlaces, setDescriptionData, dataLoading, content }) => {
+const PlacesUnderSearchBar = ({ setActiveBar, allPlaces, setDescriptionData, anyLoading, content }) => {
   const classes = useStyles();
 
   const [anchorEl, setAnchorEl] = useState(null);
@@ -198,7 +198,7 @@ const PlacesUnderSearchBar = ({ setActiveBar, allPlaces, setDescriptionData, dat
         setActiveBar={setActiveBar}
         items={allPlaces}
         setDescriptionData={setDescriptionData}
-        loading={dataLoading}
+        loading={anyLoading}
         data={content}
       />
       <div className={classes.footer}>

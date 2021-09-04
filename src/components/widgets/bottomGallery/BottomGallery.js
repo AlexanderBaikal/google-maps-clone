@@ -13,6 +13,7 @@ import "react-lazy-load-image-component/src/effects/blur.css";
 import { useSelector } from "react-redux";
 import Skeleton from "@material-ui/lab/Skeleton";
 import { createRef, useEffect, useState } from "react";
+import { TYPE_ALL } from "../../../redux/images/actions";
 
 const useStyles = makeStyles((theme) => {
   return {
@@ -69,7 +70,7 @@ const useStyles = makeStyles((theme) => {
   };
 });
 
-const BottomGallery = ({ images = [] }) => {
+const BottomGallery = ({ images = [], setImagesType, setPhotoGallery }) => {
   const classes = useStyles();
   const scrollRef = useHorizontalScroll();
 
@@ -89,9 +90,10 @@ const BottomGallery = ({ images = [] }) => {
 
   let loading = useSelector((state) => state.images.loading);
 
-  useEffect(() => {
-    console.log(loading);
-  }, [loading]);
+  const onImageClick = () => {
+    setImagesType(TYPE_ALL);
+    setPhotoGallery(true);
+  };
 
   return (
     <Paper className={classes.bottomGallery} square>
@@ -111,6 +113,7 @@ const BottomGallery = ({ images = [] }) => {
                   ref={imgListRefs[i]}
                   classes={{ item: classes.imageListItem }}
                   style={{ width: "220px" }}
+                  onClick={onImageClick}
                 >
                   <LazyLoadImage
                     src={item}

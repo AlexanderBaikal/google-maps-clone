@@ -15,6 +15,7 @@ import RateReviewOutlinedIcon from "@material-ui/icons/RateReviewOutlined";
 import TimelineOutlinedIcon from "@material-ui/icons/TimelineOutlined";
 import PermIdentityOutlinedIcon from "@material-ui/icons/PermIdentityOutlined";
 import clsx from "clsx";
+import LinkIcon from "@material-ui/icons/Link";
 
 const useStyles = makeStyles((theme) => {
   return {
@@ -83,7 +84,7 @@ const MenuSidebar = ({ menuSidebar, setMenuSidebar }) => {
       </div>
       <Divider />
       <List>
-        <ListItem button key={layersText}>
+        <ListItem button>
           <ListItemIcon>
             <LayersOutlinedIcon />
           </ListItemIcon>
@@ -108,6 +109,20 @@ const MenuSidebar = ({ menuSidebar, setMenuSidebar }) => {
         ))}
       </List>
       <Divider />
+      <ListItem
+        button
+        onClick={() =>
+          window.open("https://github.com/AlexanderBaikal", "_blank").focus()
+        }
+      >
+        <ListItemIcon>
+          <LinkIcon />
+        </ListItemIcon>
+        <ListItemText
+          classes={{ primary: classes.listItemText }}
+          primary={"github.com/AlexanderBaikal"}
+        />
+      </ListItem>
     </Paper>
   );
 };

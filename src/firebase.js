@@ -18,6 +18,8 @@ export const firestore = firebase.firestore;
 // Create a root reference
 export const storageRef = firebase.storage().ref();
 
+export const auth = firebase.auth()
+
 export async function uploadPhotoFirebase(file, keyword = "All") {
   var fileRef;
   if (keyword === "All") {
@@ -58,7 +60,7 @@ export async function editDescription(data) {
       ...content,
       inside: content.inside ? db.doc(`descriptions/${content.inside}`) : null,
       imageUrl: content.imageUrl || photos[0] || null,
-      coords: new firebase.firestore.GeoPoint(content.coords[0], content.coords[1])
+      coords: new firebase.firestore.GeoPoint(content.coords.latitude, content.coords.longitude)
     });
 
     if (content.coords) {
@@ -66,7 +68,7 @@ export async function editDescription(data) {
       await ref.set({
         name: content.name,
         type: content.type,
-        coords: content.coords,
+        coords: new firebase.firestore.GeoPoint(content.coords.latitude, content.coords.longitude),
       });
     }
 

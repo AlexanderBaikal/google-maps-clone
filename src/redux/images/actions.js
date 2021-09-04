@@ -59,3 +59,14 @@ export const loadAllImages = (data) => {
     payload: data,
   };
 };
+
+export const SET_IMAGES_TYPE = "SET_IMAGES_TYPE";
+export const TYPE_ALL = "TYPE_ALL";
+export const TYPE_PLACE = "TYPE_PLACE";
+
+export const setImagesType = (data) => {
+  return {
+    type: SET_IMAGES_TYPE,
+    payload: data,
+  };
+};

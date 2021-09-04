@@ -61,7 +61,7 @@ const useStyles = makeStyles({
   bottomWidgets: {},
 });
 
-const Widgets = ({ underSearchBar, bottomGallery }) => {
+const Widgets = ({ underSearchBar, bottomGallery, profile }) => {
   const classes = useStyles();
 
   return (
@@ -93,7 +93,7 @@ const Widgets = ({ underSearchBar, bottomGallery }) => {
         <UnderSearchContainer />
       </div>
       <div className={classes.topRightWidgets}>
-        <UserWidget />
+        <UserWidget profile={profile}/>
       </div>
     </>
   );

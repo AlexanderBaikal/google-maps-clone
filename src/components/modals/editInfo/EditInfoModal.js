@@ -25,6 +25,7 @@ import AddPhotoBlock from "../nested/AddPhotoBlock";
 import { editDescription } from "../../../firebase";
 import clsx from "clsx";
 import MySchedule from "./MySchedule";
+import { getTileImage } from "../../map/getTileImage";
 
 const useStyles = makeStyles((theme) => ({
   root: {},
@@ -69,7 +70,8 @@ const useStyles = makeStyles((theme) => ({
     marginBottom: "4px",
     paddingTop: "30px",
     paddingBottom: "30px",
-    backgroundColor: "#777",
+    backgroundImage: (props) => `url(${props.mapFragment})`,
+    backgroundPosition: "center",
   },
   bottomDiv: {
     display: "flex",
@@ -81,8 +83,9 @@ const useStyles = makeStyles((theme) => ({
     marginRight: "20px",
   },
   outlinedWhite: {
-    color: "white",
-    borderColor: "white",
+    color: "#222",
+    backgroundColor: "rgba(255,255,255,0.8)",
+    borderColor: "#999",
   },
   underButtonText2: {
     alignSelf: "start",
@@ -121,9 +124,12 @@ const EditInfoModal = ({
   allPlaces,
   photoFiles,
   setPhotoFiles,
-  loadAllPoints
+  loadAllPoints,
+  setLocationModal,
 }) => {
-  const classes = useStyles();
+  const mapFragment = getTileImage(content.coords);
+
+  const classes = useStyles({ mapFragment });
 
   const onClose = () => {
     setContent(JSON.parse(JSON.stringify(contentSnapshot)));
@@ -155,7 +161,7 @@ const EditInfoModal = ({
     setOpenCompleteEditInfo(true);
     setCanceledFields([]);
     setPhotoFiles([]);
-    loadAllPoints()
+    loadAllPoints();
   }
 
   const onCancel = () => {
@@ -176,6 +182,10 @@ const EditInfoModal = ({
   const onHoursClick = () => {
     setNewHours(JSON.parse(JSON.stringify(content.schedule)));
     setHoursModal(true);
+  };
+
+  const onUpdateLocation = () => {
+    setLocationModal(true);
   };
 
   const onAddressChange = (value) => {
@@ -290,6 +300,7 @@ const EditInfoModal = ({
             <Button
               variant="outlined"
               classes={{ outlined: classes.outlinedWhite }}
+              onClick={onUpdateLocation}
             >
               Update location
             </Button>
