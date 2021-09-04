@@ -12,7 +12,6 @@ import { DESCRIPTION_BAR } from "../../redux/active/actions";
 import numeral from "numeral";
 import { createRef, useEffect, useRef, useState } from "react";
 import { Skeleton } from "@material-ui/lab";
-import { useDispatch, useSelector } from "react-redux";
 
 const useStyles = makeStyles((theme) => ({
   image: {
@@ -92,7 +91,6 @@ const PlacesList = ({
   }, [itemsLength]);
 
   const onImageError = (index) => {
-    console.log("@", imgRefs, index, imgRefs[index]);
     imgRefs[index].current.src =
       "https://maps.gstatic.com/tactile/pane/result-no-thumbnail-2x.png";
   };
@@ -165,39 +163,11 @@ const PlacesList = ({
             {!short && id < items.length - 1 ? <Divider /> : null}
           </div>
         ))
-      ) : items === null ? (
-        [...Array(10)].map((item, i) => (
-          <div key={i}>
-            <ListItem
-              classes={{ gutters: classes.listItemGutters }}
-              className={classes.listItemSkeleton}
-            >
-              <div className={classes.textSkeleton}>
-                <Skeleton variant="text" width={200} />
-                <Skeleton variant="text" width={260} />
-                <Skeleton variant="text" width={260} />
-                <div
-                  style={{ display: "flex", justifyContent: "space-around" }}
-                >
-                  <Skeleton variant="text" width={60} />
-                  <Skeleton variant="text" width={60} />
-                  <Skeleton variant="text" width={60} />
-                </div>
-              </div>
-              <Skeleton
-                className={classes.imageSkeleton}
-                variant="rect"
-                height={84}
-                width={84}
-              />
-            </ListItem>
-          </div>
-        ))
-      ) : (
+      ) : items !== null ? (
         <div className={classes.center}>
           <Typography variant="body1">No places</Typography>
         </div>
-      )}
+      ) : null}
     </List>
   );
 };

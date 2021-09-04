@@ -6,6 +6,7 @@ const useStyles = makeStyles({
   horizontalWidget: {
     marginTop: "5px",
     height: "30px",
+    pointerEvents: "auto"
   },
 
   buttonRoot: {

@@ -11,7 +11,8 @@ import LocalCafeOutlinedIcon from "@material-ui/icons/LocalCafeOutlined";
 import HotelIcon from "@material-ui/icons/Hotel";
 import MoreHorizIcon from "@material-ui/icons/MoreHoriz";
 import ExpandLessOutlinedIcon from "@material-ui/icons/ExpandLessOutlined";
-import { PLACES_BAR, setUnderSearchBar } from "../../redux/active/actions";
+import { PLACES_BAR, setUnderSearchBar } from "../../../redux/active/actions";
+import { useEffect } from "react";
 
 const useStyles = makeStyles((theme) => ({
   iconAvatarLarge: {
@@ -103,7 +104,7 @@ const extras = ({ handleActiveBar, handleShownMore }) => [
     iconComponent: HotelIcon,
     color: "#f57c00",
     onClick: () => handleActiveBar("Hostels"),
-  }, 
+  },
   {
     name: "Show more",
     iconComponent: MoreHorizIcon,
@@ -116,31 +117,42 @@ const extras = ({ handleActiveBar, handleShownMore }) => [
 const Extras = ({
   countItems = 5,
   shownMore,
-  setActiveBar = () => {},
-  setShownMore = () => {},
+  setActiveBar,
+  setShownMore,
   setUnderSearchBar,
   setSearchPrompt,
   setPlacesData,
+  loading,
+  allPlaces,
+  placesData
 }) => {
   const classes = useStyles();
 
+
+  useEffect(() => {
+    if (!loading && allPlaces && placesData) {
+      setUnderSearchBar(true);
+      setActiveBar(PLACES_BAR);
+    }
+  }, [loading, allPlaces]);
+  
   const handleActiveBar = (category) => {
-    setUnderSearchBar(true);
+    
     setSearchPrompt(false);
-    setActiveBar(PLACES_BAR);
-    setPlacesData(category)
+    setPlacesData(category);
   };
+
   const handleShownMore = () => {
-    setShownMore((v) => !v);
+    if (setShownMore) setShownMore(!shownMore);
   };
 
   const items = extras({ handleActiveBar, handleShownMore });
 
   return (
-    <div key={"Options"} className={classes.extras}>
+    <div className={classes.extras}>
       <div className={classes.extrasHeader}>
         <div>
-          <h1 style={{ fontSize: "15px" }}>London</h1>
+          <h1 style={{ fontSize: "15px" }}>Irkutsk</h1>
         </div>
         <div className={classes.weather}>
           <div className={classes.weatherLabel}>15°</div>

@@ -6,12 +6,6 @@ import { loadAllPlaces } from "../../../redux/places/actions";
 import { setDescriptionData, setContent } from "./../../../redux/place/actions";
 
 const PlacesContainer = (props) => {
-  const dispatch = useDispatch();
-
-  useEffect(() => {
-    dispatch(loadAllPlaces(props.placesData));
-  }, []);
-
   return (
     <PlacesUnderSearchBar
       setActiveBar={props.setActiveBar}
@@ -28,7 +22,6 @@ const mapStateToProps = (state) => {
     allPlaces: state.places.allPlaces,
     anyLoading: state.places.loading || state.place.loading,
     content: state.place.content,
-    placesData: state.places.placesData
   };
 };
 

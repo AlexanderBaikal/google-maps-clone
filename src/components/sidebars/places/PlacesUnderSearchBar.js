@@ -205,7 +205,7 @@ const PlacesUnderSearchBar = ({ setActiveBar, allPlaces, setDescriptionData, any
         <Divider />
         <div className={classes.footerTop}>
           <Typography color="textSecondary" style={{ fontSize: "0.8rem" }}>
-            Showing results 21 - 40
+            Showing results 0 - {allPlaces.length}
           </Typography>
           <div>
             <IconButton

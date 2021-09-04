@@ -17,6 +17,7 @@ import {
   SET_MENU_SIDEBAR,
   SET_LOCATION_MODAL,
   SET_PHOTO_GALLERY,
+  SET_SHOWN_MORE
 } from "./actions";
 
 const defaultState = {
@@ -37,6 +38,7 @@ const defaultState = {
   bottomGallery: false,
   menuSidebar: false,
   photoGallery: false,
+  shownMore: false,
 };
 
 export const activeReducer = (state = defaultState, action) => {
@@ -126,6 +128,11 @@ export const activeReducer = (state = defaultState, action) => {
       return {
         ...state,
         photoGallery: action.payload,
+      };
+    case SET_SHOWN_MORE:
+      return {
+        ...state,
+        shownMore: action.payload,
       };
   }
   return state;

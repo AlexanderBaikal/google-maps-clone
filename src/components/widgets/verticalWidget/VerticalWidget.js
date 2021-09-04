@@ -5,6 +5,9 @@ import AddIcon from "@material-ui/icons/Add";
 import clsx from "clsx";
 
 const useStyles = makeStyles((theme) => ({
+  root: {
+    pointerEvents: "auto",
+  },
   textSecondary: {
     fill: "rgb(50, 50, 50)",
   },
@@ -48,7 +51,7 @@ const VerticalWidget = ({ setZoomDelta }) => {
   };
 
   return (
-    <div>
+    <div className={classes.root}>
       <div>
         <Button variant="contained" className={classes.controlButton}>
           <MyLocationIcon fontSize="small" className={classes.textSecondary} />

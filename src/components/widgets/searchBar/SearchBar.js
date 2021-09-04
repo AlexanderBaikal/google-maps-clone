@@ -14,11 +14,12 @@ import {
 } from "@material-ui/core";
 import { useEffect, useRef, useState } from "react";
 import clsx from "clsx";
-import Extras from "./../../inlines/Extras";
-import History from "../../inlines/History";
+import Extras from "../../inlines/extras/Extras";
+import History from "../../inlines/history/History";
 import CloseIcon from "@material-ui/icons/Close";
 import { MAIN_UNDERSEARCH_BAR } from "../../../redux/active/actions";
 import PromptBlock from "./PromptBlock";
+import { setHistoryItems } from "../../../redux/search/actions";
 
 const useStyles = makeStyles((theme) => {
   return {
@@ -82,8 +83,8 @@ const SearchBar = ({
   setContent,
   anyLoading,
   anyPlaces,
-  setPlacePosition,
-  setPlacesData
+  setHistoryItems,
+  setPlacesData,
 }) => {
   const handleUnderSearchBar = () => {
     setUnderSearchBar(!underSearchBar);
@@ -105,11 +106,10 @@ const SearchBar = ({
 
   const onDirectionsClick = () => {
     setContent(null);
-    setPlacesData(null)
+    setPlacesData(null);
     setActiveBar(MAIN_UNDERSEARCH_BAR);
   };
 
-  
   const inputRef = useRef(null);
   const classes = useStyles();
 
@@ -124,6 +124,8 @@ const SearchBar = ({
         .startsWith(inputValue ? inputValue.toLowerCase() : "")
     )
     .slice(0, 3);
+
+  setHistoryItems(historyItems);
 
   return (
     <ClickAwayListener onClickAway={handleClickOutside}>
@@ -181,15 +183,8 @@ const SearchBar = ({
 
         <PromptBlock
           searchPrompt={searchPrompt}
-          historyItems={historyItems}
           underSearchBar={underSearchBar}
           handleUnderSearchBar={handleUnderSearchBar}
-          setActiveBar={setActiveBar}
-          setPlacePosition={setPlacePosition}
-          handleSearchPrompt={handleSearchPrompt}
-          setUnderSearchBar={setUnderSearchBar}
-          setSearchPrompt={setSearchPrompt}
-          setPlacesData={setPlacesData}
         />
       </div>
     </ClickAwayListener>

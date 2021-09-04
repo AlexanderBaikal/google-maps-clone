@@ -1,7 +1,9 @@
 import KeyboardArrowDownOutlinedIcon from "@material-ui/icons/KeyboardArrowDownOutlined";
 import { IconButton, Paper, ListItemText, makeStyles } from "@material-ui/core";
-import Extras from "./../../inlines/Extras";
-import History from "../../inlines/History";
+import Extras from "../../inlines/extras/Extras";
+import History from "../../inlines/history/History";
+import ExtrasContainer from "../../inlines/extras/ExtrasContainer";
+import HistoryContainer from "../../inlines/history/HistoryContainer";
 
 const useStyles = makeStyles((theme) => {
   return {
@@ -60,15 +62,8 @@ const useStyles = makeStyles((theme) => {
 
 const PromptBlock = ({
   searchPrompt,
-  historyItems,
   underSearchBar,
   handleUnderSearchBar,
-  setActiveBar,
-  setPlacePosition,
-  handleSearchPrompt,
-  setUnderSearchBar,
-  setSearchPrompt,
-  setPlacesData
 }) => {
   const classes = useStyles();
 
@@ -80,22 +75,12 @@ const PromptBlock = ({
     <>
       {searchPrompt ? (
         <Paper elevation={2} className={classes.history}>
-          <History
-            historyItems={historyItems}
-            setPlacePosition={setPlacePosition}
-            handleSearchPrompt={handleSearchPrompt}
-          />
+          <HistoryContainer />
         </Paper>
       ) : null}
       {!underSearchBar ? (
         <Paper className={classes.underHistory} elevation={2}>
-          <Extras
-            setPlacesData={setPlacesData}
-            countItems={4}
-            setActiveBar={setActiveBar}
-            setUnderSearchBar={setUnderSearchBar}
-            setSearchPrompt={setSearchPrompt}
-          />
+          <ExtrasContainer countItems={4} />
           <div className={classes.dividerHorizontal} />
           <div
             className={classes.underHistoryPrompt}

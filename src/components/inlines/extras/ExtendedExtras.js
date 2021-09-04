@@ -7,13 +7,14 @@ import {
 } from "@material-ui/core";
 import clsx from "clsx";
 
-import { PLACES_BAR } from "../../redux/active/actions";
+import { PLACES_BAR } from "../../../redux/active/actions";
 import AccountBalanceIcon from "@material-ui/icons/AccountBalance";
 import LocalGasStationIcon from "@material-ui/icons/LocalGasStation";
 import LocalParkingIcon from "@material-ui/icons/LocalParking";
 import LocalPharmacyOutlinedIcon from "@material-ui/icons/LocalPharmacyOutlined";
 import LocalPostOfficeOutlinedIcon from "@material-ui/icons/LocalPostOfficeOutlined";
 import LocalHospitalOutlinedIcon from "@material-ui/icons/LocalHospitalOutlined";
+import { useEffect } from "react";
 
 const useStyles = makeStyles((theme) => ({
   card: {
@@ -84,11 +85,17 @@ const extras = ({ handleActiveBar }) => [
   },
 ];
 
-const ExtendedExtras = ({ setActiveBar, setPlacesData }) => {
+const ExtendedExtras = ({ setActiveBar, setPlacesData, loading, allPlaces, placesData, setUnderSearchBar  }) => {
   const classes = useStyles();
 
+  useEffect(() => {
+    if (!loading && allPlaces && placesData) {
+      setUnderSearchBar(true);
+      setActiveBar(PLACES_BAR);
+    }
+  }, [loading, allPlaces]);
+
   const handleActiveBar = (category) => {
-    setActiveBar(PLACES_BAR);
     setPlacesData(category);
   };
 

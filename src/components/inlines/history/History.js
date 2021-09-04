@@ -8,6 +8,8 @@ import {
 } from "@material-ui/core";
 
 import ScheduleOutlinedIcon from "@material-ui/icons/ScheduleOutlined";
+import { useEffect } from "react";
+import { DESCRIPTION_BAR } from "../../../redux/active/actions";
 
 const useStyles = makeStyles((theme) => {
   return {
@@ -30,12 +32,29 @@ const useStyles = makeStyles((theme) => {
   };
 });
 
-const History = ({ historyItems, setPlacePosition, handleSearchPrompt }) => {
+const History = ({
+  setPlacePosition,
+  setSearchPrompt,
+  historyItems,
+  setActiveBar,
+  setDescriptionData,
+  setUnderSearchBar,
+  loading,
+  content,
+}) => {
   const classes = useStyles();
 
-  const onPlaceClick = (coords) => {
+  useEffect(() => {
+    if (!loading && content) {
+      setUnderSearchBar(true)
+      setActiveBar(DESCRIPTION_BAR);
+    }
+  }, [loading, content]);
+
+  const onPlaceClick = (coords, name) => {
+    setDescriptionData(name);
     setPlacePosition(coords);
-    if (handleSearchPrompt) handleSearchPrompt(false);
+    if (setSearchPrompt) setSearchPrompt();
   };
 
   return historyItems && historyItems.length ? (
@@ -45,7 +64,7 @@ const History = ({ historyItems, setPlacePosition, handleSearchPrompt }) => {
           button
           key={item.name}
           className={classes.listItem}
-          onClick={() => onPlaceClick(item.coords)}
+          onClick={() => onPlaceClick(item.coords, item.name)}
         >
           <ListItemIcon className={classes.listItemIcon}>
             <ScheduleOutlinedIcon fontSize="small" />

@@ -18,6 +18,7 @@ import { TYPE_ALL } from "../../../redux/images/actions";
 const useStyles = makeStyles((theme) => {
   return {
     bottomGallery: {
+      pointerEvents: "auto",
       position: "relative",
       right: "0px",
       bottom: "0px",

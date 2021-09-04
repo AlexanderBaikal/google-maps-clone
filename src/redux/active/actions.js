@@ -143,3 +143,10 @@ export const setPhotoGallery = (data) => ({
   type: SET_PHOTO_GALLERY,
   payload: data,
 });
+
+export const SET_SHOWN_MORE = "SET_SHOWN_MORE";
+
+export const setShownMore = (data) => ({
+  type: SET_SHOWN_MORE,
+  payload: data,
+});

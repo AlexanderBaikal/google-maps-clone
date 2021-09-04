@@ -1,6 +1,5 @@
 import {
   Avatar,
-  ButtonBase,
   Fab,
   IconButton,
   List,
@@ -17,11 +16,10 @@ import ArrowForwardIosRoundedIcon from "@material-ui/icons/ArrowForwardIosRounde
 import ExpandLessIcon from "@material-ui/icons/ExpandLess";
 import { green, grey } from "@material-ui/core/colors";
 import clsx from "clsx";
-import Extras from "../../inlines/Extras";
-import History from "../../inlines/History";
 
-import { useState } from "react";
-import ExtendedExtras from "../../inlines/ExtendedExtras";
+import ExtrasContainer from "../../inlines/extras/ExtrasContainer";
+import ExtendedExtrasContainer from "../../inlines/extras/ExtendedExtrasContainer";
+import HistoryContainer from "../../inlines/history/HistoryContainer";
 
 const useStyles = makeStyles((theme) => ({
   card: {
@@ -86,25 +84,18 @@ const useStyles = makeStyles((theme) => ({
 const MainUnderSearchBar = ({
   underSearchBar,
   setUnderSearchBar,
-  setActiveBar,
-  anyPlaces,
-  setPlacePosition,
-  setSearchPrompt,
-  setPlacesData,
+  shownMore,
+  setShownMore,
 }) => {
   const classes = useStyles();
   const handleUnderSearchBar = () => {
     setUnderSearchBar(!underSearchBar);
   };
 
-  let historyItems = (anyPlaces || []).slice(0, 3);
-
   const myPlaces = [
     { name: "Home", iconComponent: HomeOutlinedIcon },
     { name: "Work", iconComponent: WorkOutlinedIcon },
   ];
-
-  const [shownMore, setShownMore] = useState(false);
 
   return (
     <>
@@ -116,10 +107,7 @@ const MainUnderSearchBar = ({
       >
         <div style={{ marginTop: "6px", marginLeft: "7px" }}>
           <div style={{ height: "50px" }} />
-          <History
-            historyItems={historyItems}
-            setPlacePosition={setPlacePosition}
-          />
+          <HistoryContainer />
         </div>
       </Paper>
       <Paper
@@ -194,23 +182,9 @@ const MainUnderSearchBar = ({
         className={clsx(classes.card, classes.outlined)}
         style={{ margin: shownMore ? 0 : "inherit" }}
       >
-        <Extras
-          shownMore={shownMore}
-          setShownMore={setShownMore}
-          setActiveBar={setActiveBar}
-          setActiveBar={setActiveBar}
-          setShownMore={setShownMore}
-          setUnderSearchBar={setUnderSearchBar}
-          setSearchPrompt={setSearchPrompt}
-          setPlacesData={setPlacesData}
-        />
+        <ExtrasContainer />
       </Paper>
-      {shownMore ? (
-        <ExtendedExtras
-          setPlacesData={setPlacesData}
-          setActiveBar={setActiveBar}
-        />
-      ) : null}
+      {shownMore ? <ExtendedExtrasContainer /> : null}
       <Fab
         size="small"
         variant="extended"
