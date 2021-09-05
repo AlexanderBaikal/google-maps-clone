@@ -24,10 +24,7 @@ import EditLocationOutlinedIcon from "@material-ui/icons/EditLocationOutlined";
 
 const useStyles = makeStyles((theme) => ({
   root: {},
-  dialog: {
-    maxWidth: "764px",
-    height: "626px",
-  },
+
   dialogTitle: {
     display: "flex",
     justifyContent: "center",
@@ -189,7 +186,6 @@ const weekdays = [
 const EditHoursModal = ({
   setContent,
   content,
-  hoursModal,
   setHoursModal,
   setScheduleModal,
   contentSnapshot,
@@ -260,11 +256,7 @@ const EditHoursModal = ({
   };
 
   return (
-    <Dialog
-      open={hoursModal}
-      PaperProps={{ className: classes.dialog, square: true }}
-      fullWidth
-    >
+    <>
       <DialogTitle
         className={classes.dialogTitle}
         style={{
@@ -351,7 +343,10 @@ const EditHoursModal = ({
             Take a close-up photo that clearly shows the hours for Google to
             scan
           </Typography>
-          <AddPhotoBlock photoFiles={photoFiles} setPhotoFiles={setPhotoFiles} />
+          <AddPhotoBlock
+            photoFiles={photoFiles}
+            setPhotoFiles={setPhotoFiles}
+          />
         </div>
       </DialogContent>
       <DialogActions className={classes.actions}>
@@ -375,7 +370,7 @@ const EditHoursModal = ({
           DONE
         </Button>
       </DialogActions>
-    </Dialog>
+    </>
   );
 };
 

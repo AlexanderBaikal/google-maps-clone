@@ -2,6 +2,7 @@ import UnderSearchBar from "./UnderSearchBar";
 import { connect, useDispatch } from "react-redux";
 import { loadAllPlaces } from "../../../redux/places/actions";
 import { useEffect } from "react";
+import { Slide } from "@material-ui/core";
 
 const UnderSearchContainer = (props) => {
   const dispatch = useDispatch();
@@ -11,10 +12,12 @@ const UnderSearchContainer = (props) => {
   }, [props.placesData]);
 
   return (
-    <UnderSearchBar
-      underSearchBar={props.underSearchBar}
-      activeBar={props.activeBar}
-    />
+    <Slide direction="down" in={props.underSearchBar} mountOnEnter unmountOnExit >
+      <UnderSearchBar
+        underSearchBar={props.underSearchBar}
+        activeBar={props.activeBar}
+      />
+    </Slide>
   );
 };
 

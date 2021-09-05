@@ -11,18 +11,11 @@ import {
   setHoursModal,
 } from "./../../../redux/active/actions";
 
-
-
 const EditHoursContainer = (props) => {
-  //   const [newHours, setNewHours] = useState(
-  //     JSON.parse(JSON.stringify(props.content.schedule))
-  //   );
-
   return (
     <EditHoursModal
       content={props.content}
       setContent={props.setContent}
-      hoursModal={props.hoursModal}
       setHoursModal={props.setHoursModal}
       setScheduleModal={props.setScheduleModal}
       contentSnapshot={props.contentSnapshot}
@@ -43,7 +36,6 @@ const mapStateToProps = (state) => {
     contentSnapshot: state.place.contentSnapshot,
     photoFiles: state.modals.photoFiles,
     newHours: state.modals.newHours,
-    hoursModal: state.active.hoursModal,
   };
 };
 

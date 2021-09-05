@@ -5,21 +5,17 @@ import { setLocationModal } from "./../../../redux/active/actions";
 
 const EditLocationContainer = (props) => {
   return (
-    <>
-      <EditLocationModal
-        content={props.content}
-        setContent={props.setContent}
-        locationModal={props.locationModal}
-        setLocationModal={props.setLocationModal}
-      />
-    </>
+    <EditLocationModal
+      content={props.content}
+      setContent={props.setContent}
+      setLocationModal={props.setLocationModal}
+    />
   );
 };
 
 const mapStateToProps = (state) => {
   return {
     content: state.place.content,
-    locationModal: state.active.locationModal,
   };
 };
 

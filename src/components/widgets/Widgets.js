@@ -18,22 +18,15 @@ const useStyles = makeStyles({
     flexDirection: "column",
     zIndex: 501,
     width: "100%",
-    pointerEvents: "none"
+    pointerEvents: "none",
   },
 
   bottomLeftWidgets: {
     bottom: 0,
-    left: "20px",
     position: "absolute",
     zIndex: 501,
-    // transition: "left 200ms cubic-bezier(0, 0, 0.2, 1)",
-  },
-
-  shift: {
-    left: "423px",
-    position: "absolute",
-    bottom: 0,
-    width: "calc(100vw - 423px)",
+    transition: "left 200ms cubic-bezier(0, 0, 0.2, 1)",
+    left: "20px",
   },
 
   topLeftWidgets: {
@@ -51,38 +44,37 @@ const useStyles = makeStyles({
   },
 
   tools: {
-    position: "relative",
+    position: "absolute",
     right: "20px",
-
     display: "flex",
     flexDirection: "column",
     alignItems: "flex-end",
+    bottom: (props) => (props.bottomGallery ? "143px" : "25px"),
+    transition: "bottom 200ms cubic-bezier(0, 0, 0.2, 1)",
   },
 
-  bottomWidgets: {},
+  bottomWidgets: {
+    bottom: 0,
+    width: (props) => (props.underSearchBar ? "calc(100vw - 423px)" : "100vw"),
+    right: 0,
+    position: "absolute",
+    transition: "width 200ms cubic-bezier(0, 0, 0.2, 1)",
+  },
+  widgets: {},
 });
 
 const Widgets = ({ underSearchBar, bottomGallery, profile }) => {
-  const classes = useStyles();
+  const classes = useStyles({ underSearchBar, bottomGallery });
 
   return (
-    <>
-      <div
-        className={
-          underSearchBar
-            ? clsx(classes.bottomWidgets, classes.shift)
-            : classes.bottomWidgets
-        }
-      >
+    <div className={classes.widgets}>
+      <div className={classes.bottomWidgets}>
         <div className={classes.bottomRightWidgets}>
-          <div
-            className={classes.tools}
-            style={{ bottom: bottomGallery ? 0 : "25px" }}
-          >
+          <div className={classes.tools}>
             <VerticalContainer />
             <HorizontalContainer />
           </div>
-          {bottomGallery ? <BottomGalleryContainer /> : null}
+          <BottomGalleryContainer />
         </div>
         <div className={classes.bottomLeftWidgets}>
           <MinimapWidget bottomGallery={bottomGallery} />
@@ -94,9 +86,9 @@ const Widgets = ({ underSearchBar, bottomGallery, profile }) => {
         <UnderSearchContainer />
       </div>
       <div className={classes.topRightWidgets}>
-        <UserWidget profile={profile}/>
+        <UserWidget profile={profile} />
       </div>
-    </>
+    </div>
   );
 };
 

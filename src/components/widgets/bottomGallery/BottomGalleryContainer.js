@@ -4,7 +4,7 @@ import { loadAllImages } from "../../../redux/images/actions";
 import BottomGallery from "./BottomGallery";
 import { setImagesType } from "../../../redux/images/actions";
 import { setPhotoGallery } from "../../../redux/active/actions";
-
+import { Slide } from "@material-ui/core";
 
 const BottomGalleryContainer = (props) => {
   const dispatch = useDispatch();
@@ -13,17 +13,25 @@ const BottomGalleryContainer = (props) => {
   }, []);
 
   return (
-    <BottomGallery images={props.images} setImagesType={props.setImagesType} setPhotoGallery={props.setPhotoGallery} />
+    <Slide direction="up" in={props.bottomGallery} mountOnEnter unmountOnExit>
+      <BottomGallery
+        images={props.images}
+        setImagesType={props.setImagesType}
+        setPhotoGallery={props.setPhotoGallery}
+        bottomGallery={props.bottomGallery}
+      />
+    </Slide>
   );
 };
 
 const mapStateToProps = (state) => {
   return {
     images: state.images.allImages,
+    bottomGallery: state.active.bottomGallery,
   };
 };
 
-const mapDispatchToProps = { setImagesType,setPhotoGallery };
+const mapDispatchToProps = { setImagesType, setPhotoGallery };
 
 export default connect(
   mapStateToProps,

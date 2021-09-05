@@ -1,5 +1,8 @@
 body{
   font-family: Roboto, Arial, sans-serif;
+  overflow: hidden;
+  max-height: 100vh;
+  max-width: 100vw;
 }
 
 ::-webkit-scrollbar {

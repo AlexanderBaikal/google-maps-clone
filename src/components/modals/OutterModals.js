@@ -1,20 +1,18 @@
 import EditModalContainer from "./edit/EditModalContainer";
-import EditInfoContainer from "./editInfo/EditInfoContainer";
-import EditCategoryContainer from "./editCategory/EditCategoryContainer";
-import ScheduleModalContainer from "./scheduleModal/ScheduleModalContainer";
-import EditHoursContainer from "./editHours/EditHoursContainer";
+
 import { connect } from "react-redux";
-import EditLocationContainer from "./editLocation/EditLocationContainer";
+import ModalContainer from "./editInfo/ModalContainer";
+import { setOpenCompleteEditInfo } from "../../redux/active/actions";
+import CompleteEditInfoModal from "./editInfo/CompleteEditInfoModal";
 
 const ModalsContainer = (props) => {
   return props.content ? (
     <>
-      <EditModalContainer />
-      <EditInfoContainer />
-      <EditCategoryContainer />
-      <ScheduleModalContainer />
-      <EditHoursContainer />
-      <EditLocationContainer/>
+      <ModalContainer /> <EditModalContainer />
+      <CompleteEditInfoModal
+        setOpenCompleteEditInfo={props.setOpenCompleteEditInfo}
+        openCompleteEditInfo={props.openCompleteEditInfo}
+      />
     </>
   ) : null;
 };
@@ -22,9 +20,10 @@ const ModalsContainer = (props) => {
 const mapStateToProps = (state) => {
   return {
     content: state.place.content,
+    openCompleteEditInfo: state.active.openCompleteEditInfo,
   };
 };
 
-const mapDispatchToProps = {};
+const mapDispatchToProps = { setOpenCompleteEditInfo };
 
 export default connect(mapStateToProps, mapDispatchToProps)(ModalsContainer);

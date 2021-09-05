@@ -59,10 +59,10 @@ const EditModal = ({ setOpenEdit, openEdit, setOpenEditInfo }) => {
   const onEditInfoClick = () => {
     setOpenEdit(false);
     setOpenEditInfo(true);
-  }
+  };
 
   return (
-    <Modal open={openEdit} onClose={onClose} className={classes.root}>
+    <div className={classes.root}>
       <Dialog
         onClose={onClose}
         aria-labelledby="customized-dialog-title"
@@ -70,7 +70,9 @@ const EditModal = ({ setOpenEdit, openEdit, setOpenEditInfo }) => {
         PaperProps={{ className: classes.dialog }}
       >
         <DialogTitle className={classes.dialogTitle} onClose={onClose}>
-          <Typography variant="h3" component="div">Suggest an edit</Typography>
+          <Typography variant="h3" component="div">
+            Suggest an edit
+          </Typography>
           <IconButton
             aria-label="close"
             className={classes.closeButton}
@@ -82,7 +84,11 @@ const EditModal = ({ setOpenEdit, openEdit, setOpenEditInfo }) => {
         <DialogContent classes={{ root: classes.dialogContent }}>
           <List className={classes.list}>
             <Divider component="li" />
-            <ListItem button classes={{ gutters: classes.gutters }} onClick={onEditInfoClick}>
+            <ListItem
+              button
+              classes={{ gutters: classes.gutters }}
+              onClick={onEditInfoClick}
+            >
               <ListItemIcon>
                 <EditIcon color="primary" />
               </ListItemIcon>
@@ -109,7 +115,7 @@ const EditModal = ({ setOpenEdit, openEdit, setOpenEditInfo }) => {
           </List>
         </DialogContent>
       </Dialog>
-    </Modal>
+    </div>
   );
 };
 

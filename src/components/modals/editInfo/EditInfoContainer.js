@@ -1,5 +1,4 @@
 import { connect } from "react-redux";
-import EditInfoModal from "../editInfo/EditInfoModal";
 import {
   setOpenEditInfo,
   setOpenCompleteEditInfo,
@@ -10,42 +9,33 @@ import { setPhotoFiles, setNewHours } from "../../../redux/modals/actions";
 import { setCategoryModal, setHoursModal } from "../../../redux/active/actions";
 import { loadAllPoints } from "../../../redux/points/actions";
 import { setLocationModal } from "../../../redux/active/actions";
-
+import EditInfoContent from "./EditInfoContent";
 
 const EditInfoContainer = (props) => {
   return (
-    <>
-      <EditInfoModal
-        content={props.content}
-        contentSnapshot={props.contentSnapshot}
-        openEditInfo={props.openEditInfo}
-        setOpenEditInfo={props.setOpenEditInfo}
-        setOpenCompleteEditInfo={props.setOpenCompleteEditInfo}
-        categoryModal={props.categoryModal}
-        setCategoryModal={props.setCategoryModal}
-        setHoursModal={props.setHoursModal}
-        setNewHours={props.setNewHours}
-        setContent={props.setContent}
-        allPlaces={props.allPlaces}
-        photoFiles={props.photoFiles}
-        setPhotoFiles={props.setPhotoFiles}
-        loadAllPoints={props.loadAllPoints}
-        setLocationModal={props.setLocationModal}
-      />
-      <CompleteEditInfoModal
-        setOpenCompleteEditInfo={props.setOpenCompleteEditInfo}
-        openCompleteEditInfo={props.openCompleteEditInfo}
-      />
-    </>
+    <EditInfoContent
+      content={props.content}
+      contentSnapshot={props.contentSnapshot}
+      setOpenEditInfo={props.setOpenEditInfo}
+      setOpenCompleteEditInfo={props.setOpenCompleteEditInfo}
+      categoryModal={props.categoryModal}
+      setCategoryModal={props.setCategoryModal}
+      setHoursModal={props.setHoursModal}
+      setNewHours={props.setNewHours}
+      setContent={props.setContent}
+      allPlaces={props.allPlaces}
+      photoFiles={props.photoFiles}
+      setPhotoFiles={props.setPhotoFiles}
+      loadAllPoints={props.loadAllPoints}
+      setLocationModal={props.setLocationModal}
+    />
   );
 };
 
 const mapStateToProps = (state) => {
   return {
     content: state.place.content,
-    openEditInfo: state.active.openEditInfo,
-    openCompleteEditInfo:
-      state.active.openCompleteEditInfo,
+    openCompleteEditInfo: state.active.openCompleteEditInfo,
     contentSnapshot: state.place.contentSnapshot,
     allPlaces: state.places.allPlaces,
     photoFiles: state.modals.photoFiles,
@@ -62,7 +52,7 @@ const mapDispatchToProps = {
   setNewHours,
   setHoursModal,
   loadAllPoints,
-  setLocationModal
+  setLocationModal,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(EditInfoContainer);

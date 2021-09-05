@@ -20,6 +20,7 @@ import clsx from "clsx";
 import ExtrasContainer from "../../inlines/extras/ExtrasContainer";
 import ExtendedExtrasContainer from "../../inlines/extras/ExtendedExtrasContainer";
 import HistoryContainer from "../../inlines/history/HistoryContainer";
+import { forwardRef } from "react";
 
 const useStyles = makeStyles((theme) => ({
   card: {
@@ -81,124 +82,120 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const MainUnderSearchBar = ({
-  underSearchBar,
-  setUnderSearchBar,
-  shownMore,
-  setShownMore,
-}) => {
-  const classes = useStyles();
-  const handleUnderSearchBar = () => {
-    setUnderSearchBar(!underSearchBar);
-  };
+const MainUnderSearchBar = forwardRef(
+  ({ underSearchBar, setUnderSearchBar, shownMore, setShownMore }, ref) => {
+    const classes = useStyles();
+    const handleUnderSearchBar = () => {
+      setUnderSearchBar(!underSearchBar);
+    };
 
-  const myPlaces = [
-    { name: "Home", iconComponent: HomeOutlinedIcon },
-    { name: "Work", iconComponent: WorkOutlinedIcon },
-  ];
+    const myPlaces = [
+      { name: "Home", iconComponent: HomeOutlinedIcon },
+      { name: "Work", iconComponent: WorkOutlinedIcon },
+    ];
 
-  return (
-    <>
-      <Paper
-        square
-        variant="outlined"
-        className={clsx(classes.card, classes.outlined)}
-        style={{ height: "195px" }}
-      >
-        <div style={{ marginTop: "6px", marginLeft: "7px" }}>
-          <div style={{ height: "50px" }} />
-          <HistoryContainer />
-        </div>
-      </Paper>
-      <Paper
-        square
-        variant="outlined"
-        className={clsx(classes.card, classes.outlined)}
-      >
-        <List>
-          {myPlaces.map((item, index) => (
-            <div key={index}>
-              <ListItem button key={item.name}>
-                <ListItemIcon>
-                  <Avatar className={classes.iconAvatar}>
-                    <item.iconComponent fontSize="medium" />
-                  </Avatar>
-                </ListItemIcon>
-                <div>
-                  <ListItemText primary={item.name} style={{ margin: 0 }} />
-                  <ListItemText
-                    secondary={"Add address"}
-                    style={{ margin: 0 }}
+    return (
+      <div ref={ref}>
+        <Paper
+          square
+          variant="outlined"
+          className={clsx(classes.card, classes.outlined)}
+          style={{ height: "195px" }}
+        >
+          <div style={{ marginTop: "6px", marginLeft: "7px" }}>
+            <div style={{ height: "50px" }} />
+            <HistoryContainer />
+          </div>
+        </Paper>
+        <Paper
+          square
+          variant="outlined"
+          className={clsx(classes.card, classes.outlined)}
+        >
+          <List>
+            {myPlaces.map((item, index) => (
+              <div key={index}>
+                <ListItem button key={item.name}>
+                  <ListItemIcon>
+                    <Avatar className={classes.iconAvatar}>
+                      <item.iconComponent fontSize="medium" />
+                    </Avatar>
+                  </ListItemIcon>
+                  <div>
+                    <ListItemText primary={item.name} style={{ margin: 0 }} />
+                    <ListItemText
+                      secondary={"Add address"}
+                      style={{ margin: 0 }}
+                    />
+                  </div>
+                </ListItem>
+                {index < myPlaces.length - 1 ? (
+                  <div className={classes.divider}></div>
+                ) : null}
+              </div>
+            ))}
+          </List>
+        </Paper>
+        <Paper
+          square
+          variant="outlined"
+          className={clsx(classes.card, classes.outlined)}
+        >
+          <List>
+            <ListItem button key={"Traffic"}>
+              <ListItemIcon>
+                <Avatar
+                  className={classes.iconAvatarSmall}
+                  style={{ backgroundColor: "#4caf50" }}
+                >
+                  <DriveEtaIcon
+                    fontSize="small"
+                    style={{ backgroundColor: "#4caf50", fill: "white" }}
                   />
-                </div>
-              </ListItem>
-              {index < myPlaces.length - 1 ? (
-                <div className={classes.divider}></div>
-              ) : null}
-            </div>
-          ))}
-        </List>
-      </Paper>
-      <Paper
-        square
-        variant="outlined"
-        className={clsx(classes.card, classes.outlined)}
-      >
-        <List>
-          <ListItem button key={"Traffic"}>
-            <ListItemIcon>
-              <Avatar
-                className={classes.iconAvatarSmall}
-                style={{ backgroundColor: "#4caf50" }}
-              >
-                <DriveEtaIcon
-                  fontSize="small"
-                  style={{ backgroundColor: "#4caf50", fill: "white" }}
+                </Avatar>
+              </ListItemIcon>
+              <div>
+                <ListItemText
+                  primary={"There aren't any traffic jams"}
+                  classes={{ root: classes.marginZero }}
                 />
-              </Avatar>
-            </ListItemIcon>
-            <div>
-              <ListItemText
-                primary={"There aren't any traffic jams"}
-                classes={{ root: classes.marginZero }}
-              />
-              <ListItemText
-                secondary={"Common traffic"}
-                classes={{
-                  secondary: classes.textSmall,
-                  root: classes.marginZero,
-                }}
-              />
-            </div>
-            <IconButton style={{ position: "absolute", right: "10px" }}>
-              <ArrowForwardIosRoundedIcon fontSize="small" />
-            </IconButton>
-          </ListItem>
-        </List>
-      </Paper>
-      <Paper
-        square
-        variant="outlined"
-        className={clsx(classes.card, classes.outlined)}
-        style={{ margin: shownMore ? 0 : "inherit" }}
-      >
-        <ExtrasContainer />
-      </Paper>
-      {shownMore ? <ExtendedExtrasContainer /> : null}
-      <Fab
-        size="small"
-        variant="extended"
-        className={classes.fab}
-        onClick={() => {
-          handleUnderSearchBar();
-          setShownMore(false);
-        }}
-      >
-        <ExpandLessIcon className={classes.extendedIcon} />
-        <div style={{ marginRight: "8px", color: "#3C4043" }}>Hide all</div>
-      </Fab>
-    </>
-  );
-};
-
+                <ListItemText
+                  secondary={"Common traffic"}
+                  classes={{
+                    secondary: classes.textSmall,
+                    root: classes.marginZero,
+                  }}
+                />
+              </div>
+              <IconButton style={{ position: "absolute", right: "10px" }}>
+                <ArrowForwardIosRoundedIcon fontSize="small" />
+              </IconButton>
+            </ListItem>
+          </List>
+        </Paper>
+        <Paper
+          square
+          variant="outlined"
+          className={clsx(classes.card, classes.outlined)}
+          style={{ margin: shownMore ? 0 : "inherit" }}
+        >
+          <ExtrasContainer />
+        </Paper>
+        {shownMore ? <ExtendedExtrasContainer /> : null}
+        <Fab
+          size="small"
+          variant="extended"
+          className={classes.fab}
+          onClick={() => {
+            handleUnderSearchBar();
+            setShownMore(false);
+          }}
+        >
+          <ExpandLessIcon className={classes.extendedIcon} />
+          <div style={{ marginRight: "8px", color: "#3C4043" }}>Hide all</div>
+        </Fab>
+      </div>
+    );
+  }
+);
 export default MainUnderSearchBar;

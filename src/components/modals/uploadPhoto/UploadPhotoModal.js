@@ -33,7 +33,7 @@ const UploadPhotoModal = ({
   };
 
   return (
-    <Modal open={openUploadPhoto} onClose={onClose} className={classes.root}>
+    <div className={classes.root}>
       <Dialog
         onClose={onClose}
         open={openUploadPhoto}
@@ -45,7 +45,7 @@ const UploadPhotoModal = ({
           keyword={keyword}
         />
       </Dialog>
-    </Modal>
+    </div>
   );
 };
 

@@ -1,6 +1,7 @@
 import { makeStyles } from "@material-ui/core";
 import { Paper } from "@material-ui/core";
 import clsx from "clsx";
+import { forwardRef } from "react";
 import {
   DESCRIPTION_BAR,
   MAIN_UNDERSEARCH_BAR,
@@ -26,10 +27,9 @@ const useStyles = makeStyles((theme) => ({
   close: {
     display: "none",
   },
-
 }));
 
-const UnderSearchBar = ({ underSearchBar, activeBar }) => {
+const UnderSearchBar = forwardRef(({ underSearchBar, activeBar }, ref) => {
   const classes = useStyles();
 
   const renderSwitch = (param) => {
@@ -45,6 +45,7 @@ const UnderSearchBar = ({ underSearchBar, activeBar }) => {
 
   return (
     <Paper
+      ref={ref}
       className={
         underSearchBar
           ? clsx(classes.underSearch, classes.open)
@@ -57,10 +58,9 @@ const UnderSearchBar = ({ underSearchBar, activeBar }) => {
           activeBar !== MAIN_UNDERSEARCH_BAR ? "white" : "#f0f0f0",
       }}
     >
-     
       {renderSwitch(activeBar)}
     </Paper>
   );
-};
+});
 
 export default UnderSearchBar;

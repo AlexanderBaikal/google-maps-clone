@@ -15,10 +15,6 @@ const SearchbarContainer = (props) => {
     props.loadAllPlaces();
   }, []);
 
-  useEffect(() => {
-    props.setHistoryItems(props.anyPlaces);
-  }, [props.anyPlaces !== null]);
-
   return (
     <SearchBar
       activeBar={props.activeBar}
@@ -34,6 +30,7 @@ const SearchbarContainer = (props) => {
       anyPlaces={props.anyPlaces}
       setHistoryItems={props.setHistoryItems}
       setPlacesData={props.setPlacesData}
+      historyItems={props.historyItems}
     />
   );
 };
@@ -46,6 +43,7 @@ const mapStateToProps = (state) => {
     menuSidebar: state.app.menuSidebar,
     anyLoading: state.places.loading || state.place.loading,
     anyPlaces: state.places.anyPlaces,
+    historyItems: state.search.historyItems,
   };
 };
 

@@ -29,10 +29,7 @@ import MiddleMap from "./MiddleMap";
 
 const useStyles = makeStyles((theme) => ({
   root: {},
-  dialog: {
-    maxWidth: "764px",
-    height: "626px",
-  },
+
   dialogTitle: {
     display: "flex",
     justifyContent: "center",
@@ -65,7 +62,6 @@ const useStyles = makeStyles((theme) => ({
 const EditLocationModal = ({
   content,
   setContent,
-  locationModal,
   setLocationModal,
 }) => {
   const classes = useStyles();
@@ -84,10 +80,8 @@ const EditLocationModal = ({
   };
 
   return (
-    <Dialog
-      open={locationModal}
-      PaperProps={{ className: classes.dialog, square: true }}
-      fullWidth
+    <
+
     >
       <DialogTitle className={classes.dialogTitle} onClose={onClose}>
         <div className={classes.title}>
@@ -139,7 +133,7 @@ const EditLocationModal = ({
           DONE
         </Button>
       </DialogActions>
-    </Dialog>
+    </>
   );
 };
 

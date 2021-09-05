@@ -194,7 +194,7 @@ const EditItem = ({
                   ) : null}
                 </IconButton>
               ) : null}
-              {focused ? <MySelector /> : null}
+              {focused && select.length ? <MySelector /> : null}
             </div>
           </ClickAwayListener>
         )}

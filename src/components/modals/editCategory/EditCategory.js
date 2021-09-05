@@ -26,10 +26,7 @@ import { categoryItems, findCategories } from "./categoryItems";
 
 const useStyles = makeStyles((theme) => ({
   root: {},
-  dialog: {
-    maxWidth: "764px",
-    height: "546px",
-  },
+
   dialogTitle: {
     display: "flex",
     justifyContent: "center",
@@ -142,11 +139,7 @@ const EditCategory = ({
   };
 
   return (
-    <Dialog
-      open={categoryModal}
-      PaperProps={{ className: classes.dialog, square: true }}
-      fullWidth
-    >
+    <>
       <DialogTitle
         className={classes.dialogTitle}
         style={{
@@ -267,7 +260,7 @@ const EditCategory = ({
           )}
         </List>
       </DialogContent>
-    </Dialog>
+    </>
   );
 };
 

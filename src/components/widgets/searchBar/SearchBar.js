@@ -1,25 +1,20 @@
 import MenuIcon from "@material-ui/icons/Menu";
 import SearchIcon from "@material-ui/icons/Search";
 import DirectionsIcon from "@material-ui/icons/Directions";
-import KeyboardArrowDownOutlinedIcon from "@material-ui/icons/KeyboardArrowDownOutlined";
 import {
   IconButton,
   Divider,
   InputBase,
   Paper,
-  ListItemText,
   makeStyles,
   ClickAwayListener,
   CircularProgress,
 } from "@material-ui/core";
 import { useEffect, useRef, useState } from "react";
 import clsx from "clsx";
-import Extras from "../../inlines/extras/Extras";
-import History from "../../inlines/history/History";
 import CloseIcon from "@material-ui/icons/Close";
 import { MAIN_UNDERSEARCH_BAR } from "../../../redux/active/actions";
 import PromptBlock from "./PromptBlock";
-import { setHistoryItems } from "../../../redux/search/actions";
 
 const useStyles = makeStyles((theme) => {
   return {
@@ -85,6 +80,7 @@ const SearchBar = ({
   anyPlaces,
   setHistoryItems,
   setPlacesData,
+  historyItems,
 }) => {
   const handleUnderSearchBar = () => {
     setUnderSearchBar(!underSearchBar);
@@ -115,17 +111,19 @@ const SearchBar = ({
 
   const [inputValue, setinputValue] = useState("");
 
-  let historyItems = anyPlaces || [];
-
-  historyItems = historyItems
-    .filter((el) =>
-      el.name
-        .toLowerCase()
-        .startsWith(inputValue ? inputValue.toLowerCase() : "")
-    )
-    .slice(0, 3);
-
-  setHistoryItems(historyItems);
+  useEffect(() => {
+    let newHistoryItems = anyPlaces || [];
+    if (newHistoryItems.length) {
+      newHistoryItems = newHistoryItems
+        .filter((el) =>
+          el.name
+            .toLowerCase()
+            .startsWith(inputValue ? inputValue.toLowerCase() : "")
+        )
+        .slice(0, 3);
+      setHistoryItems(newHistoryItems);
+    }
+  }, [anyPlaces, inputValue]);
 
   return (
     <ClickAwayListener onClickAway={handleClickOutside}>
@@ -134,7 +132,7 @@ const SearchBar = ({
           component="form"
           variant={underSearchBar ? "outlined" : "elevation"}
           className={
-            searchPrompt && historyItems.length
+            searchPrompt && historyItems?.length
               ? clsx(classes.paper, classes.bottomRound)
               : classes.paper
           }
