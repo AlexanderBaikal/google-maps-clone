@@ -24,7 +24,7 @@ import ArrowBackIcon from "@material-ui/icons/ArrowBack";
 import { LazyLoadImage } from "react-lazy-load-image-component";
 const useStyles = makeStyles((theme) => ({
   root: {
-    zIndex: 2000,
+    zIndex: 600,
     position: "absolute",
     display: "flex",
     height: "100vh",
@@ -112,15 +112,16 @@ const PhotoGallery = ({
   images,
   setOpenUploadPhoto,
   setPhotoGallery,
+  currentImg,
+  setCurrentImg,
 }) => {
-  const [currentImg, setCurrentImg] = useState(0);
-
   const img = new Image();
   img.src = images[currentImg];
 
   const classes = useStyles({ currentImage: img });
 
   const onClose = () => {
+    setCurrentImg(0);
     setPhotoGallery(false);
   };
 
@@ -141,6 +142,8 @@ const PhotoGallery = ({
   const onImageError = (index) => {
     if (imgListRefs[index].current) imgListRefs[index].current.remove();
   };
+
+  const [tabValue, setTabValue] = useState(0);
 
   return (
     <div className={classes.root}>
@@ -170,8 +173,10 @@ const PhotoGallery = ({
         </DialogTitle>
         <Divider />
         <Tabs
-          value={0}
-          onChange={() => {}}
+          value={tabValue}
+          onChange={(e, i) => {
+            setTabValue(i);
+          }}
           indicatorColor="primary"
           textColor="primary"
           className={classes.tabs}

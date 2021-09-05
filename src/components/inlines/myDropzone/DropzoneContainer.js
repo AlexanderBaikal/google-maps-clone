@@ -17,7 +17,7 @@ const mapStateToProps = (state) => {
   return {
     photoFiles: state.modals.photoFiles,
     openUploadPhoto: state.active.openUploadPhoto,
-    keyword: state.place.content.name,
+    keyword: state.place.content?.name || 'All',
   };
 };
 

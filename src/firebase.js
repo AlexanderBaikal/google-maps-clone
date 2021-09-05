@@ -69,7 +69,7 @@ export async function editDescription(data) {
       return result;
     };
 
-    await ref.set({
+    const newContent = {
       ...content,
       inBuilding: getInBuilding(content.inBuilding, content.inside),
       imageUrl: content.imageUrl || photos[0] || null,
@@ -77,7 +77,11 @@ export async function editDescription(data) {
         content.coords.latitude,
         content.coords.longitude
       ),
-    });
+    };
+
+    const { inside, ...rest } = newContent; // remove .inside
+
+    await ref.set(rest);
 
     if (content.coords) {
       const ref = db.collection("places").doc(content.name);
@@ -114,7 +118,8 @@ export async function createComment(data) {
       forPlace: place,
       author: {
         name: author.name,
-        link: author.link || "/",
+        photoURL: author.photoURL || "/",
+        email: author.email,
         reviewCount: author.reviewCount || 1,
       },
       date: firebase.firestore.Timestamp.fromDate(new Date()),

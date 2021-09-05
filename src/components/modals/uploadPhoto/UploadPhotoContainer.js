@@ -21,7 +21,7 @@ const UploadPhotoContainer = (props) => {
 const mapStateToProps = (state) => {
   return {
     openUploadPhoto: state.active.openUploadPhoto,
-    keyword: state.place.content.name,
+    keyword: state.place.content?.name || 'Add a photo',
   };
 };
 

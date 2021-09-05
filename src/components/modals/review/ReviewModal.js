@@ -21,7 +21,8 @@ const ReviewModal = ({
   setPhotoFiles,
   keyword,
   content,
-  loadComments
+  loadComments,
+  profile
 }) => {
   const classes = useStyles();
 
@@ -68,6 +69,7 @@ const ReviewModal = ({
             keyword={keyword}
             content={content}
             loadComments={loadComments}
+            profile={profile}
           />
         )}
       </Dialog>

@@ -118,7 +118,10 @@ const Comments = ({ comments, content, handleExtended, extended }) => {
                 <div className={classes.commentHeader}>
                   <Avatar
                     className={classes.avatarSmall}
-                    src="https://lh3.googleusercontent.com/-5Jp3D27Y3Sg/AAAAAAAAAAI/AAAAAAAAAAA/8BDXrJK6CyY/w70-h70-p/photo.jpg"
+                    src={
+                      item.author.photoURL ||
+                      "https://premiumt.ru/wp-content/uploads/2019/02/avatar.png"
+                    }
                   />
                   <div className={classes.commentHeaderName}>
                     <Typography classes={{ body1: classes.lineHeightOne }}>
@@ -181,7 +184,9 @@ const Comments = ({ comments, content, handleExtended, extended }) => {
         : null}
       <div className={classes.textButtonContainer}>
         {comments !== null ? (
-          !comments.length ? <Typography>No reviews:(</Typography> : (
+          !comments.length ? (
+            <Typography>No reviews:(</Typography>
+          ) : (
             <Button className={classes.textButton} onClick={handleExtended}>
               <Typography variant="subtitle2">
                 {!extended

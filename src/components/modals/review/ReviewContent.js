@@ -92,7 +92,8 @@ const ReviewContent = ({
   photoFiles,
   setPhotoFiles,
   content,
-  loadComments
+  loadComments,
+  profile
 }) => {
   const classes = useStyles();
 
@@ -117,7 +118,11 @@ const ReviewContent = ({
     setDisabled(true);
     const data = {
       place: content.name,
-      author: { name: "Donald Trump" },
+      author: {
+        name: profile.name,
+        photoURL: profile.photoURL,
+        email: profile.email,
+      },
       value: ratingValue,
       photos: photoFiles,
       text: commentText,
@@ -126,7 +131,7 @@ const ReviewContent = ({
     setDisabled(false);
     setPhotoFiles([]);
     setCompleteReview(true);
-    loadComments(content.name)
+    loadComments(content.name);
   }
 
   const [ratingValue, setRatingValue] = useState(0);

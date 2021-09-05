@@ -6,6 +6,7 @@ import MenuSidebarContainer from "./sidebars/sideMenu/MenuSidebarContainer";
 import MapContainer from "./map/MapContainer";
 import OutterModals from "./modals/OutterModals";
 import PhotoGalleryContainer from "./photoGallery/PhotoGalleryContainer";
+import UploadPhotoContainer from "./modals/uploadPhoto/UploadPhotoContainer";
 
 function App({}) {
   return (
@@ -15,6 +16,7 @@ function App({}) {
         <WidgetsContainer />
         <MenuSidebarContainer />
         <OutterModals />
+        <UploadPhotoContainer />
         <PhotoGalleryContainer />
       </div>
     </ThemeProvider>

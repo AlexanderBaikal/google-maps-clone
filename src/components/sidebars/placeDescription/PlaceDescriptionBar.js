@@ -183,7 +183,6 @@ const PlaceDescriptionBar = ({
             </Button>
           </div>
         )}
-        <UploadPhotoContainer />
         <CompletePhotoModal
           setOpenCompletePhoto={setOpenCompletePhoto}
           openCompletePhoto={openCompletePhoto}

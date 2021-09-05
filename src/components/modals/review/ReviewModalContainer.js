@@ -7,7 +7,6 @@ import { loadComments } from "../../../redux/comments/actions";
 import ReviewModal from "./ReviewModal";
 
 const ReviewModalContainer = (props) => {
-
   return (
     <ReviewModal
       addComment={props.addComment}
@@ -18,6 +17,7 @@ const ReviewModalContainer = (props) => {
       setPhotoFiles={props.setPhotoFiles}
       content={props.content}
       loadComments={props.loadComments}
+      profile={props.profile}
     />
   );
 };
@@ -28,6 +28,7 @@ const mapStateToProps = (state) => {
     addPhoto: state.active.addPhoto,
     photoFiles: state.modals.photoFiles,
     content: state.place.content,
+    profile: state.auth.profile,
   };
 };
 

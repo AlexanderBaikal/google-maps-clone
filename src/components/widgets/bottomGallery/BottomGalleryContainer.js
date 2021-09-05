@@ -2,7 +2,7 @@ import { useEffect } from "react";
 import { connect, useDispatch } from "react-redux";
 import { loadAllImages } from "../../../redux/images/actions";
 import BottomGallery from "./BottomGallery";
-import { setImagesType } from "../../../redux/images/actions";
+import { setImagesType, setCurrentImg } from "../../../redux/images/actions";
 import { setPhotoGallery } from "../../../redux/active/actions";
 import { Slide } from "@material-ui/core";
 
@@ -18,7 +18,7 @@ const BottomGalleryContainer = (props) => {
         images={props.images}
         setImagesType={props.setImagesType}
         setPhotoGallery={props.setPhotoGallery}
-        bottomGallery={props.bottomGallery}
+        setCurrentImg={props.setCurrentImg}
       />
     </Slide>
   );
@@ -31,7 +31,7 @@ const mapStateToProps = (state) => {
   };
 };
 
-const mapDispatchToProps = { setImagesType, setPhotoGallery };
+const mapDispatchToProps = { setImagesType, setPhotoGallery, setCurrentImg };
 
 export default connect(
   mapStateToProps,

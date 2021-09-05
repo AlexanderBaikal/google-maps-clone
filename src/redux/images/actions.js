@@ -70,3 +70,12 @@ export const setImagesType = (data) => {
     payload: data,
   };
 };
+
+export const SET_CURRENT_IMG = "SET_CURRENT_IMG";
+
+export const setCurrentImg = (data) => {
+  return {
+    type: SET_CURRENT_IMG,
+    payload: data,
+  };
+};

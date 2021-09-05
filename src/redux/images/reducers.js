@@ -6,6 +6,7 @@ import {
   REQUEST_IMAGES,
   REQUEST_IMAGES_FAILED,
   REQUEST_IMAGES_SUCCESS,
+  SET_CURRENT_IMG,
   SET_IMAGES_TYPE,
 } from "./actions";
 
@@ -14,7 +15,8 @@ const defaultState = {
   allImages: [],
   loading: false,
   error: false,
-  imagesType: null
+  imagesType: null,
+  currentImg: 0,
 };
 
 const imagesReducer = (state = defaultState, action) => {
@@ -29,7 +31,7 @@ const imagesReducer = (state = defaultState, action) => {
     case REQUEST_IMAGES_SUCCESS:
       return {
         ...state,
-        images: action.payload,
+        images: action.payload || [],
         loading: false,
         error: false,
       };
@@ -61,11 +63,16 @@ const imagesReducer = (state = defaultState, action) => {
         loading: false,
         error: true,
       };
-      case SET_IMAGES_TYPE:
-        return {
-          ...state,
-          imagesType: action.payload,
-        };
+    case SET_IMAGES_TYPE:
+      return {
+        ...state,
+        imagesType: action.payload,
+      };
+    case SET_CURRENT_IMG:
+      return {
+        ...state,
+        currentImg: action.payload,
+      };
   }
   return state;
 };
