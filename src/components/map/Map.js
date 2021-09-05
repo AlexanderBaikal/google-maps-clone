@@ -7,7 +7,7 @@ import {
   useMap,
 } from "react-leaflet";
 import "leaflet/dist/leaflet.css";
-import "./_map.css";
+import "./map.css";
 import { useEffect, useState } from "react";
 import ContextMenu from "./ContextMenu";
 import { getIcon } from "../../icons/typeIcons";

@@ -25,7 +25,7 @@ import AddPhotoBlock from "../nested/AddPhotoBlock";
 import { editDescription } from "../../../firebase";
 import clsx from "clsx";
 import MySchedule from "./MySchedule";
-import { getTileImage } from "../../map/getTileImage";
+import { getTileImage } from "../../../utils/getTileImage";
 
 const useStyles = makeStyles((theme) => ({
   root: {},

@@ -1,5 +1,5 @@
 import "leaflet/dist/leaflet.css";
-import "./_map.css";
+import "./map.css";
 import {
   ClickAwayListener,
   List,
