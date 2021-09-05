@@ -18,7 +18,7 @@ export const firestore = firebase.firestore;
 // Create a root reference
 export const storageRef = firebase.storage().ref();
 
-export const auth = firebase.auth()
+export const auth = firebase.auth();
 
 export async function uploadPhotoFirebase(file, keyword = "All") {
   var fileRef;
@@ -56,11 +56,27 @@ export async function editDescription(data) {
 
     const ref = db.collection("descriptions").doc(content.name);
 
+    const getInBuilding = (oldValue, newValue) => {
+      let result = [];
+      if (oldValue) {
+        for (var value of oldValue) {
+          let segments = value._delegate._key.path.segments;
+          let itemName = segments[segments.length - 1];
+          result.push(db.doc(`descriptions/${itemName}`));
+        }
+      }
+      result.push(db.doc(`descriptions/${newValue}`));
+      return result;
+    };
+
     await ref.set({
       ...content,
-      inside: content.inside ? db.doc(`descriptions/${content.inside}`) : null,
+      inBuilding: getInBuilding(content.inBuilding, content.inside),
       imageUrl: content.imageUrl || photos[0] || null,
-      coords: new firebase.firestore.GeoPoint(content.coords.latitude, content.coords.longitude)
+      coords: new firebase.firestore.GeoPoint(
+        content.coords.latitude,
+        content.coords.longitude
+      ),
     });
 
     if (content.coords) {
@@ -68,7 +84,10 @@ export async function editDescription(data) {
       await ref.set({
         name: content.name,
         type: content.type,
-        coords: new firebase.firestore.GeoPoint(content.coords.latitude, content.coords.longitude),
+        coords: new firebase.firestore.GeoPoint(
+          content.coords.latitude,
+          content.coords.longitude
+        ),
       });
     }
 
@@ -110,7 +129,7 @@ export async function createComment(data) {
   }
 }
 
-export async function getComments({data, limit}) {
+export async function getComments({ data, limit }) {
   limit = limit || 3;
   try {
     const query = await db
