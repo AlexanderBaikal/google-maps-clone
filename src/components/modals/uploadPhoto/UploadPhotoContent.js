@@ -92,7 +92,7 @@ const UploadPhotoContent = ({
           <Tab disableRipple label="Photos from phone" />
           <Tab disableRipple label="Your photos" />
         </Tabs>
-        <DropzoneContainer  />
+        <DropzoneContainer />
       </DialogContent>
       <Divider />
       <DialogActions className={classes.actions}>

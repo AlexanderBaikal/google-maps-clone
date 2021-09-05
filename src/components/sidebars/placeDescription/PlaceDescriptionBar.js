@@ -183,10 +183,7 @@ const PlaceDescriptionBar = ({
             </Button>
           </div>
         )}
-        <CompletePhotoModal
-          setOpenCompletePhoto={setOpenCompletePhoto}
-          openCompletePhoto={openCompletePhoto}
-        />
+
       </div>
 
       <Divider />

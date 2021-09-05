@@ -27,10 +27,7 @@ const UploadPhotoModal = ({
     setOpenUploadPhoto(false);
   };
 
-  const onComplete = () => {
-    setOpenUploadPhoto(false);
-    setOpenCompletePhoto(true);
-  };
+
 
   return (
     <div className={classes.root}>
@@ -41,7 +38,6 @@ const UploadPhotoModal = ({
       >
         <UploadPhotoContent
           onClose={onClose}
-          onComplete={onComplete}
           keyword={keyword}
         />
       </Dialog>

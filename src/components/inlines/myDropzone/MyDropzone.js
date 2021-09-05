@@ -80,6 +80,8 @@ const MyDropzone = ({
   photoFiles,
   setPhotoFiles,
   keyword,
+  setOpenUploadPhoto,
+  setOpenCompletePhoto,
 }) => {
   const classes = useStyles();
 
@@ -117,11 +119,17 @@ const MyDropzone = ({
     }
   }
 
+  const onComplete = () => {
+    setOpenUploadPhoto(false);
+    setOpenCompletePhoto(true);
+  };
+
   async function standardUpload(files) {
     setDropzoneState(dropStates.LOADING);
     var promises = files.map((file) => uploadPhotoFirebase(file, keyword));
     await Promise.all(promises);
     setDropzoneState(dropStates.UPLOAD);
+    onComplete();
   }
 
   return (
