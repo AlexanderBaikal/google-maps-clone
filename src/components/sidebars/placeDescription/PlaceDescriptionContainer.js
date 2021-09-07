@@ -27,8 +27,6 @@ const PlaceDescriptionContainer = (props) => {
           setAddComment={props.setAddComment}
           setOpenEdit={props.setOpenEdit}
           setOpenUploadPhoto={props.setOpenUploadPhoto}
-          openCompletePhoto={props.openCompletePhoto}
-          setOpenCompletePhoto={props.setOpenCompletePhoto}
           loadComments={props.loadComments}
           profile={props.profile}
           login={props.login}

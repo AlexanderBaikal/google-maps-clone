@@ -98,8 +98,7 @@ const PlaceDescriptionBar = ({
   setAddComment,
   setOpenEdit,
   setOpenUploadPhoto,
-  openCompletePhoto,
-  setOpenCompletePhoto,
+
   loadComments,
   profile,
   login,

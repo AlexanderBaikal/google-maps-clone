@@ -136,6 +136,7 @@ const EditInfoModal = ({
   setPhotoFiles,
   loadAllPoints,
   setLocationModal,
+  profile
 }) => {
   const mapFragment = getTileImage(content.coords);
 
@@ -163,6 +164,8 @@ const EditInfoModal = ({
     const data = {
       content: newContent,
       photos: photoFiles,
+      profile,
+      contentSnapshot: contentSnapshot
     };
     await editDescription(data);
 

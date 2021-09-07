@@ -100,9 +100,11 @@ const PlacesList = ({
       "https://maps.gstatic.com/tactile/pane/result-no-thumbnail-2x.png";
   };
 
+  console.log(items);
+
   return (
     <List aria-label="places" className={short ? "" : classes.list}>
-      {items !== null && items.length ? (
+      {items && items.length ? (
         items.map((item, id) => (
           <div key={item.name}>
             <ListItem

@@ -7,7 +7,7 @@ const firebaseConfig = {
   projectId: "g-maps-clone",
   storageBucket: "g-maps-clone.appspot.com",
   messagingSenderId: "38255311699",
-  appId: "1:38255311699:web:73821598771c934fe93fa6"
+  appId: "1:38255311699:web:73821598771c934fe93fa6",
 };
 
 firebase.initializeApp(firebaseConfig);
@@ -44,7 +44,7 @@ export async function uploadPhotoFirebase(file, keyword = "All") {
 }
 
 export async function editDescription(data) {
-  var { content, photos } = data;
+  var { content, photos, profile, contentSnapshot } = data;
 
   try {
     if (photos) {
@@ -57,6 +57,7 @@ export async function editDescription(data) {
     const ref = db.collection("descriptions").doc(content.name);
 
     const getInBuilding = (oldValue, newValue) => {
+      if (!newValue) return [];
       let result = [];
       if (oldValue) {
         for (var value of oldValue) {
@@ -95,6 +96,36 @@ export async function editDescription(data) {
       });
     }
 
+    function compareContent(newCont, oldCont) {
+      let res = {};
+      for (let key of Object.keys(newCont)) {
+        if (
+          oldCont[key] &&
+          JSON.stringify(newCont[key]) !== JSON.stringify(oldCont[key])
+        ) {
+          if (key == "coords") {
+            res.coords = `(${oldCont[key].latitude} ${oldCont[key].longitude}) -> (${newCont[key].latitude} ${newCont[key].longitude})`;
+          }
+          if (
+            typeof oldCont[key] === "string" ||
+            typeof oldCont[key] === "number"
+          ) {
+            res[key] = `${oldCont[key]} -> ${newCont[key]}`;
+          }
+        }
+      }
+      return res;
+    }
+
+    const logref = db.collection("firestore_log").doc(Date.now().toString());
+    await logref.set({
+      data: compareContent(rest, contentSnapshot),
+      doc: content.name,
+      name: profile.name,
+      email: profile.email,
+      date: firebase.firestore.Timestamp.fromDate(new Date()),
+    });
+
     console.log("Document successfully updated!");
   } catch (e) {
     console.error("Error updating document: ", e);
@@ -104,7 +135,6 @@ export async function editDescription(data) {
 export async function createComment(data) {
   //! if doc doesn exists ? if commets doesnt exists?
   var { place, author, value, photos, text } = data;
-  console.log(data);
 
   try {
     if (photos) {

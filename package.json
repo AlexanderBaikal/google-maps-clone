@@ -18,6 +18,7 @@
     "date-fns": "^2.23.0",
     "firebase": "^8.7.1",
     "firebase-admin": "^9.11.1",
+    "firebase-functions": "^3.15.5",
     "jimp": "^0.16.1",
     "leaflet": "^1.7.1",
     "material-ui-dropzone": "^3.5.0",

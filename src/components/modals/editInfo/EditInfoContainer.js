@@ -28,6 +28,7 @@ const EditInfoContainer = (props) => {
       setPhotoFiles={props.setPhotoFiles}
       loadAllPoints={props.loadAllPoints}
       setLocationModal={props.setLocationModal}
+      profile={props.profile}
     />
   );
 };
@@ -40,6 +41,7 @@ const mapStateToProps = (state) => {
     allPlaces: state.places.allPlaces,
     photoFiles: state.modals.photoFiles,
     categoryModal: state.active.categoryModal,
+    profile: state.auth.profile,
   };
 };
 
