@@ -13,6 +13,7 @@ const useStyles = makeStyles((theme) => ({
     justifyContent: "space-evenly",
     padding: "10px 30px 0 26px",
     alignItems: "flex-start",
+    flexWrap: "wrap"
   },
   optionsButton: {
     borderRadius: "8px",

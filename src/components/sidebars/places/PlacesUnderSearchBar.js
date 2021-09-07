@@ -32,6 +32,12 @@ const useStyles = makeStyles((theme) => ({
   },
   topButtons: {
     marginLeft: "10px",
+    width: "calc(100% - 20px)",
+    position: "absolute",
+  },
+  topButtonsOverflow: {
+    width: "100%",
+    position: "absolute",
   },
 
   footerTop: {
@@ -59,9 +65,20 @@ const useStyles = makeStyles((theme) => ({
   radioSpacing: {
     height: "30px",
   },
+  topSpan: {
+    "@media screen and (max-width: 340px)": {
+      display: "none",
+    },
+  },
 }));
 
-const PlacesUnderSearchBar = ({ setActiveBar, allPlaces, setDescriptionData, anyLoading, content }) => {
+const PlacesUnderSearchBar = ({
+  setActiveBar,
+  allPlaces,
+  setDescriptionData,
+  anyLoading,
+  content,
+}) => {
   const classes = useStyles();
 
   const [anchorEl, setAnchorEl] = useState(null);
@@ -103,95 +120,97 @@ const PlacesUnderSearchBar = ({ setActiveBar, allPlaces, setDescriptionData, any
       <Paper square variant={"outlined"} className={classes.header}>
         <div style={{ height: "70px" }} />
         <div className={classes.topButtons}>
-          <Button
-            variant="outlined"
-            className={classes.button}
-            aria-describedby={id}
-            onClick={handleClick}
-            style={{ paddingRight: "4px" }}
-          >
-            Rating
-            <ArrowDropDownIcon />
-          </Button>
-          <Popover
-            id={id}
-            open={open}
-            anchorEl={anchorEl}
-            onClose={handleClose}
-            elevation={3}
-          >
-            <FormControl
-              component="fieldset"
-              className={classes.radioPopover}
-              size="small"
+          <div className={classes.topButtonsOverflow}>
+            <Button
+              variant="outlined"
+              className={classes.button}
+              aria-describedby={id}
+              onClick={handleClick}
+              style={{ paddingRight: "4px" }}
             >
-              <RadioGroup
-                aria-label="gender"
-                name="gender1"
-                value={value}
-                onChange={handleChange}
+              <span className={classes.topSpan}>Rating</span>
+              <ArrowDropDownIcon />
+            </Button>
+            <Popover
+              id={id}
+              open={open}
+              anchorEl={anchorEl}
+              onClose={handleClose}
+              elevation={3}
+            >
+              <FormControl
+                component="fieldset"
+                className={classes.radioPopover}
+                size="small"
               >
-                <FormControlLabel
-                  value="Any time"
-                  control={<Radio color="primary" size="small" />}
-                  label="Any time"
-                  classes={{
-                    label: classes.radioLabel,
-                    root: classes.radioSpacing,
-                  }}
-                />
-                <FormControlLabel
-                  value="Open now"
-                  control={<Radio color="primary" size="small" />}
-                  label="Open now"
-                  classes={{
-                    label: classes.radioLabel,
-                    root: classes.radioSpacing,
-                  }}
-                />
-                <FormControlLabel
-                  value="Open 24 hours"
-                  control={<Radio color="primary" size="small" />}
-                  label="Open 24 hours"
-                  classes={{
-                    label: classes.radioLabel,
-                    root: classes.radioSpacing,
-                  }}
-                />
-              </RadioGroup>
-            </FormControl>
-          </Popover>
+                <RadioGroup
+                  aria-label="gender"
+                  name="gender1"
+                  value={value}
+                  onChange={handleChange}
+                >
+                  <FormControlLabel
+                    value="Any time"
+                    control={<Radio color="primary" size="small" />}
+                    label="Any time"
+                    classes={{
+                      label: classes.radioLabel,
+                      root: classes.radioSpacing,
+                    }}
+                  />
+                  <FormControlLabel
+                    value="Open now"
+                    control={<Radio color="primary" size="small" />}
+                    label="Open now"
+                    classes={{
+                      label: classes.radioLabel,
+                      root: classes.radioSpacing,
+                    }}
+                  />
+                  <FormControlLabel
+                    value="Open 24 hours"
+                    control={<Radio color="primary" size="small" />}
+                    label="Open 24 hours"
+                    classes={{
+                      label: classes.radioLabel,
+                      root: classes.radioSpacing,
+                    }}
+                  />
+                </RadioGroup>
+              </FormControl>
+            </Popover>
 
-          <Button
-            variant="outlined"
-            className={classes.button}
-            onClick={handleClick}
-            style={{ paddingRight: "4px" }}
-          >
-            Hours
-            <ArrowDropDownIcon />
-          </Button>
-          <Popper id={id} open={open} anchorEl={anchorEl}>
-            <div className={classes.paper}>The content of the Popper.</div>
-          </Popper>
+            <Button
+              variant="outlined"
+              className={classes.button}
+              onClick={handleClick}
+              style={{ paddingRight: "4px" }}
+            >
+              <span className={classes.topSpan}>Hours</span>
+              <ArrowDropDownIcon />
+            </Button>
+            <Popper id={id} open={open} anchorEl={anchorEl}>
+              <div className={classes.paper}>The content of the Popper.</div>
+            </Popper>
 
-          <Button
-            variant="outlined"
-            className={classes.button}
-            style={{ padding: "2px 15px" }}
-            onClick={handleClick}
-            color="primary"
-          >
-            <TuneIcon
+            <Button
+              variant="outlined"
+              className={classes.button}
+              style={{ padding: "2px 15px" }}
+              onClick={handleClick}
               color="primary"
-              fontSize="small"
-              style={{ marginRight: "4px" }}
-            />
-            More filters
-          </Button>
-          <Popper id={id} open={open} anchorEl={anchorEl}>
-            <div className={classes.paper}>The content of the Popper.</div>
-          </Popper>
+            >
+              <TuneIcon
+                color="primary"
+                fontSize="small"
+                style={{ marginRight: "4px" }}
+              />
+              <span className={classes.topSpan}>More filters</span>
+            </Button>
+            <Popper id={id} open={open} anchorEl={anchorEl}>
+              <div className={classes.paper}>The content of the Popper.</div>
+            </Popper>
+          </div>
         </div>
       </Paper>
       <PlacesList

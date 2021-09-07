@@ -16,6 +16,7 @@ const useStyles = makeStyles((theme) => ({
   photoCards: {
     marginBottom: "15px",
     position: "relative",
+    width: "calc(100vw - 6px)"
   },
   imageList: {
     flexWrap: "nowrap",
@@ -79,7 +80,7 @@ const PhotoCards = ({ images, setPhotoGallery, setImagesType }) => {
   };
 
   const onPhotoClick = () => {
-    setImagesType(TYPE_PLACE)
+    setImagesType(TYPE_PLACE);
     setPhotoGallery(true);
   };
 

@@ -52,12 +52,16 @@ const useStyles = makeStyles((theme) => ({
     backgroundColor: green[500],
     color: "black",
   },
+  fabContainer: {
+    display: "flex",
+    justifyContent: "center",
+  },
 
   fab: {
     position: "fixed",
-    left: "150px",
     bottom: "20px",
     backgroundColor: "white",
+
     textTransform: "none",
     border: "1px solid #dadce0",
     boxShadow: "0 1px 6px rgb(60 64 67 / 28%)",
@@ -182,18 +186,20 @@ const MainUnderSearchBar = forwardRef(
           <ExtrasContainer />
         </Paper>
         {shownMore ? <ExtendedExtrasContainer /> : null}
-        <Fab
-          size="small"
-          variant="extended"
-          className={classes.fab}
-          onClick={() => {
-            handleUnderSearchBar();
-            setShownMore(false);
-          }}
-        >
-          <ExpandLessIcon className={classes.extendedIcon} />
-          <div style={{ marginRight: "8px", color: "#3C4043" }}>Hide all</div>
-        </Fab>
+        <div className={classes.fabContainer}>
+          <Fab
+            size="small"
+            variant="extended"
+            className={classes.fab}
+            onClick={() => {
+              handleUnderSearchBar();
+              setShownMore(false);
+            }}
+          >
+            <ExpandLessIcon className={classes.extendedIcon} />
+            <div style={{ marginRight: "8px", color: "#3C4043" }}>Hide all</div>
+          </Fab>
+        </div>
       </div>
     );
   }

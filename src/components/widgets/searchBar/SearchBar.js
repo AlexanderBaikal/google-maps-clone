@@ -63,6 +63,26 @@ const useStyles = makeStyles((theme) => {
       marginLeft: "3px",
       color: theme.palette.grey[500],
     },
+    "@media screen and (max-width: 540px)": {
+      paper: {
+        width: "385px",
+        display: "flex",
+        alignItems: "center",
+      },
+    },
+
+    "@media screen and (max-width: 410px)": {
+      paper: {
+        width: "calc(100vw - 23px)",
+        display: "flex",
+        alignItems: "center",
+      },
+      searchbar: {
+        position: "absolute",
+        zIndex: 2,
+        top: "7px",
+      },
+    },
   };
 });
 

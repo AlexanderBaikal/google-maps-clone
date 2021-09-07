@@ -12,4 +12,3 @@ const firebaseConfig = {
   firebase.initializeApp(firebaseConfig);
 
 
-console.log('jjj');

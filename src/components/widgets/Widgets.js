@@ -33,14 +33,15 @@ const useStyles = makeStyles({
     top: "0px",
     left: "0px",
     position: "absolute",
-    zIndex: 501,
+    zIndex: 502,
+    maxWidth: "425px",
   },
 
   topRightWidgets: {
     top: "15px",
     right: "30px",
     position: "absolute",
-    zIndex: 501,
+    zIndex: 500,
   },
 
   tools: {
@@ -61,6 +62,14 @@ const useStyles = makeStyles({
     transition: "width 200ms cubic-bezier(0, 0, 0.2, 1)",
   },
   widgets: {},
+  "@media screen and (max-width: 540px)": {
+    topRightWidgets: {
+      top: "115px",
+    },
+    bottomLeftWidgets: {
+      display: (props) => (props.underSearchBar ? "none" : "block"),
+    },
+  },
 });
 
 const Widgets = ({ underSearchBar, bottomGallery, profile }) => {

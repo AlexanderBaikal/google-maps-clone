@@ -52,6 +52,11 @@ const useStyles = makeStyles((theme) => ({
     justifyContent: "center",
     marginTop: "20px",
   },
+  "@media screen and (max-width: 540px)": {
+    list: {
+      height: "69vh",
+    },
+  },
 }));
 
 const PlacesList = ({

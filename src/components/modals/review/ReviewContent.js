@@ -93,7 +93,7 @@ const ReviewContent = ({
   setPhotoFiles,
   content,
   loadComments,
-  profile
+  profile,
 }) => {
   const classes = useStyles();
 
@@ -111,6 +111,7 @@ const ReviewContent = ({
   };
 
   const onCancel = () => {
+    setDisabled((v) => !v);
     setPrompt((v) => !v);
   };
 
@@ -145,20 +146,17 @@ const ReviewContent = ({
     <>
       <DialogTitle className={classes.dialogTitle}>
         <Typography variant="h3" component="div">
-          Trts Yarkomoll
+          {content.name}
         </Typography>
       </DialogTitle>
       {prompt ? <Prompt onCancel={onCancel} onClose={onClose} /> : null}
       <div className={disabled ? classes.disabled : ""}>
         <DialogContent classes={{ root: classes.dialogContent }}>
           <div className={classes.avatarGroup}>
-            <Avatar
-              src="https://lh3.googleusercontent.com/-5Jp3D27Y3Sg/AAAAAAAAAAI/AAAAAAAAAAA/8BDXrJK6CyY/w70-h70-p/photo.jpg"
-              className={classes.avatar}
-            />
+            <Avatar src={profile.photoURL} className={classes.avatar} />
             <div className={classes.commentHeaderName}>
               <Typography classes={{ body1: classes.lineHeightOne }}>
-                Firstname Lastname
+                {profile.name}
               </Typography>
               <Typography
                 classes={{ body2: classes.lineHeightOne }}

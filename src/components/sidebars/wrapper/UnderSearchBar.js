@@ -14,7 +14,6 @@ import PlacesContainer from "../places/PlacesContainer";
 const useStyles = makeStyles((theme) => ({
   underSearch: {
     position: "relative",
-
     height: "100vh",
     width: "423px",
     overflow: "auto",
@@ -26,6 +25,11 @@ const useStyles = makeStyles((theme) => ({
 
   close: {
     display: "none",
+  },
+  "@media screen and (max-width: 540px)": {
+    underSearch: {
+      width: "100vw",
+    },
   },
 }));
 

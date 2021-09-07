@@ -224,7 +224,6 @@ export function* watchLoadComments() {
 async function loginFirebase() {
   const provider = new firebase.auth.GoogleAuthProvider();
   const res = await auth.signInWithPopup(provider);
-  console.log(res);
   const profile = {
     name: res.additionalUserInfo.profile.name,
     photoURL: res.additionalUserInfo.profile.picture,
