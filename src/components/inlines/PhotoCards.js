@@ -16,7 +16,6 @@ const useStyles = makeStyles((theme) => ({
   photoCards: {
     marginBottom: "15px",
     position: "relative",
-    width: "calc(100vw - 6px)"
   },
   imageList: {
     flexWrap: "nowrap",
@@ -63,6 +62,11 @@ const useStyles = makeStyles((theme) => ({
   },
   shiftEnd: {
     marginLeft: "-220px!important",
+  },
+  "@media screen and (max-width: 540px)": {
+    photoCards: {
+      width: "calc(100vw - 6px)",
+    },
   },
 }));
 

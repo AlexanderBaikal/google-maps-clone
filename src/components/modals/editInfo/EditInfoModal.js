@@ -11,6 +11,12 @@ const useStyles = makeStyles((theme) => ({
     height: (props) => (props.categoryModal ? "546px" : "626px"),
     transition: "height 0.15s ease",
   },
+  "@media screen and (max-width: 540px)": {
+    dialog: {
+      minWidth: "100vw",
+      minHeight: "100vh",
+    },
+  },
 }));
 
 const EditInfoModal = ({

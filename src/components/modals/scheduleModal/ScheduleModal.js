@@ -51,6 +51,7 @@ const useStyles = makeStyles((theme) => ({
   weekdays: {
     display: "flex",
     justifyContent: "space-between",
+    flexWrap: "wrap",
     width: "100%",
     margin: "16px 0",
   },
@@ -78,6 +79,17 @@ const useStyles = makeStyles((theme) => ({
   timeInput: {
     width: "100%",
     margin: "0 6px",
+  },
+  "@media screen and (max-width: 540px)": {
+    dialog: {
+      minWidth: "calc(100vw - 20px)",
+      minHeight: "calc(100vh - 20px)",
+    },
+    dialogContent: {
+      width: "calc(100vw - 20px)",
+    },
+    timeFields: { flexWrap: "wrap" },
+    timeInput:{margin: "8px 0"}
   },
 }));
 

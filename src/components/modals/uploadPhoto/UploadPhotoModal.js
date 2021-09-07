@@ -13,6 +13,11 @@ const useStyles = makeStyles((theme) => ({
     width: "1000px",
     maxWidth: "1200px",
   },
+  "@media screen and (max-width: 540px)": {
+    dialog: {
+      minWidth: "100vw",
+      minHeight: "90vh",
+    },},
 }));
 
 const UploadPhotoModal = ({

@@ -10,6 +10,11 @@ const useStyles = makeStyles((theme) => ({
     width: "580px",
     height: "550px",
   },
+  "@media screen and (max-width: 540px)": {
+    dialog: {
+      minWidth: "100vw",
+      minHeight: "96vh",
+    },},
 }));
 
 const ReviewModal = ({

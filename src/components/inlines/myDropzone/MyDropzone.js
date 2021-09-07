@@ -41,7 +41,7 @@ const useStyles = makeStyles((theme) => {
       padding: "20px",
     },
     containerStandard: {
-      height: "400px",
+      height: "350px",
     },
 
     containerLite: {
@@ -72,6 +72,11 @@ const useStyles = makeStyles((theme) => {
       height: "86px",
       opacity: 0.4,
     },
+
+    "@media screen and (max-width: 540px)": {
+      containerStandard: {
+        height: "55vh",
+      },},
   };
 });
 

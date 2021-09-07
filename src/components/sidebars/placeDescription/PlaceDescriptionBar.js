@@ -20,10 +20,8 @@ import ActionButtons from "./../../inlines/ActionButtons";
 import BasicInfo from "./../../inlines/BasicInfo";
 import HeaderBar from "./../../inlines/HeaderBar";
 import BottomButton from "./../../inlines/BottomButton";
-import CompletePhotoModal from "./../../modals/uploadPhoto/CompletePhotoModal";
 import ReviewModalContainer from "../../modals/review/ReviewModalContainer";
 
-import UploadPhotoContainer from "../../modals/uploadPhoto/UploadPhotoContainer";
 
 const useStyles = makeStyles((theme) => ({
   topImage: {

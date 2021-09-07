@@ -82,6 +82,14 @@ const useStyles = makeStyles((theme) => ({
     pointerEvents: "none",
     opacity: 0.15,
   },
+  "@media screen and (max-width: 540px)": {
+    avatar: {
+      display: "none",
+    },
+    reviewBlock:{
+      paddingLeft:"8px"
+    }
+  },
 }));
 
 const ReviewContent = ({

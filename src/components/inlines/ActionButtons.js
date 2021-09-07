@@ -11,13 +11,13 @@ const useStyles = makeStyles((theme) => ({
   actionButtons: {
     display: "flex",
     justifyContent: "space-evenly",
-    padding: "10px 30px 0 26px",
+    padding: "10px 20px 0 20px",
     alignItems: "flex-start",
     flexWrap: "wrap"
   },
   optionsButton: {
     borderRadius: "8px",
-    width: "74px",
+    width: "70px",
     display: "flex",
     flexDirection: "column",
     padding: "10px 0px",
@@ -47,6 +47,7 @@ const useStyles = makeStyles((theme) => ({
     display: "flex",
     justifyContent: "center",
   },
+  
 }));
 
 const actionButtons = [
