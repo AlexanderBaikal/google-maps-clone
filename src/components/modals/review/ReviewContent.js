@@ -127,6 +127,7 @@ const ReviewContent = ({
     setDisabled(true);
     const data = {
       place: content.name,
+      photoFolder: content.photoFolder || content.name,
       author: {
         name: profile.name,
         photoURL: profile.photoURL,
@@ -140,7 +141,7 @@ const ReviewContent = ({
     setDisabled(false);
     setPhotoFiles([]);
     setCompleteReview(true);
-    loadComments(content.name);
+    loadComments(content.photoFolder || content.name);
   }
 
   const [ratingValue, setRatingValue] = useState(0);

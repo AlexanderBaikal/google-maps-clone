@@ -46,10 +46,12 @@ export async function uploadPhotoFirebase(file, keyword = "All") {
 export async function editDescription(data) {
   var { content, photos, profile, contentSnapshot } = data;
 
+  content.photoFolder = content.photoFolder || content.name;
+
   try {
     if (photos) {
       var promises = photos.map((file) =>
-        uploadPhotoFirebase(file, content.name)
+        uploadPhotoFirebase(file, content.photoFolder)
       );
       photos = await Promise.all(promises);
     }
@@ -126,6 +128,12 @@ export async function editDescription(data) {
       date: firebase.firestore.Timestamp.fromDate(new Date()),
     });
 
+    if (content.name !== contentSnapshot.name) {
+      await db.collection("descriptions").doc(contentSnapshot.name).delete();
+      await db.collection("places").doc(contentSnapshot.name).delete();
+      console.log("Document successfully moved!");
+    }
+
     console.log("Document successfully updated!");
   } catch (e) {
     console.error("Error updating document: ", e);
@@ -134,18 +142,19 @@ export async function editDescription(data) {
 
 export async function createComment(data) {
   //! if doc doesn exists ? if commets doesnt exists?
-  var { place, author, value, photos, text } = data;
+  var { place, author, value, photos, text, photoFolder } = data;
 
   try {
     if (photos) {
-      var promises = photos.map((file) => uploadPhotoFirebase(file, place));
+      var promises = photos.map((file) => uploadPhotoFirebase(file, photoFolder));
       photos = await Promise.all(promises);
     }
 
     const ref = db.collection("comments").doc(Date.now().toString());
 
+
     await ref.set({
-      forPlace: place,
+      forPlace: photoFolder,
       author: {
         name: author.name,
         photoURL: author.photoURL || "/",

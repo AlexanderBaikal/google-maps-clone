@@ -100,8 +100,6 @@ const PlacesList = ({
       "https://maps.gstatic.com/tactile/pane/result-no-thumbnail-2x.png";
   };
 
-  console.log(items);
-
   return (
     <List aria-label="places" className={short ? "" : classes.list}>
       {items && items.length ? (

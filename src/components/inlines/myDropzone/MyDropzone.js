@@ -7,12 +7,12 @@ import {
 import React, { createRef } from "react";
 import { useState } from "react";
 import Dropzone from "react-dropzone";
-import { uploadPhotoFirebase } from "../../../firebase";
 import clsx from "clsx";
 import { useEffect } from "react";
 import PhotoPreviews from "./../PhotoPreviews";
 import { compress } from "../../../utils/compress";
 import { getPreviews } from "../../../utils/previews";
+import { editDescription } from "../../../firebase";
 
 const useStyles = makeStyles((theme) => {
   return {
@@ -76,7 +76,8 @@ const useStyles = makeStyles((theme) => {
     "@media screen and (max-width: 540px)": {
       containerStandard: {
         height: "55vh",
-      },},
+      },
+    },
   };
 });
 
@@ -84,9 +85,11 @@ const MyDropzone = ({
   openUploadPhoto,
   photoFiles,
   setPhotoFiles,
-  keyword,
   setOpenUploadPhoto,
   setOpenCompletePhoto,
+  profile,
+  contentSnapshot,
+  content,
 }) => {
   const classes = useStyles();
 
@@ -131,8 +134,15 @@ const MyDropzone = ({
 
   async function standardUpload(files) {
     setDropzoneState(dropStates.LOADING);
-    var promises = files.map((file) => uploadPhotoFirebase(file, keyword));
-    await Promise.all(promises);
+
+    const data = {
+      content,
+      photos: files,
+      profile,
+      contentSnapshot,
+    };
+    await editDescription(data);
+
     setDropzoneState(dropStates.UPLOAD);
     onComplete();
   }

@@ -131,7 +131,7 @@ const PlaceDescriptionBar = ({
   const handleExtended = () => {
     const limit = !extended ? 20 : 3;
     setExtended((v) => !v);
-    loadComments(content.name, limit);
+    loadComments(content.photoFolder || content.name, limit);
   };
 
   return (

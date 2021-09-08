@@ -12,9 +12,11 @@ const DropzoneContainer = (props) => {
       openUploadPhoto={props.openUploadPhoto}
       photoFiles={props.photoFiles}
       setPhotoFiles={props.setPhotoFiles}
-      keyword={props.keyword}
       setOpenUploadPhoto={props.setOpenUploadPhoto}
       setOpenCompletePhoto={props.setOpenCompletePhoto}
+      content={props.content}
+      profile={props.profile}
+      contentSnapshot={props.contentSnapshot}
     />
   );
 };
@@ -23,7 +25,9 @@ const mapStateToProps = (state) => {
   return {
     photoFiles: state.modals.photoFiles,
     openUploadPhoto: state.active.openUploadPhoto,
-    keyword: state.place.content?.name || "All",
+    content: state.place.content,
+    profile: state.auth.profile,
+    contentSnapshot: state.place.contentSnapshot,
   };
 };
 

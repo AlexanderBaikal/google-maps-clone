@@ -189,11 +189,7 @@ const Comments = ({ comments, content, handleExtended, extended }) => {
           ) : (
             <Button className={classes.textButton} onClick={handleExtended}>
               <Typography variant="subtitle2">
-                {!extended
-                  ? `More reviews (${numeral(content.ratingCount).format(
-                      "0,0"
-                    )})`
-                  : "Show less"}
+                {!extended ? `More reviews` : "Show less"}
               </Typography>
             </Button>
           )
