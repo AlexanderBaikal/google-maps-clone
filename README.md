@@ -1,7 +1,12 @@
 # Google Maps Clone React
 Fullstack Google Maps Clone created with React, Redux, Leaflet and Firebase. <br/><br/>
+## Demo:
+ <a href="https://g-maps-clone.web.app/">g-maps-clone</a> 
+## Screenshots:
+### Fullwidth:
 ![image](https://user-images.githubusercontent.com/60140669/132619257-a49f59b9-b3f8-47f6-8dbe-9764a462bc20.png)
 ![image](https://user-images.githubusercontent.com/60140669/132619403-e89792fc-a11e-4123-8101-543404c5de29.png)
+### Mobile:
 ![image](https://user-images.githubusercontent.com/60140669/132619608-cd688ed1-a4a4-42ed-8498-808d2d1cb8a8.png)
 ![image](https://user-images.githubusercontent.com/60140669/132619627-857bd2c8-6441-4dfe-9e05-ab5504443bfd.png)
 ![image](https://user-images.githubusercontent.com/60140669/132619656-4828d22a-e545-4cc7-9e95-795a63ac802a.png)
