@@ -1,5 +1,5 @@
 # Google Maps Clone React
-Comming soon
+Fullstack Google Maps Clone created with React, Redux, Leaflet and Firebase. <br/><br/>
 ![image](https://user-images.githubusercontent.com/60140669/132619257-a49f59b9-b3f8-47f6-8dbe-9764a462bc20.png)
 ![image](https://user-images.githubusercontent.com/60140669/132619403-e89792fc-a11e-4123-8101-543404c5de29.png)
 ![image](https://user-images.githubusercontent.com/60140669/132619608-cd688ed1-a4a4-42ed-8498-808d2d1cb8a8.png)
